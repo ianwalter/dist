@@ -15,14 +15,14 @@ async function run () {
         dist
 
       Option
-        --name, -n  Name to use for files and global variable (defaults to package
-                    name)
+        --name, -n  Name to use for files and global variable (defaults to
+                    package name)
         --input, -i Filename of source module
 
       Example
         ❯ npx dist
-        💿 CommonJS file created: dist/someName.js
-        🕸 Browser file created: dist/someName.browser.js
+        💿 Writing CommonJS file: /myProject/dist/someName.js
+        🕸 Writing Browser file: /myProject/dist/someName.browser.js
     `,
     {
       flags: {
@@ -38,7 +38,14 @@ async function run () {
 
     // TODO: comment
     const promises = []
-    const addPromises = ([path, src]) => promises.push(writeFile(path, src))
+    const addPromises = ([path, src]) => {
+      if (path.includes('.browser.js')) {
+        console.info(`  🕸 Writing Browser file: ${path}\n`)
+      } else {
+        console.info(`  💿 Writing CommonJS file: ${path}\n`)
+      }
+      promises.push(writeFile(path, src))
+    }
     Object.entries(files).forEach(addPromises)
     const results = await complete(promises)
 

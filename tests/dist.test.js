@@ -1,26 +1,28 @@
-import { readFileSync } from 'fs'
 import { join } from 'path'
 import test from 'ava'
+import { oneLine } from 'common-tags'
 import dist from '..'
 
-test(
-  `
-    dist converts an export default literal declaration to a module.exports
-    assignment
-  `,
-  t => {
-    const path = join(__dirname, 'fixtures/exportDefaultLiteral.js')
-    t.snapshot(dist(readFileSync(path, 'utf8')))
-  }
-)
+// TODO:
+// test(
+//   `
+//     dist converts an export default literal declaration to a module.exports
+//     assignment
+//   `,
+//   t => {
+//     const path = join(__dirname, 'fixtures/exportDefaultLiteral.js')
+//     t.snapshot(dist(readFileSync(path, 'utf8')))
+//   }
+// )
 
 test(
-  `
+  oneLine`
     dist converts an export default function declaration to a module.exports
     assignment
   `,
-  t => {
-    const path = join(__dirname, 'fixtures/exportDefaultFunction.js')
-    t.snapshot(dist(readFileSync(path, 'utf8')))
+  async t => {
+    const name = 'exportDefaultFunction'
+    const input = join(__dirname, `fixtures/${name}.js`)
+    t.snapshot(await dist({ name, input }))
   }
 )

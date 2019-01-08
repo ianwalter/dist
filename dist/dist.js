@@ -1,36 +1,63 @@
-const { dirname, join, resolve } = require('path')
-const { readFileSync } = require('fs')
-const readPkgUp = require('read-pkg-up')
-const { types, parse, print } = require('recast')
-const parser = require('recast/parsers/babel')
-const clone = require('@ianwalter/clone')
+const {
+  dirname,
+  join,
+  resolve
+} = require("path");
+
+const {
+  readFileSync
+} = require("fs");
+
+const readPkgUp = require("read-pkg-up");
+
+const {
+  types,
+  parse,
+  print
+} = require("recast");
+
+const parser = require("recast/parsers/babel");
+const clone = require("@ianwalter/clone");
 
 function getShortName (pkg) {
   const parts = pkg.name.split('/')
   return parts.length ? parts[parts.length - 1] : null
 }
 
-const { namedTypes } = types
+const {
+  ExportDefaultDeclaration,
+  FunctionDeclaration,
+  ImportDeclaration,
+  ImportDefaultSpecifier
+} = types.namedTypes
 const {
   identifier,
   memberExpression,
   functionExpression,
   assignmentStatement,
-  expressionStatement
+  expressionStatement,
+  literal,
+  callExpression,
+  variableDeclarator,
+  variableDeclaration,
+  objectPattern,
+  objectProperty
 } = types.builders
 const modulePattern = identifier('module')
 const windowPattern = identifier('window')
 const exportsPattern =  identifier('exports')
 const moduleExportsExp = memberExpression(modulePattern, exportsPattern)
+const requirePattern = identifier('require')
 
-module.exports = async function dist (options) {
+module.exports = async function dist(options) {
   // Read modules package.json.
   const { pkg, path } = await readPkgUp()
 
   // Deconstruct options and set defaults if necessary.
   let {
     name = options.name || getShortName(pkg),
-    input = options.input || require.resolve(join(dirname(path), pkg.module))
+    input = options.input || require.resolve(join(dirname(path), pkg.module)),
+    output = options.output || join(dirname(path), 'dist', `${name}.js`)
   } = options
 
   // Parse the source module to recast's Abstract Syntax Tree (AST).
@@ -42,42 +69,55 @@ module.exports = async function dist (options) {
   const windowExp = memberExpression(windowPattern, identifier(name))
 
   ast.program.body.forEach((t, index) => {
-    let cjsExp
-    let browserExp
-
     // export default ...
-    if (namedTypes.ExportDefaultDeclaration.check(t)) {
+    if (ExportDefaultDeclaration.check(t)) {
       // TODO: comment
-      let rightExp
-      if (namedTypes.FunctionDeclaration.check(t.declaration)) {
-        const { id, params, body } = t.declaration
-        rightExp = functionExpression(id, params, body)
+      let rExp
+      if (FunctionDeclaration.check(t.declaration)) {
+        const { id, params, body, async } = t.declaration
+        rExp = functionExpression(id, params, body)
+        rExp.async = async
       }
 
       // TODO: comment
       if (cjsAst) {
-        cjsExp = assignmentStatement('=', moduleExportsExp, rightExp).expression
+        const { expression } = assignmentStatement('=', moduleExportsExp, rExp)
+        cjsAst.program.body[index] = expressionStatement(expression)
       }
       if (browserAst) {
-        browserExp = assignmentStatement('=', windowExp, rightExp).expression
+        const { expression } = assignmentStatement('=', windowExp, rightExp)
+        browserAst.program.body[index] = expressionStatement(expression)
       }
-    }
 
-    if (cjsExp) {
-      cjsAst.program.body[index] = expressionStatement(cjsExp)
-    }
-    if (browserExp) {
-      browserAst.program.body[index] = expressionStatement(browserExp)
+    // import ...
+    } else if (ImportDeclaration.check(t)) {
+      if (cjsAst) {
+        const sourceLiteral = literal(t.source.value)
+        const callExp = callExpression(requirePattern, [sourceLiteral])
+
+        let id
+        if (ImportDefaultSpecifier.check(t.specifiers[0])) {
+          id = t.specifiers[0].local
+        } else {
+          const toProps = s => ({
+            // This is a workaround from:
+            // https://github.com/benjamn/ast-types/issues/161
+            ...objectProperty(s.local, s.local),
+            shorthand: true
+          })
+          id = objectPattern.from({ properties: t.specifiers.map(toProps) })
+        }
+
+        const declarator =  variableDeclarator(id, callExp)
+        cjsAst.program.body[index] = variableDeclaration('const', [declarator])
+      }
     }
   })
 
   // TODO: comment
-  const distPath = join(dirname(path), 'dist')
-  const cjsPath = join(distPath, `${name}.js`)
-  const browserPath = join(distPath, `${name}.browser.js`)
+  const browserPath = join(dirname(output), `${name}.browser.js`)
   return {
-    ...(cjsAst ? { [cjsPath]: print(cjsAst).code } : {}),
+    ...(cjsAst ? { [output]: print(cjsAst).code } : {}),
     ...(browserAst ? { [browserPath]: print(browserAst).code } : {})
   }
-}
-
+};
