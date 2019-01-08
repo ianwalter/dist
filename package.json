@@ -1,6 +1,6 @@
 {
   "name": "@ianwalter/dist",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Convert your ESM/MJS library to CommonJS",
   "main": "dist/dist.js",
   "module": "index.js",
