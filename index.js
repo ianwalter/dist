@@ -1,4 +1,4 @@
-import { dirname, join, resolve } from 'path'
+import { dirname, join, resolve, extname } from 'path'
 import { readFileSync } from 'fs'
 import readPkgUp from 'read-pkg-up'
 import { types, parse, print } from 'recast'
@@ -101,9 +101,11 @@ export default async function dist (options) {
   })
 
   // TODO: comment
+  const filename = extname(output)
+  const cjsPath = filename ? output : join(output, `${name}.js`)
   const browserPath = join(dirname(output), `${name}.browser.js`)
   return {
-    ...(cjsAst ? { [output]: print(cjsAst).code } : {}),
+    ...(cjsAst ? { [cjsPath]: print(cjsAst).code } : {}),
     ...(browserAst ? { [browserPath]: print(browserAst).code } : {})
   }
 }

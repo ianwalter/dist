@@ -1,7 +1,8 @@
 const {
   dirname,
   join,
-  resolve
+  resolve,
+  extname
 } = require("path");
 
 const {
@@ -115,9 +116,11 @@ module.exports = async function dist(options) {
   })
 
   // TODO: comment
+  const filename = extname(output)
+  const cjsPath = filename ? output : join(output, `${name}.js`)
   const browserPath = join(dirname(output), `${name}.browser.js`)
   return {
-    ...(cjsAst ? { [output]: print(cjsAst).code } : {}),
+    ...(cjsAst ? { [cjsPath]: print(cjsAst).code } : {}),
     ...(browserAst ? { [browserPath]: print(browserAst).code } : {})
   }
 };
