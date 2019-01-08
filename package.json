@@ -9,6 +9,11 @@
   "bin": {
     "dist": "cli.js"
   },
+  "files": [
+    "cli.js",
+    "index.js",
+    "dist"
+  ],
   "scripts": {
     "dist": "./cli.js",
     "pretest": "npm run dist",
