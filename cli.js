@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const fs = require('fs')
+const { dirname } = require('path')
 const pify = require('pify')
 const meow = require('meow')
 const complete = require('@ianwalter/promise-complete')
@@ -15,9 +16,10 @@ async function run () {
         dist
 
       Option
-        --name, -n  Name to use for files and global variable (defaults to
-                    package name)
-        --input, -i Filename of source module
+        --name, -n    Name to use for files and global variable (defaults to
+                      package name)
+        --input, -i   Filename of source module
+        --output, -o  Output filename or directory path
 
       Example
         ❯ npx dist
@@ -27,7 +29,8 @@ async function run () {
     {
       flags: {
         name: { type: 'string', alias: 'n' },
-        input: { type: 'string', alias: 'i' }
+        input: { type: 'string', alias: 'i' },
+        output: { type: 'string', alias: 'o' }
       }
     }
   )
@@ -35,6 +38,9 @@ async function run () {
   try {
     // TODO: comment
     const files = await dist(cli.flags)
+
+    // TODO: comment
+    fs.mkdirSync(dirname(Object.keys(files)[0]), { recursive: true })
 
     // TODO: comment
     const promises = []
