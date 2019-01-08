@@ -45,7 +45,7 @@ const {
 } = types.builders
 const modulePattern = identifier('module')
 const windowPattern = identifier('window')
-const exportsPattern =  identifier('exports')
+const exportsPattern = identifier('exports')
 const moduleExportsExp = memberExpression(modulePattern, exportsPattern)
 const requirePattern = identifier('require')
 
@@ -85,7 +85,7 @@ module.exports = async function dist(options) {
         cjsAst.program.body[index] = expressionStatement(expression)
       }
       if (browserAst) {
-        const { expression } = assignmentStatement('=', windowExp, rightExp)
+        const { expression } = assignmentStatement('=', windowExp, rExp)
         browserAst.program.body[index] = expressionStatement(expression)
       }
 
@@ -108,7 +108,7 @@ module.exports = async function dist(options) {
           id = objectPattern.from({ properties: t.specifiers.map(toProps) })
         }
 
-        const declarator =  variableDeclarator(id, callExp)
+        const declarator = variableDeclarator(id, callExp)
         cjsAst.program.body[index] = variableDeclaration('const', [declarator])
       }
     }
