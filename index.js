@@ -58,7 +58,7 @@ export default async function dist (options) {
     // export default ...
     if (ExportDefaultDeclaration.check(t)) {
       // TODO: comment
-      let rExp
+      let rExp = t.declaration
       if (FunctionDeclaration.check(t.declaration)) {
         const { id, params, body, async } = t.declaration
         rExp = functionExpression(id, params, body)
