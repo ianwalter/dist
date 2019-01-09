@@ -1,6 +1,6 @@
 {
   "name": "@ianwalter/dist",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Create CommonJS and Browser distribution files for your ESM/MJS library",
   "main": "dist/dist.js",
   "author": "Ian Walter <public@iankwalter.com> (https://iankwalter.com)",
