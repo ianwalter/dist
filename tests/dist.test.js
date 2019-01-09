@@ -5,17 +5,17 @@ import dist from '..'
 
 const output = '/fakePath'
 
-// TODO:
-// test(
-//   `
-//     dist converts an export default literal declaration to a module.exports
-//     assignment
-//   `,
-//   t => {
-//     const path = join(__dirname, 'fixtures/exportDefaultLiteral.js')
-//     t.snapshot(dist(readFileSync(path, 'utf8')))
-//   }
-// )
+test(
+  `
+    dist converts an export default literal declaration to a module.exports
+    assignment
+  `,
+  async t => {
+    const name = 'exportDefaultLiteral'
+    const input = join(__dirname, `fixtures/${name}.js`)
+    t.snapshot(await dist({ name, input, output }))
+  }
+)
 
 test(
   oneLine`

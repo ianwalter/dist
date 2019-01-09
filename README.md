@@ -31,6 +31,7 @@ serves different, more-specific use cases.
                   true and ./dist/{name}.js)
 * `--browser, -b` Path for / whether to create a browser dist file (defaults to
                   false or browser in package.json or ./dist/{name}.browser.js)
+* `--inline, -l`  Inline/bundle imported modules (defaults to false)
 
 ## License
 

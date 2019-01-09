@@ -27,6 +27,7 @@ async function run () {
         --browser, -b Path for / whether to create a browser dist file (defaults
                       to false or browser in package.json or
                       ./dist/{name}.browser.js)
+        --inline, -l  Inline/bundle imported modules (defaults to false)
 
       Example
         ❯ npx dist
@@ -39,7 +40,8 @@ async function run () {
         input: { type: 'string', alias: 'i' },
         output: { type: 'string', alias: 'o' },
         cjs: { type: 'string', alias: 'c' },
-        browser: { type: 'string', alias: 'b' }
+        browser: { type: 'string', alias: 'b' },
+        inline: { type: 'string', alias: 'l' }
       }
     }
   )

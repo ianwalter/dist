@@ -1,39 +1,14 @@
 import { dirname, join, resolve, extname } from 'path'
-import { readFileSync } from 'fs'
 import readPkgUp from 'read-pkg-up'
-import { types, parse, print } from 'recast'
-import parser from 'recast/parsers/babel'
 import { rollup } from 'rollup'
+import cjsPlugin from 'rollup-plugin-commonjs'
 import nodeResolvePlugin from 'rollup-plugin-node-resolve'
+import jsonPlugin from 'rollup-plugin-json'
 
 function getShortName (pkg) {
   const parts = pkg.name.split('/')
   return parts.length ? parts[parts.length - 1] : null
 }
-
-const {
-  ExportDefaultDeclaration,
-  FunctionDeclaration,
-  ImportDeclaration,
-  ImportDefaultSpecifier
-} = types.namedTypes
-const {
-  identifier,
-  memberExpression,
-  functionExpression,
-  assignmentStatement,
-  expressionStatement,
-  literal,
-  callExpression,
-  variableDeclarator,
-  variableDeclaration,
-  objectPattern,
-  objectProperty
-} = types.builders
-const modulePattern = identifier('module')
-const exportsPattern = identifier('exports')
-const moduleExportsExp = memberExpression(modulePattern, exportsPattern)
-const requirePattern = identifier('require')
 
 export default async function dist (options) {
   // Read modules package.json.
@@ -46,59 +21,47 @@ export default async function dist (options) {
     input = options.input || resolve(join(dirname(path), sourceModule)),
     output = options.output || join(dirname(path), 'dist', `${name}.js`),
     cjs = options.cjs || pkg.main,
-    browser = options.browser || pkg.browser
+    browser = options.browser || pkg.browser,
+    inline = options.inline
   } = options
 
-  let ast
+  // TODO: comment
+  const dependencies = Object.keys(pkg.dependencies || {})
+  let external = [
+    'path',
+    'fs',
+    'crypto',
+    'url',
+    'stream',
+    'module',
+    'util',
+    'assert',
+    'constants',
+    'events',
+    ...dependencies
+  ]
+  if (inline !== undefined) {
+    inline = inline.length ? inline.split(',') : dependencies
+    external = external.filter(p => !inline.includes(p))
+  }
+  const plugins = [
+    cjsPlugin(),
+    ...(inline !== undefined ? [nodeResolvePlugin()] : []),
+    jsonPlugin()
+  ]
+
+  // TODO: comment
+  let cjsBundle
   if (cjs) {
-    // Parse the source module to recast's Abstract Syntax Tree (AST).
-    ast = parse(readFileSync(input, 'utf8'), { parser })
-
-    ast.program.body.forEach((t, index) => {
-      // export default ...
-      if (ExportDefaultDeclaration.check(t)) {
-        // TODO: comment
-        let rExp = t.declaration
-        if (FunctionDeclaration.check(t.declaration)) {
-          const { id, params, body, async } = t.declaration
-          rExp = functionExpression(id, params, body)
-          rExp.async = async
-        }
-
-        // TODO: comment
-        const { expression } = assignmentStatement('=', moduleExportsExp, rExp)
-        ast.program.body[index] = expressionStatement(expression)
-
-      // import ...
-      } else if (ImportDeclaration.check(t)) {
-        const sourceLiteral = literal(t.source.value)
-        const callExp = callExpression(requirePattern, [sourceLiteral])
-
-        let id
-        if (ImportDefaultSpecifier.check(t.specifiers[0])) {
-          id = t.specifiers[0].local
-        } else {
-          const toProps = s => ({
-            // This is a workaround from:
-            // https://github.com/benjamn/ast-types/issues/161
-            ...objectProperty(s.local, s.local),
-            shorthand: true
-          })
-          id = objectPattern.from({ properties: t.specifiers.map(toProps) })
-        }
-
-        const declarator = variableDeclarator(id, callExp)
-        ast.program.body[index] = variableDeclaration('const', [declarator])
-      }
-    })
+    const bundler = await rollup({ input, external, plugins })
+    cjsBundle = await bundler.generate({ format: 'cjs' })
   }
 
   // TODO: comment
-  let browserCode
+  let browserBundle
   if (browser) {
-    const bundle = await rollup({ input, plugins: [nodeResolvePlugin()] })
-    const bundleOutput = await bundle.generate({ format: 'iife', name })
-    browserCode = bundleOutput.output[0].code
+    const bundler = await rollup({ input, external, plugins })
+    browserBundle = await bundler.generate({ format: 'iife', name })
   }
 
   // TODO: comment
@@ -108,8 +71,9 @@ export default async function dist (options) {
     ? resolve(browser)
     : join(dir, `${name}.browser.js`)
 
+  // TODO: comment
   return {
-    ...(ast ? { [cjsPath]: print(ast).code } : {}),
-    ...(browserCode ? { [browserPath]: browserCode } : {})
+    ...(cjs ? { [cjsPath]: cjsBundle.output[0].code } : {}),
+    ...(browser ? { [browserPath]: browserBundle.output[0].code } : {})
   }
 }
