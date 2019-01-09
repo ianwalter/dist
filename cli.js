@@ -53,15 +53,14 @@ async function run () {
     const addPromises = ([absolutePath, src]) => {
       const path = absolutePath.replace(`${process.cwd()}/`, '')
       if (path.includes('.browser.js')) {
-        console.info(cyan('  🌎 Writing Browser dist file:'), gray(path))
+        console.info(cyan('🌎 Writing Browser dist file:'), gray(path))
       } else {
-        console.info(cyan('  💿 Writing CommonJS dist file:'), gray(path))
+        console.info(cyan('💿 Writing CommonJS dist file:'), gray(path))
       }
       promises.push(writeFile(absolutePath, src))
     }
-    if (filePath) {
-      console.info('')
-    }
+
+    // TODO: comment
     Object.entries(files).forEach(addPromises)
     const results = await complete(promises)
 
