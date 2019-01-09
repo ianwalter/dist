@@ -1,11 +1,30 @@
 {
   "name": "@ianwalter/dist",
   "version": "0.3.2",
-  "description": "Convert your ESM/MJS library to CommonJS",
+  "description": "Create CommonJS and Browser distribution files for your ESM/MJS library",
   "main": "dist/dist.js",
   "module": "index.js",
-  "author": "Ian Walter <public@iankwalter.com>",
+  "author": "Ian Walter <public@iankwalter.com> (https://iankwalter.com)",
   "license": "SEE LICENSE IN LICENSE",
+  "keywords": [
+    "esm",
+    "bundle",
+    "commonjs",
+    "cjs",
+    "mjs",
+    "inline",
+    "browser",
+    "distribution",
+    "rollup"
+  ],
+  "homepage": "https://github.com/ianwalter/dist#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ianwalter/dist.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ianwalter/dist/issues"
+  },
   "bin": {
     "dist": "cli.js"
   },
@@ -21,12 +40,10 @@
     "test": "ava"
   },
   "dependencies": {
-    "@babel/parser": "^7.2.3",
     "@ianwalter/promise-complete": "^1.0.0",
     "chalk": "^2.4.2",
     "meow": "^5.0.0",
     "pify": "^4.0.1",
-    "recast": "^0.16.1",
     "rollup": "^1.0.2",
     "rollup-plugin-node-resolve": "^4.0.0"
   },
