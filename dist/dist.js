@@ -1,134 +1,85 @@
-const {
-  dirname,
-  join,
-  resolve,
-  extname
-} = require("path");
+'use strict';
 
-const {
-  readFileSync
-} = require("fs");
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-const readPkgUp = require("read-pkg-up");
-
-const {
-  types,
-  parse,
-  print
-} = require("recast");
-
-const parser = require("recast/parsers/babel");
-
-const {
-  rollup
-} = require("rollup");
-
-const nodeResolvePlugin = require("rollup-plugin-node-resolve");
+var path = require('path');
+var readPkgUp = _interopDefault(require('read-pkg-up'));
+var rollup = require('rollup');
+var cjsPlugin = _interopDefault(require('rollup-plugin-commonjs'));
+var nodeResolvePlugin = _interopDefault(require('rollup-plugin-node-resolve'));
+var jsonPlugin = _interopDefault(require('rollup-plugin-json'));
 
 function getShortName (pkg) {
-  const parts = pkg.name.split('/')
+  const parts = pkg.name.split('/');
   return parts.length ? parts[parts.length - 1] : null
 }
 
-const {
-  ExportDefaultDeclaration,
-  FunctionDeclaration,
-  ImportDeclaration,
-  ImportDefaultSpecifier
-} = types.namedTypes
-const {
-  identifier,
-  memberExpression,
-  functionExpression,
-  assignmentStatement,
-  expressionStatement,
-  literal,
-  callExpression,
-  variableDeclarator,
-  variableDeclaration,
-  objectPattern,
-  objectProperty
-} = types.builders
-const modulePattern = identifier('module')
-const exportsPattern = identifier('exports')
-const moduleExportsExp = memberExpression(modulePattern, exportsPattern)
-const requirePattern = identifier('require')
-
-module.exports = async function dist(options) {
+async function dist (options) {
   // Read modules package.json.
-  const { pkg, path } = await readPkgUp()
+  const { pkg, path: path$$1 } = await readPkgUp();
 
   // Deconstruct options and set defaults if necessary.
-  const sourceModule = pkg.module || 'index.js'
+  const sourceModule = pkg.module || 'index.js';
   let {
     name = options.name || getShortName(pkg),
-    input = options.input || resolve(join(dirname(path), sourceModule)),
-    output = options.output || join(dirname(path), 'dist', `${name}.js`),
+    input = options.input || path.resolve(path.join(path.dirname(path$$1), sourceModule)),
+    output = options.output || path.join(path.dirname(path$$1), 'dist', `${name}.js`),
     cjs = options.cjs || pkg.main,
-    browser = options.browser || pkg.browser
-  } = options
+    browser = options.browser || pkg.browser,
+    inline = options.inline
+  } = options;
 
-  let ast
+  // TODO: comment
+  const dependencies = Object.keys(pkg.dependencies || {});
+  let external = [
+    'path',
+    'fs',
+    'crypto',
+    'url',
+    'stream',
+    'module',
+    'util',
+    'assert',
+    'constants',
+    'events',
+    ...dependencies
+  ];
+  if (inline !== undefined) {
+    inline = inline.length ? inline.split(',') : dependencies;
+    external = external.filter(p => !inline.includes(p));
+  }
+  const plugins = [
+    cjsPlugin(),
+    ...(inline !== undefined ? [nodeResolvePlugin()] : []),
+    jsonPlugin()
+  ];
+
+  // TODO: comment
+  let cjsBundle;
   if (cjs) {
-    // Parse the source module to recast's Abstract Syntax Tree (AST).
-    ast = parse(readFileSync(input, 'utf8'), { parser })
-
-    ast.program.body.forEach((t, index) => {
-      // export default ...
-      if (ExportDefaultDeclaration.check(t)) {
-        // TODO: comment
-        let rExp = t.declaration
-        if (FunctionDeclaration.check(t.declaration)) {
-          const { id, params, body, async } = t.declaration
-          rExp = functionExpression(id, params, body)
-          rExp.async = async
-        }
-
-        // TODO: comment
-        const { expression } = assignmentStatement('=', moduleExportsExp, rExp)
-        ast.program.body[index] = expressionStatement(expression)
-
-      // import ...
-      } else if (ImportDeclaration.check(t)) {
-        const sourceLiteral = literal(t.source.value)
-        const callExp = callExpression(requirePattern, [sourceLiteral])
-
-        let id
-        if (ImportDefaultSpecifier.check(t.specifiers[0])) {
-          id = t.specifiers[0].local
-        } else {
-          const toProps = s => ({
-            // This is a workaround from:
-            // https://github.com/benjamn/ast-types/issues/161
-            ...objectProperty(s.local, s.local),
-            shorthand: true
-          })
-          id = objectPattern.from({ properties: t.specifiers.map(toProps) })
-        }
-
-        const declarator = variableDeclarator(id, callExp)
-        ast.program.body[index] = variableDeclaration('const', [declarator])
-      }
-    })
+    const bundler = await rollup.rollup({ input, external, plugins });
+    cjsBundle = await bundler.generate({ format: 'cjs' });
   }
 
   // TODO: comment
-  let browserCode
+  let browserBundle;
   if (browser) {
-    const bundle = await rollup({ input, plugins: [nodeResolvePlugin()] })
-    const bundleOutput = await bundle.generate({ format: 'iife', name })
-    browserCode = bundleOutput.output[0].code
+    const bundler = await rollup.rollup({ input, external, plugins });
+    browserBundle = await bundler.generate({ format: 'iife', name });
   }
 
   // TODO: comment
-  const cjsPath = extname(output) ? output : join(output, `${name}.js`)
-  const dir = dirname(cjsPath)
-  const browserPath = typeof browser === 'string' && extname(browser)
-    ? resolve(browser)
-    : join(dir, `${name}.browser.js`)
+  const cjsPath = path.extname(output) ? output : path.join(output, `${name}.js`);
+  const dir = path.dirname(cjsPath);
+  const browserPath = typeof browser === 'string' && path.extname(browser)
+    ? path.resolve(browser)
+    : path.join(dir, `${name}.browser.js`);
 
+  // TODO: comment
   return {
-    ...(ast ? { [cjsPath]: print(ast).code } : {}),
-    ...(browserCode ? { [browserPath]: browserCode } : {})
+    ...(cjs ? { [cjsPath]: cjsBundle.output[0].code } : {}),
+    ...(browser ? { [browserPath]: browserBundle.output[0].code } : {})
   }
-};
+}
+
+module.exports = dist;

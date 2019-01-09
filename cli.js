@@ -23,6 +23,7 @@ async function run () {
         --output, -o  Output filename or directory path
         --cjs, -c     Path for / whether to create a CommonJS dist file
         --browser, -b Path for / whether to create a browser dist file
+        --inline, -l  Inline/bundle imported modules
 
       Example
         ❯ npx dist
@@ -35,7 +36,8 @@ async function run () {
         input: { type: 'string', alias: 'i' },
         output: { type: 'string', alias: 'o' },
         cjs: { type: 'string', alias: 'c' },
-        browser: { type: 'string', alias: 'b' }
+        browser: { type: 'string', alias: 'b' },
+        inline: { type: 'string', alias: 'l' }
       }
     }
   )
