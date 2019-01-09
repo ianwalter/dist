@@ -3,6 +3,8 @@ import test from 'ava'
 import { oneLine } from 'common-tags'
 import dist from '..'
 
+const output = '/fakePath'
+
 // TODO:
 // test(
 //   `
@@ -23,7 +25,7 @@ test(
   async t => {
     const name = 'exportDefaultFunction'
     const input = join(__dirname, `fixtures/${name}.js`)
-    t.snapshot(await dist({ name, input, output: '/fakePath', browser: true }))
+    t.snapshot(await dist({ name, input, output, browser: true }))
   }
 )
 
@@ -35,6 +37,12 @@ test(
   async t => {
     const name = 'exportDefaultNewExpression'
     const input = join(__dirname, `fixtures/${name}.js`)
-    t.snapshot(await dist({ name, input, output: '/fakePath' }))
+    t.snapshot(await dist({ name, input, output }))
   }
 )
+
+test('dist bundles imports with module into browser dist file', async t => {
+  const name = 'exportDefaultFunctionWithImport'
+  const input = join(__dirname, `fixtures/${name}.js`)
+  t.snapshot(await dist({ name, input, output, browser: join(output, 'b.js') }))
+})

@@ -18,7 +18,10 @@ const {
 } = require("recast");
 
 const parser = require("recast/parsers/babel");
-const clone = require("@ianwalter/clone");
+
+const {
+  rollup
+} = require("rollup");
 
 function getShortName (pkg) {
   const parts = pkg.name.split('/')
@@ -45,7 +48,6 @@ const {
   objectProperty
 } = types.builders
 const modulePattern = identifier('module')
-const windowPattern = identifier('window')
 const exportsPattern = identifier('exports')
 const moduleExportsExp = memberExpression(modulePattern, exportsPattern)
 const requirePattern = identifier('require')
@@ -55,46 +57,37 @@ module.exports = async function dist(options) {
   const { pkg, path } = await readPkgUp()
 
   // Deconstruct options and set defaults if necessary.
+  const sourceModule = pkg.module || 'index.js'
   let {
     name = options.name || getShortName(pkg),
-    input = options.input || require.resolve(join(dirname(path), pkg.module)),
+    input = options.input || resolve(join(dirname(path), sourceModule)),
     output = options.output || join(dirname(path), 'dist', `${name}.js`),
     cjs = options.cjs || pkg.main,
     browser = options.browser || pkg.browser
   } = options
 
-  // Parse the source module to recast's Abstract Syntax Tree (AST).
-  const ast = parse(readFileSync(resolve(input), 'utf8'), { parser })
-  const cjsAst = cjs ? ast : null
-  const browserAst = browser ? (cjs ? clone(cjsAst) : ast) : null
+  let ast
+  if (cjs) {
+    // Parse the source module to recast's Abstract Syntax Tree (AST).
+    ast = parse(readFileSync(input, 'utf8'), { parser })
 
-  // TODO: comment
-  const windowExp = memberExpression(windowPattern, identifier(name))
+    ast.program.body.forEach((t, index) => {
+      // export default ...
+      if (ExportDefaultDeclaration.check(t)) {
+        // TODO: comment
+        let rExp = t.declaration
+        if (FunctionDeclaration.check(t.declaration)) {
+          const { id, params, body, async } = t.declaration
+          rExp = functionExpression(id, params, body)
+          rExp.async = async
+        }
 
-  ast.program.body.forEach((t, index) => {
-    // export default ...
-    if (ExportDefaultDeclaration.check(t)) {
-      // TODO: comment
-      let rExp = t.declaration
-      if (FunctionDeclaration.check(t.declaration)) {
-        const { id, params, body, async } = t.declaration
-        rExp = functionExpression(id, params, body)
-        rExp.async = async
-      }
-
-      // TODO: comment
-      if (cjsAst) {
+        // TODO: comment
         const { expression } = assignmentStatement('=', moduleExportsExp, rExp)
-        cjsAst.program.body[index] = expressionStatement(expression)
-      }
-      if (browserAst) {
-        const { expression } = assignmentStatement('=', windowExp, rExp)
-        browserAst.program.body[index] = expressionStatement(expression)
-      }
+        ast.program.body[index] = expressionStatement(expression)
 
-    // import ...
-    } else if (ImportDeclaration.check(t)) {
-      if (cjsAst) {
+      // import ...
+      } else if (ImportDeclaration.check(t)) {
         const sourceLiteral = literal(t.source.value)
         const callExp = callExpression(requirePattern, [sourceLiteral])
 
@@ -112,10 +105,18 @@ module.exports = async function dist(options) {
         }
 
         const declarator = variableDeclarator(id, callExp)
-        cjsAst.program.body[index] = variableDeclaration('const', [declarator])
+        ast.program.body[index] = variableDeclaration('const', [declarator])
       }
-    }
-  })
+    })
+  }
+
+  // TODO: comment
+  let browserCode
+  if (browser) {
+    const bundle = await rollup({ input })
+    const bundleOutput = await bundle.generate({ format: 'iife', name })
+    browserCode = bundleOutput.output[0].code
+  }
 
   // TODO: comment
   const cjsPath = extname(output) ? output : join(output, `${name}.js`)
@@ -123,8 +124,9 @@ module.exports = async function dist(options) {
   const browserPath = typeof browser === 'string' && extname(browser)
     ? browser
     : join(dir, `${name}.browser.js`)
+
   return {
-    ...(cjsAst ? { [cjsPath]: print(cjsAst).code } : {}),
-    ...(browserAst ? { [browserPath]: print(browserAst).code } : {})
+    ...(ast ? { [cjsPath]: print(ast).code } : {}),
+    ...(browserCode ? { [browserPath]: browserCode } : {})
   }
 };

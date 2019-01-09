@@ -325,11 +325,6 @@
   dependencies:
     arrify "^1.0.1"
 
-"@ianwalter/clone@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@ianwalter/clone/-/clone-1.0.2.tgz#ed72ae0db824b7fd45c6eae8ce0288f94edc97a9"
-  integrity sha512-pqYkbPcI+VEgpcyhGCbeGeq3rCZLpj+Mk7yuYasMPttkfkGS+a4kI9VUNa5JY4WfYMcUIIq7GgBxgnyejHb6fg==
-
 "@ianwalter/promise-complete@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@ianwalter/promise-complete/-/promise-complete-1.0.0.tgz#a11b4ce24f5de90a25991ed429002dfb01d6d39a"
@@ -354,6 +349,16 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
+"@types/estree@0.0.39":
+  version "0.0.39"
+  resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.39.tgz#e177e699ee1b8c22d23174caaa7422644389509f"
+  integrity sha512-EYNwp3bU+98cpU4lAWYYL7Zz+2gryWH1qbdDTidVd6hkiR6weksdbMadyXKXNPEkQFhXM+hVO9ZygomHXp+AIw==
+
+"@types/node@*":
+  version "10.12.18"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.18.tgz#1d3ca764718915584fcd9f6344621b7672665c67"
+  integrity sha512-fh+pAqt4xRzPfqA6eh3Z2y6fyZavRIumvjhaCL753+TVkGKGhpPeyrJG2JftD0T9q4GF00KjefsQ+PQNDdWQaQ==
+
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
@@ -364,7 +369,7 @@ acorn-jsx@^5.0.0:
   resolved "https://registry.yarnpkg.com/acorn-jsx/-/acorn-jsx-5.0.1.tgz#32a064fd925429216a09b141102bfdd185fae40e"
   integrity sha512-HJ7CfNHrfJLlNTzIEUTj43LNWGkqpRLxm3YjAlcD0ACydk9XynzYsCBHxut+iqt+1aBXkx9UP/w/ZqMr13XIzg==
 
-acorn@^6.0.2, acorn@^6.0.5:
+acorn@^6.0.2, acorn@^6.0.4, acorn@^6.0.5:
   version "6.0.5"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-6.0.5.tgz#81730c0815f3f3b34d8efa95cb7430965f4d887a"
   integrity sha512-i33Zgp3XWtmZBMNvCr4azvOFeWVw1Rk6p3hfi3LUDvIFraOMywb1kAtrbi+med14m4Xfpqm3zRZMT+c0FNE7kg==
@@ -3625,6 +3630,15 @@ rimraf@^2.2.8, rimraf@^2.6.1, rimraf@~2.6.2:
   integrity sha512-mwqeW5XsA2qAejG46gYdENaxXjx9onRNCfn7L0duuP4hCuTIi/QO7PDK07KJfp1d+izWPrzEJDcSqBa0OZQriA==
   dependencies:
     glob "^7.1.3"
+
+rollup@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.0.2.tgz#df88abda5cfe96afaa07dbd540510f87e60d1baf"
+  integrity sha512-FkkSrWUVo1WliS+/GIgEmKQPILubgVdBRTWampfdhkasxx7sM2nfwSfKiX3paIBVnN0HG3DvkTy13RfjkyBX9w==
+  dependencies:
+    "@types/estree" "0.0.39"
+    "@types/node" "*"
+    acorn "^6.0.4"
 
 run-async@^2.2.0:
   version "2.3.0"
