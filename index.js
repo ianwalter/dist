@@ -96,7 +96,7 @@ export default async function dist (options) {
   // TODO: comment
   let browserCode
   if (browser) {
-    const bundle = await rollup({ input, plugins: [nodeResolvePlugin] })
+    const bundle = await rollup({ input, plugins: [nodeResolvePlugin()] })
     const bundleOutput = await bundle.generate({ format: 'iife', name })
     browserCode = bundleOutput.output[0].code
   }
