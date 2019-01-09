@@ -8,11 +8,7 @@ var rollup = require('rollup');
 var cjsPlugin = _interopDefault(require('rollup-plugin-commonjs'));
 var nodeResolvePlugin = _interopDefault(require('rollup-plugin-node-resolve'));
 var jsonPlugin = _interopDefault(require('rollup-plugin-json'));
-
-function getShortName (pkg) {
-  const parts = pkg.name.split('/');
-  return parts.length ? parts[parts.length - 1] : null
-}
+var npmShortName = _interopDefault(require('@ianwalter/npm-short-name'));
 
 async function dist (options) {
   // Read modules package.json.
@@ -21,7 +17,7 @@ async function dist (options) {
   // Deconstruct options and set defaults if necessary.
   const sourceModule = pkg.module || 'index.js';
   let {
-    name = options.name || getShortName(pkg),
+    name = options.name || npmShortName(pkg.name),
     input = options.input || path.resolve(path.join(path.dirname(path$$1), sourceModule)),
     output = options.output || path.join(path.dirname(path$$1), 'dist', `${name}.js`),
     cjs = options.cjs || pkg.main,
