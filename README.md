@@ -24,13 +24,14 @@ serves different, more-specific use cases.
 
 * `--name, -n`    Name to use for files and global variable (defaults to name in
                   package.json)
-* `--input, -i`   Filename of source module Filename of source module (defaults
-                  to module in package.json)
+* `--input, -i`   Filename of source/entry file (defaults to {cwd}/index.js)
 * `--output, -o`  Output filename or directory path (defaults to ./dist)
 * `--cjs, -c`     Path for / whether to create a CommonJS dist file (defaults to
                   true and ./dist/{name}.js)
 * `--browser, -b` Path for / whether to create a browser dist file (defaults to
                   false or browser in package.json or ./dist/{name}.browser.js)
+* `--esm, -e`     Path for / whether to create a ESM dist file (defaults to
+                  false or module in package.json)
 * `--inline, -l`  Inline/bundle imported modules (defaults to false)
 
 ## License

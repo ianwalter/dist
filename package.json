@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Create CommonJS and Browser distribution files for your ESM/MJS library",
   "main": "dist/dist.js",
-  "module": "index.js",
   "author": "Ian Walter <public@iankwalter.com> (https://iankwalter.com)",
   "license": "SEE LICENSE IN LICENSE",
   "keywords": [
@@ -35,8 +34,7 @@
   ],
   "scripts": {
     "lint": "eslint index.js tests",
-    "dist": "./cli.js",
-    "pretest": "npm run dist && npm run dist",
+    "pretest": "./cli.js && ./cli.js",
     "test": "ava"
   },
   "dependencies": {
