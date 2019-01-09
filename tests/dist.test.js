@@ -23,7 +23,7 @@ test(
   async t => {
     const name = 'exportDefaultFunction'
     const input = join(__dirname, `fixtures/${name}.js`)
-    t.snapshot(await dist({ name, input, output: '/fakePath' }))
+    t.snapshot(await dist({ name, input, output: '/fakePath', browser: true }))
   }
 )
 

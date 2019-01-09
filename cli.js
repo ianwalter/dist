@@ -20,6 +20,8 @@ async function run () {
                       package name)
         --input, -i   Filename of source module
         --output, -o  Output filename or directory path
+        --cjs, -c     Path for / whether to create a CommonJS dist file
+        --browser, -b Path for / whether to create a browser dist file
 
       Example
         ❯ npx dist
@@ -30,7 +32,9 @@ async function run () {
       flags: {
         name: { type: 'string', alias: 'n' },
         input: { type: 'string', alias: 'i' },
-        output: { type: 'string', alias: 'o' }
+        output: { type: 'string', alias: 'o' },
+        cjs: { type: 'string', alias: 'c' },
+        browser: { type: 'string', alias: 'b' }
       }
     }
   )

@@ -43,13 +43,15 @@ export default async function dist (options) {
   let {
     name = options.name || getShortName(pkg),
     input = options.input || require.resolve(join(dirname(path), pkg.module)),
-    output = options.output || join(dirname(path), 'dist', `${name}.js`)
+    output = options.output || join(dirname(path), 'dist', `${name}.js`),
+    cjs = options.cjs || pkg.main,
+    browser = options.browser || pkg.browser
   } = options
 
   // Parse the source module to recast's Abstract Syntax Tree (AST).
   const ast = parse(readFileSync(resolve(input), 'utf8'), { parser })
-  const cjsAst = pkg.main ? ast : null
-  const browserAst = pkg.browser ? (pkg.main ? clone(cjsAst) : ast) : null
+  const cjsAst = cjs ? ast : null
+  const browserAst = browser ? (cjs ? clone(cjsAst) : ast) : null
 
   // TODO: comment
   const windowExp = memberExpression(windowPattern, identifier(name))
@@ -101,9 +103,11 @@ export default async function dist (options) {
   })
 
   // TODO: comment
-  const filename = extname(output)
-  const cjsPath = filename ? output : join(output, `${name}.js`)
-  const browserPath = join(dirname(output), `${name}.browser.js`)
+  const cjsPath = extname(output) ? output : join(output, `${name}.js`)
+  const dir = dirname(cjsPath)
+  const browserPath = typeof browser === 'string' && extname(browser)
+    ? browser
+    : join(dir, `${name}.browser.js`)
   return {
     ...(cjsAst ? { [cjsPath]: print(cjsAst).code } : {}),
     ...(browserAst ? { [browserPath]: print(browserAst).code } : {})
