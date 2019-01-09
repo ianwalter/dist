@@ -1,6 +1,6 @@
 {
   "name": "@ianwalter/dist",
-  "version": "0.3.2",
+  "version": "1.0.0-0",
   "description": "Create CommonJS and Browser distribution files for your ESM/MJS library",
   "main": "dist/dist.js",
   "module": "index.js",
