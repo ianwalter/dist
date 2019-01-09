@@ -6,6 +6,7 @@ const pify = require('pify')
 const meow = require('meow')
 const complete = require('@ianwalter/promise-complete')
 const dist = require('.')
+const { cyan, gray } = require('chalk')
 
 const writeFile = pify(fs.writeFile)
 
@@ -42,19 +43,24 @@ async function run () {
   try {
     // TODO: comment
     const files = await dist(cli.flags)
+    const [filePath] = Object.keys(files)
 
     // TODO: comment
-    fs.mkdirSync(dirname(Object.keys(files)[0]), { recursive: true })
+    fs.mkdirSync(dirname(filePath), { recursive: true })
 
     // TODO: comment
     const promises = []
-    const addPromises = ([path, src]) => {
+    const addPromises = ([absolutePath, src]) => {
+      const path = absolutePath.replace(`${process.cwd()}/`, '')
       if (path.includes('.browser.js')) {
-        console.info(`  🕸 Writing Browser file: ${path}\n`)
+        console.info(cyan('  🌎 Writing Browser dist file:'), gray(path))
       } else {
-        console.info(`  💿 Writing CommonJS file: ${path}\n`)
+        console.info(cyan('  💿 Writing CommonJS dist file:'), gray(path))
       }
-      promises.push(writeFile(path, src))
+      promises.push(writeFile(absolutePath, src))
+    }
+    if (filePath) {
+      console.info('')
     }
     Object.entries(files).forEach(addPromises)
     const results = await complete(promises)

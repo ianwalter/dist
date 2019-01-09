@@ -104,7 +104,7 @@ export default async function dist (options) {
   const cjsPath = extname(output) ? output : join(output, `${name}.js`)
   const dir = dirname(cjsPath)
   const browserPath = typeof browser === 'string' && extname(browser)
-    ? browser
+    ? resolve(browser)
     : join(dir, `${name}.browser.js`)
 
   return {

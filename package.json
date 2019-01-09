@@ -23,7 +23,7 @@
   "dependencies": {
     "@babel/parser": "^7.2.3",
     "@ianwalter/promise-complete": "^1.0.0",
-    "acorn": "^6.0.5",
+    "chalk": "^2.4.2",
     "meow": "^5.0.0",
     "pify": "^4.0.1",
     "recast": "^0.16.1",
