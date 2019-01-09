@@ -46,4 +46,5 @@ Created by [Ian Walter](https://iankwalter.com)
 [rollupUrl]: https://rollupjs.org/
 [microbundleUrl]: https://github.com/developit/microbundle
 [puppeteerUrl]: https://pptr.dev/
+[licenseUrl]: https://github.com/ianwalter/dist/blob/master/LICENSE
 

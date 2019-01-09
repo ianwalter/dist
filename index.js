@@ -4,11 +4,7 @@ import { rollup } from 'rollup'
 import cjsPlugin from 'rollup-plugin-commonjs'
 import nodeResolvePlugin from 'rollup-plugin-node-resolve'
 import jsonPlugin from 'rollup-plugin-json'
-
-function getShortName (pkg) {
-  const parts = pkg.name.split('/')
-  return parts.length ? parts[parts.length - 1] : null
-}
+import npmShortName from '@ianwalter/npm-short-name'
 
 export default async function dist (options) {
   // Read modules package.json.
@@ -17,7 +13,7 @@ export default async function dist (options) {
   // Deconstruct options and set defaults if necessary.
   const sourceModule = pkg.module || 'index.js'
   let {
-    name = options.name || getShortName(pkg),
+    name = options.name || npmShortName(pkg.name),
     input = options.input || resolve(join(dirname(path), sourceModule)),
     output = options.output || join(dirname(path), 'dist', `${name}.js`),
     cjs = options.cjs || pkg.main,
