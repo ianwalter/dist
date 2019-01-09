@@ -27,7 +27,8 @@
     "meow": "^5.0.0",
     "pify": "^4.0.1",
     "recast": "^0.16.1",
-    "rollup": "^1.0.2"
+    "rollup": "^1.0.2",
+    "rollup-plugin-node-resolve": "^4.0.0"
   },
   "devDependencies": {
     "ava": "^1.0.1",

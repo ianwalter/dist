@@ -4,6 +4,7 @@ import readPkgUp from 'read-pkg-up'
 import { types, parse, print } from 'recast'
 import parser from 'recast/parsers/babel'
 import { rollup } from 'rollup'
+import nodeResolvePlugin from 'rollup-plugin-node-resolve'
 
 function getShortName (pkg) {
   const parts = pkg.name.split('/')
@@ -95,7 +96,7 @@ export default async function dist (options) {
   // TODO: comment
   let browserCode
   if (browser) {
-    const bundle = await rollup({ input })
+    const bundle = await rollup({ input, plugins: [nodeResolvePlugin] })
     const bundleOutput = await bundle.generate({ format: 'iife', name })
     browserCode = bundleOutput.output[0].code
   }

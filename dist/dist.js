@@ -23,6 +23,8 @@ const {
   rollup
 } = require("rollup");
 
+const nodeResolvePlugin = require("rollup-plugin-node-resolve");
+
 function getShortName (pkg) {
   const parts = pkg.name.split('/')
   return parts.length ? parts[parts.length - 1] : null
@@ -113,7 +115,7 @@ module.exports = async function dist(options) {
   // TODO: comment
   let browserCode
   if (browser) {
-    const bundle = await rollup({ input })
+    const bundle = await rollup({ input, plugins: [nodeResolvePlugin] })
     const bundleOutput = await bundle.generate({ format: 'iife', name })
     browserCode = bundleOutput.output[0].code
   }
