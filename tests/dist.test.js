@@ -39,15 +39,22 @@ test(
   async t => {
     const name = 'exportDefaultNewExpression'
     const input = join(__dirname, `fixtures/${name}.js`)
-    const cjs = join(output, `${name}.js`)
-    t.snapshot(await dist({ name, input, cjs }))
+    const iife = join(output, 'b.js')
+    t.snapshot(await dist({ name, input, output, cjs: true, iife }))
   }
 )
 
 test('dist bundles imports with module into dist files', async t => {
-  const name = 'exportDefaultFunctionWithImport'
+  const name = 'exportDefaultFunctionWithImports'
   const input = join(__dirname, `fixtures/${name}.js`)
   const cjs = join(output, `${name}.js`)
-  const iife = join(output, 'b.js')
-  t.snapshot(await dist({ name, input, output, cjs, iife, esm: true }))
+  t.snapshot(await dist({ name, input, output, cjs, esm: true, inline: '' }))
+})
+
+test('dist bundles specified imports with module into dist files', async t => {
+  const name = 'exportObjectWithImports'
+  const input = join(__dirname, `fixtures/${name}.js`)
+  const cjs = join(output, `${name}.js`)
+  const inline = '@ianwalter/promise-complete'
+  t.snapshot(await dist({ name, input, output, cjs, inline }))
 })
