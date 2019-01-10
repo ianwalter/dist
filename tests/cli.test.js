@@ -1,8 +1,11 @@
 import test from 'ava'
 import execa from 'execa'
 
+const cli = './cli.js'
+
 test(`cli doesn't generate cjs file when passed --no-cjs`, async t => {
+  const input = 'tests/fixtures/exportDefaultFunction.js'
   const iife = 'tests/tmp/one.js'
-  const { stdout } = await execa('./cli.js', ['--no-cjs', '--iife', iife])
+  const { stdout } = await execa(cli, [input, '--iife', iife, '--no-cjs'])
   t.snapshot(stdout)
 })

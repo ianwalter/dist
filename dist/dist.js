@@ -9,6 +9,11 @@ var cjsPlugin = _interopDefault(require('rollup-plugin-commonjs'));
 var nodeResolvePlugin = _interopDefault(require('rollup-plugin-node-resolve'));
 var jsonPlugin = _interopDefault(require('rollup-plugin-json'));
 var npmShortName = _interopDefault(require('@ianwalter/npm-short-name'));
+var core = require('@babel/core');
+var promiseComplete = _interopDefault(require('@ianwalter/promise-complete'));
+
+const resolveFalse = Promise.resolve(false);
+const byIsError = r => r instanceof Error;
 
 async function dist (options) {
   // Read modules package.json.
@@ -23,7 +28,6 @@ async function dist (options) {
     iife = options.iife !== undefined ? options.iife : pkg.iife,
     esm = options.esm !== undefined ? options.esm : pkg.module,
     inline
-    // babel
   } = options;
 
   cjs = cjs || cjs === '';
@@ -33,7 +37,7 @@ async function dist (options) {
   // Determine which dependencies should be external (Node.js core modules
   // should always be external).
   const dependencies = Object.keys(pkg.dependencies || {});
-  let external = [
+  let nodeExternal = [
     'path',
     'fs',
     'crypto',
@@ -43,9 +47,9 @@ async function dist (options) {
     'util',
     'assert',
     'constants',
-    'events',
-    ...dependencies
+    'events'
   ];
+  let external = [...nodeExternal, ...dependencies];
   if (inline !== undefined) {
     const inlineDependencies = inline ? inline.split(',') : dependencies;
     external = external.filter(p => inlineDependencies.indexOf(p) === -1);
@@ -61,8 +65,17 @@ async function dist (options) {
     jsonPlugin()
   ];
 
-  // Create the Rollup bundler instance.
+  // Create the Rollup bundler instance(s).
   const bundler = await rollup.rollup({ input, external, plugins });
+  let iifeBundler;
+  if (iife) {
+    iifeBundler = await rollup.rollup({
+      input,
+      external: nodeExternal,
+      plugins: [nodeResolvePlugin(), cjsPlugin(), jsonPlugin()],
+      output: { globals: dependencies.map(d => ({ [d]: npmShortName(d) })) }
+    });
+  }
 
   // Generate the CommonJS bundle.
   let cjsBundle;
@@ -73,13 +86,36 @@ async function dist (options) {
   // Generate the Immediately Invoked Function Expression (IIFE) bundle.
   let iifeBundle;
   if (iife) {
-    iifeBundle = await bundler.generate({ format: 'iife', name });
+    iifeBundle = await iifeBundler.generate({ format: 'iife', name });
   }
 
   // Generate the EcmaScript Module bundle.
   let esmBundle;
   if (esm) {
     esmBundle = await bundler.generate({ format: 'esm' });
+  }
+
+  let cjsCode = cjs ? cjsBundle.output[0].code : undefined;
+  let iifeCode = iife ? iifeBundle.output[0].code : undefined;
+  let esmCode = esm ? esmBundle.output[0].code : undefined;
+  if (options.babel) {
+    // console.log(loadPartialConfig({ config: pkg.babel }))
+
+    // Transform necessary dist files using babel in parallel and don't stop
+    // other transformations if there is an error.
+    const result = await promiseComplete({
+      cjs: cjs ? core.transformAsync(cjsCode) : resolveFalse,
+      iife: iife ? core.transformAsync(iifeCode) : resolveFalse,
+      esm: esm ? core.transformAsync(esmCode) : resolveFalse
+    });
+
+    // Log any errors returned during the transformation process.
+    Object.values(result).filter(byIsError).forEach(e => console.error(e));
+
+    // Assign the transformed code if it was returned instead of an error.
+    cjsCode = result.cjs instanceof Error ? undefined : result.cjs.code;
+    iifeCode = result.iife instanceof Error ? undefined : result.iife.code;
+    esmCode = result.esm instanceof Error ? undefined : result.esm.code;
   }
 
   // Determine the output file paths.
@@ -97,9 +133,9 @@ async function dist (options) {
   // Return an object with the properties that use the file path as the key and
   // the source code as the value.
   return {
-    ...(cjs ? { cjs: [cjsPath, cjsBundle.output[0].code] } : {}),
-    ...(iife ? { iife: [iifePath, iifeBundle.output[0].code] } : {}),
-    ...(esm ? { esm: [esmPath, esmBundle.output[0].code] } : {})
+    ...(cjs ? { cjs: [cjsPath, cjsCode] } : {}),
+    ...(iife ? { iife: [iifePath, iifeCode] } : {}),
+    ...(esm ? { esm: [esmPath, esmCode] } : {})
   }
 }
 

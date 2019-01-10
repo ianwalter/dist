@@ -46,7 +46,7 @@ async function run () {
         iife: { type: 'string', alias: 'f' },
         esm: { type: 'string', alias: 'e' },
         inline: { type: 'string', alias: 'l' },
-        babel: { type: 'string', alias: 'b' }
+        babel: { type: 'boolean', alias: 'b' }
       }
     }
   )
