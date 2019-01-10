@@ -1,7 +1,7 @@
 {
   "name": "@ianwalter/dist",
   "version": "1.1.0",
-  "description": "Create CommonJS and Browser distribution files for your ESM/MJS library",
+  "description": "Simplify the generation of distribution files for your JavaScript library",
   "main": "dist/dist.js",
   "author": "Ian Walter <public@iankwalter.com> (https://iankwalter.com)",
   "license": "SEE LICENSE IN LICENSE",
@@ -14,7 +14,8 @@
     "inline",
     "browser",
     "distribution",
-    "rollup"
+    "rollup",
+    "iife"
   ],
   "homepage": "https://github.com/ianwalter/dist#readme",
   "repository": {

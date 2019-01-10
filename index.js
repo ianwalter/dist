@@ -16,12 +16,14 @@ export default async function dist (options) {
     input = options.input || resolve(join(dirname(path), 'index.js')),
     output = options.output || join(dirname(path), 'dist', `${name}.js`),
     cjs = options.cjs || pkg.main,
-    browser = options.browser || pkg.browser,
+    iife = options.iife || pkg.iife,
     esm = options.esm || pkg.module || options.esm === '',
-    inline = options.inline
+    inline
+    // babel
   } = options
 
-  // TODO: comment
+  // Determine which dependencies should be external (Node.js core modules
+  // should always be external).
   const dependencies = Object.keys(pkg.dependencies || {})
   let external = [
     'path',
@@ -40,45 +42,53 @@ export default async function dist (options) {
     const inlineDependencies = inline ? inline.split(',') : dependencies
     external = external.filter(p => inlineDependencies.indexOf(p) === -1)
   }
+
+  // Determine which Rollup plugins should be used.
   const plugins = [
-    cjsPlugin(),
+    // Allows dependencies to be bundled:
     ...(inline !== undefined ? [nodeResolvePlugin()] : []),
+    // Allows CommonJS dependencies to be imported:
+    cjsPlugin(),
+    // Allows JSON to be imported:
     jsonPlugin()
   ]
+
+  // Create the Rollup bundler instance.
   const bundler = await rollup({ input, external, plugins })
 
-  // TODO: comment
+  // Generate the CommonJS bundle.
   let cjsBundle
   if (cjs) {
     cjsBundle = await bundler.generate({ format: 'cjs' })
   }
 
-  // TODO: comment
-  let browserBundle
-  if (browser) {
-    browserBundle = await bundler.generate({ format: 'iife', name })
+  // Generate the Immediately Invoked Function Expression (IIFE) bundle.
+  let iifeBundle
+  if (iife) {
+    iifeBundle = await bundler.generate({ format: 'iife', name })
   }
 
-  // TODO: comment
+  // Generate the EcmaScript Module bundle.
   let esmBundle
   if (esm) {
     esmBundle = await bundler.generate({ format: 'esm' })
   }
 
-  // TODO: comment
+  // Determine the output file paths.
   const cjsPath = extname(output) ? output : join(output, `${name}.js`)
   const dir = dirname(cjsPath)
-  const browserPath = typeof browser === 'string' && extname(browser)
-    ? resolve(browser)
-    : join(dir, `${name}.browser.js`)
+  const iifePath = typeof iife === 'string' && extname(iife)
+    ? resolve(iife)
+    : join(dir, `${name}.iife.js`)
   const esmPath = typeof esm === 'string' && extname(esm)
     ? resolve(esm)
     : join(dir, `${name}.m.js`)
 
-  // TODO: comment
+  // Return an object with the properties that use the file path as the key and
+  // the source code as the value.
   return {
     ...(cjs ? { [cjsPath]: cjsBundle.output[0].code } : {}),
-    ...(browser ? { [browserPath]: browserBundle.output[0].code } : {}),
+    ...(iife ? { [iifePath]: iifeBundle.output[0].code } : {}),
     ...(esm ? { [esmPath]: esmBundle.output[0].code } : {})
   }
 }

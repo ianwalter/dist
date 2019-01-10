@@ -1,5 +1,5 @@
 # @ianwalter/dist
-> Create CommonJS and Browser distribution files for your ESM/MJS library
+> Simplify the generation of distribution files for your JavaScript library
 
 [![npm page][npmImage]][npmUrl]
 
@@ -11,13 +11,12 @@ serves different, more-specific use cases.
 
 ## Features
 
-* Write your package as an ES Module but still allow it to be require'd in
+* Write your library as an ES Module but still allow it to be require'd in
   Node.js
-* Generate a single browser distribution file that wraps your module and it's
+* Generate a separate distribution file that wraps your library and it's
   dependencies in an IIFE to make it easy to test your module in a real browser
-  (e.g. using [Puppeteer][puppeteerUrl]) without a more complex bundler like
-  Webpack
-* Inline your package's dependencies to create a single distribution file that
+  (e.g. using [Puppeteer][puppeteerUrl])
+* Inline your library's dependencies to create a single distribution file that
   should significantly improve startup time (I haven't tested this yet).
 
 ## Options
@@ -28,11 +27,12 @@ serves different, more-specific use cases.
 * `--output, -o`  Output filename or directory path (defaults to ./dist)
 * `--cjs, -c`     Path for / whether to create a CommonJS dist file (defaults to
                   true and ./dist/{name}.js)
-* `--browser, -b` Path for / whether to create a browser dist file (defaults to
-                  false or browser in package.json or ./dist/{name}.browser.js)
+* `--iife, -f`    Path for / whether to create a IIFE dist file (defaults to
+                  false or iife in package.json or ./dist/{name}.iife.js)
 * `--esm, -e`     Path for / whether to create a ESM dist file (defaults to
                   false or module in package.json)
 * `--inline, -l`  Inline/bundle imported modules (defaults to false)
+* `--babel, -b`   Transpile output with Babel (defaults to false)
 
 ## License
 

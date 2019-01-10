@@ -25,7 +25,7 @@ test(
   async t => {
     const name = 'exportDefaultFunction'
     const input = join(__dirname, `fixtures/${name}.js`)
-    t.snapshot(await dist({ name, input, output, browser: true }))
+    t.snapshot(await dist({ name, input, output, iife: true }))
   }
 )
 
@@ -44,6 +44,6 @@ test(
 test('dist bundles imports with module into dist files', async t => {
   const name = 'exportDefaultFunctionWithImport'
   const input = join(__dirname, `fixtures/${name}.js`)
-  const browser = join(output, 'b.js')
-  t.snapshot(await dist({ name, input, output, browser, esm: true }))
+  const iife = join(output, 'b.js')
+  t.snapshot(await dist({ name, input, output, iife, esm: true }))
 })

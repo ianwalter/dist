@@ -23,17 +23,17 @@ async function run () {
         --output, -o  Output filename or directory path (defaults to ./dist)
         --cjs, -c     Path for / whether to create a CommonJS dist file
                       (defaults to true and ./dist/{name}.js)
-        --browser, -b Path for / whether to create a browser dist file (defaults
-                      to false or browser in package.json or
-                      ./dist/{name}.browser.js)
+        --iife, -f    Path for / whether to create a IIFE dist file (defaults
+                      to false or iife in package.json or ./dist/{name}.iife.js)
         --esm, -e     Path for / whether to create a ESM dist file (defaults
                       to false or module in package.json)
         --inline, -l  Inline/bundle imported modules (defaults to false)
+        --babel, -b   Transpile output with Babel (defaults to false)
 
       Example
         ❯ npx dist
         💿 Writing CommonJS file: /myProject/dist/someName.js
-        🕸 Writing Browser file: /myProject/dist/someName.browser.js
+        🕸 Writing IIFE file: /myProject/dist/someName.iife.js
     `,
     {
       flags: {
@@ -41,9 +41,10 @@ async function run () {
         input: { type: 'string', alias: 'i' },
         output: { type: 'string', alias: 'o' },
         cjs: { type: 'string', alias: 'c' },
-        browser: { type: 'string', alias: 'b' },
+        iife: { type: 'string', alias: 'f' },
         esm: { type: 'string', alias: 'e' },
-        inline: { type: 'string', alias: 'l' }
+        inline: { type: 'string', alias: 'l' },
+        babel: { type: 'string', alias: 'b' }
       }
     }
   )
@@ -60,8 +61,8 @@ async function run () {
     const promises = []
     const addPromises = ([absolutePath, src]) => {
       const path = absolutePath.replace(`${process.cwd()}/`, '')
-      if (path.includes('.browser.js')) {
-        console.info(cyan('🌎 Writing Browser dist file:'), gray(path))
+      if (path.includes('.iife.js')) {
+        console.info(cyan('🌎 Writing IIFE dist file:'), gray(path))
       } else {
         console.info(cyan('💿 Writing CommonJS dist file:'), gray(path))
       }
