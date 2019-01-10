@@ -332,10 +332,10 @@
   dependencies:
     camelcase "^5.0.0"
 
-"@ianwalter/promise-complete@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@ianwalter/promise-complete/-/promise-complete-1.0.0.tgz#a11b4ce24f5de90a25991ed429002dfb01d6d39a"
-  integrity sha512-qtGXIXp0oOPLuvaOSK2XROTeyIitk5btrAwlqmF9AVY5SWKYCTDuVpSNbIsgFQ90onE/PlbyRCtId71ON41ycQ==
+"@ianwalter/promise-complete@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@ianwalter/promise-complete/-/promise-complete-2.0.0.tgz#c52446d48aa5b5bc572fee4a4d1ffffd300752f2"
+  integrity sha512-jwyGQoqX4rFwAv048v0TSBB4IrH7TBldOAXEQkcbd9ODk3iWkT8wnh/HZT26t7+CNW3joCwi+D0OmJTrAmTykA==
 
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
@@ -4327,6 +4327,19 @@ tar@^4:
     mkdirp "^0.5.0"
     safe-buffer "^5.1.2"
     yallist "^3.0.2"
+
+temp-dir@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/temp-dir/-/temp-dir-1.0.0.tgz#0a7c0ea26d3a39afa7e0ebea9c1fc0bc4daa011d"
+  integrity sha1-CnwOom06Oa+n4OvqnB/AvE2qAR0=
+
+tempy@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/tempy/-/tempy-0.2.1.tgz#9038e4dbd1c201b74472214179bc2c6f7776e54c"
+  integrity sha512-LB83o9bfZGrntdqPuRdanIVCPReam9SOZKW0fOy5I9X3A854GGWi0tjCqoXEk84XIEYBc/x9Hq3EFop/H5wJaw==
+  dependencies:
+    temp-dir "^1.0.0"
+    unique-string "^1.0.0"
 
 term-size@^1.2.0:
   version "1.2.0"

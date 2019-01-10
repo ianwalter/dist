@@ -26,7 +26,7 @@ test(
   async t => {
     const name = 'exportDefaultFunction'
     const input = join(__dirname, `fixtures/${name}.js`)
-    const cjs = join(output, 'some-functions.js')
+    const cjs = join(output, 'some-function.js')
     t.snapshot(await dist({ name, input, output, cjs, iife: true }))
   }
 )

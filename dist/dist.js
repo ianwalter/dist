@@ -10,8 +10,6 @@ var nodeResolvePlugin = _interopDefault(require('rollup-plugin-node-resolve'));
 var jsonPlugin = _interopDefault(require('rollup-plugin-json'));
 var npmShortName = _interopDefault(require('@ianwalter/npm-short-name'));
 
-const isPath = value => value !== undefined && value !== '';
-
 async function dist (options) {
   // Read modules package.json.
   const { pkg, path: path$$1 } = await readPkgUp();
@@ -21,22 +19,16 @@ async function dist (options) {
     name = options.name || npmShortName(pkg.name),
     input = options.input || path.resolve(path.join(path.dirname(path$$1), 'index.js')),
     output = options.output || path.join(path.dirname(path$$1), 'dist'),
-    cjs = (
-      isPath(options.cjs) ? options.cjs : (pkg.main || options.cjs === '')
-    ),
-    iife = (
-      isPath(options.iife) ? options.iife : (pkg.iife || options.iife === '')
-    ),
-    esm = (
-      isPath(options.esm) ? options.esm : (pkg.module || options.esm === '')
-    ),
+    cjs = options.cjs !== undefined ? options.cjs : pkg.main,
+    iife = options.iife !== undefined ? options.iife : pkg.iife,
+    esm = options.esm !== undefined ? options.esm : pkg.module,
     inline
     // babel
   } = options;
 
-  console.log('cjs', cjs);
-  console.log('iife', iife);
-  console.log('esm', esm);
+  cjs = cjs || cjs === '';
+  iife = iife || iife === '';
+  esm = esm || esm === '';
 
   // Determine which dependencies should be external (Node.js core modules
   // should always be external).
