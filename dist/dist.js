@@ -18,9 +18,9 @@ async function dist (options) {
   let {
     name = options.name || npmShortName(pkg.name),
     input = options.input || path.resolve(path.join(path.dirname(path$$1), 'index.js')),
-    output = options.output || path.join(path.dirname(path$$1), 'dist', `${name}.js`),
-    cjs = options.cjs || pkg.main,
-    iife = options.iife || pkg.iife,
+    output = options.output || path.join(path.dirname(path$$1), 'dist'),
+    cjs = options.cjs || pkg.main || options.cjs === '',
+    iife = options.iife || pkg.iife || options.iife === '',
     esm = options.esm || pkg.module || options.esm === '',
     inline
     // babel
@@ -79,8 +79,10 @@ async function dist (options) {
   }
 
   // Determine the output file paths.
-  const cjsPath = path.extname(output) ? output : path.join(output, `${name}.js`);
-  const dir = path.dirname(cjsPath);
+  const dir = path.extname(output) ? path.dirname(output) : output;
+  const cjsPath = typeof cjs === 'string' && path.extname(cjs)
+    ? path.resolve(cjs)
+    : path.join(dir, `${name}.js`);
   const iifePath = typeof iife === 'string' && path.extname(iife)
     ? path.resolve(iife)
     : path.join(dir, `${name}.iife.js`);

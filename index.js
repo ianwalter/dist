@@ -14,9 +14,9 @@ export default async function dist (options) {
   let {
     name = options.name || npmShortName(pkg.name),
     input = options.input || resolve(join(dirname(path), 'index.js')),
-    output = options.output || join(dirname(path), 'dist', `${name}.js`),
-    cjs = options.cjs || pkg.main,
-    iife = options.iife || pkg.iife,
+    output = options.output || join(dirname(path), 'dist'),
+    cjs = options.cjs || pkg.main || options.cjs === '',
+    iife = options.iife || pkg.iife || options.iife === '',
     esm = options.esm || pkg.module || options.esm === '',
     inline
     // babel
@@ -75,8 +75,10 @@ export default async function dist (options) {
   }
 
   // Determine the output file paths.
-  const cjsPath = extname(output) ? output : join(output, `${name}.js`)
-  const dir = dirname(cjsPath)
+  const dir = extname(output) ? dirname(output) : output
+  const cjsPath = typeof cjs === 'string' && extname(cjs)
+    ? resolve(cjs)
+    : join(dir, `${name}.js`)
   const iifePath = typeof iife === 'string' && extname(iife)
     ? resolve(iife)
     : join(dir, `${name}.iife.js`)
