@@ -15,12 +15,16 @@ export default async function dist (options) {
     name = options.name || npmShortName(pkg.name),
     input = options.input || resolve(join(dirname(path), 'index.js')),
     output = options.output || join(dirname(path), 'dist'),
-    cjs = options.cjs || pkg.main || options.cjs === '',
-    iife = options.iife || pkg.iife || options.iife === '',
-    esm = options.esm || pkg.module || options.esm === '',
+    cjs = options.cjs !== undefined ? options.cjs : pkg.main,
+    iife = options.iife !== undefined ? options.iife : pkg.iife,
+    esm = options.esm !== undefined ? options.esm : pkg.module,
     inline
     // babel
   } = options
+
+  cjs = cjs || cjs === ''
+  iife = iife || iife === ''
+  esm = esm || esm === ''
 
   // Determine which dependencies should be external (Node.js core modules
   // should always be external).
@@ -89,8 +93,8 @@ export default async function dist (options) {
   // Return an object with the properties that use the file path as the key and
   // the source code as the value.
   return {
-    ...(cjs ? { [cjsPath]: cjsBundle.output[0].code } : {}),
-    ...(iife ? { [iifePath]: iifeBundle.output[0].code } : {}),
-    ...(esm ? { [esmPath]: esmBundle.output[0].code } : {})
+    ...(cjs ? { cjs: [cjsPath, cjsBundle.output[0].code] } : {}),
+    ...(iife ? { iife: [iifePath, iifeBundle.output[0].code] } : {}),
+    ...(esm ? { esm: [esmPath, esmBundle.output[0].code] } : {})
   }
 }
