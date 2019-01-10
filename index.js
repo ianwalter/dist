@@ -6,6 +6,8 @@ import nodeResolvePlugin from 'rollup-plugin-node-resolve'
 import jsonPlugin from 'rollup-plugin-json'
 import npmShortName from '@ianwalter/npm-short-name'
 
+const isPath = value => value !== undefined && value !== ''
+
 export default async function dist (options) {
   // Read modules package.json.
   const { pkg, path } = await readPkgUp()
@@ -15,12 +17,22 @@ export default async function dist (options) {
     name = options.name || npmShortName(pkg.name),
     input = options.input || resolve(join(dirname(path), 'index.js')),
     output = options.output || join(dirname(path), 'dist'),
-    cjs = options.cjs || pkg.main || options.cjs === '',
-    iife = options.iife || pkg.iife || options.iife === '',
-    esm = options.esm || pkg.module || options.esm === '',
+    cjs = (
+      isPath(options.cjs) ? options.cjs : (pkg.main || options.cjs === '')
+    ),
+    iife = (
+      isPath(options.iife) ? options.iife : (pkg.iife || options.iife === '')
+    ),
+    esm = (
+      isPath(options.esm) ? options.esm : (pkg.module || options.esm === '')
+    ),
     inline
     // babel
   } = options
+
+  console.log('cjs', cjs)
+  console.log('iife', iife)
+  console.log('esm', esm)
 
   // Determine which dependencies should be external (Node.js core modules
   // should always be external).
@@ -89,8 +101,8 @@ export default async function dist (options) {
   // Return an object with the properties that use the file path as the key and
   // the source code as the value.
   return {
-    ...(cjs ? { [cjsPath]: cjsBundle.output[0].code } : {}),
-    ...(iife ? { [iifePath]: iifeBundle.output[0].code } : {}),
-    ...(esm ? { [esmPath]: esmBundle.output[0].code } : {})
+    ...(cjs ? { cjs: [cjsPath, cjsBundle.output[0].code] } : {}),
+    ...(iife ? { iife: [iifePath, iifeBundle.output[0].code] } : {}),
+    ...(esm ? { esm: [esmPath, esmBundle.output[0].code] } : {})
   }
 }

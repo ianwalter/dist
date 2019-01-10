@@ -4,11 +4,12 @@ const fs = require('fs')
 const { dirname } = require('path')
 const pify = require('pify')
 const meow = require('meow')
-const complete = require('@ianwalter/promise-complete')
+const promiseComplete = require('@ianwalter/promise-complete')
 const dist = require('.')
-const { cyan, gray } = require('chalk')
+const { cyan, gray, yellow, red } = require('chalk')
 
 const writeFile = pify(fs.writeFile)
+const logError = err => console.error(`💥 ${red(err)}`)
 
 async function run () {
   const cli = meow(
@@ -31,9 +32,10 @@ async function run () {
         --babel, -b   Transpile output with Babel (defaults to false)
 
       Example
-        ❯ npx dist
+        ❯ yarn dist
         💿 Writing CommonJS file: /myProject/dist/someName.js
-        🕸 Writing IIFE file: /myProject/dist/someName.iife.js
+        🌎 Writing IIFE file: /myProject/dist/someName.iife.js
+        📦 Writing ES Module file: /myProject/dist/someName.m.js
     `,
     {
       flags: {
@@ -50,34 +52,40 @@ async function run () {
   )
 
   try {
-    // TODO: comment
-    const files = await dist(cli.flags)
-    const [filePath] = Object.keys(files)
+    // Perform distribution file generation and get back a map of files to be
+    // written to the filesystme.
+    const files = Object.entries(await dist(cli.flags))
+    if (files.length) {
+      const writes = []
+      files.forEach(([key, [path, src]]) => {
+        // Make the file's containing directory if it doesn't exist.
+        fs.mkdirSync(dirname(path), { recursive: true })
 
-    // TODO: comment
-    fs.mkdirSync(dirname(filePath), { recursive: true })
+        // Inform the user about what files are being written.
+        const relative = path.replace(`${process.cwd()}/`, '')
+        if (key === 'cjs') {
+          console.info(cyan('💿 Writing CommonJS dist file:'), gray(relative))
+        } else if (key === 'iife') {
+          console.info(cyan('🌎 Writing IIFE dist file:'), gray(relative))
+        } else if (key === 'esm') {
+          console.info(cyan('📦 Writing ES Module dist file:'), gray(relative))
+        }
 
-    // TODO: comment
-    const promises = []
-    const addPromises = ([absolutePath, src]) => {
-      const path = absolutePath.replace(`${process.cwd()}/`, '')
-      if (path.includes('.iife.js')) {
-        console.info(cyan('🌎 Writing IIFE dist file:'), gray(path))
-      } else {
-        console.info(cyan('💿 Writing CommonJS dist file:'), gray(path))
-      }
-      promises.push(writeFile(absolutePath, src))
+        // Add the file write operation to the list of writes to be completed
+        writes.push(writeFile(path, src))
+      })
+
+      // Perform all of the writes in parallel, regardless of whether errors are
+      // encountered in individual operations.
+      const results = await promiseComplete(writes)
+
+      // Filter the results for errors and log them.
+      results.filter(r => r instanceof Error).forEach(err => logError(err))
+    } else {
+      console.warn(yellow('🤷 No distribution files were specified'))
     }
-
-    // TODO: comment
-    Object.entries(files).forEach(addPromises)
-    const results = await complete(promises)
-
-    // TODO: comment
-    results.filter(res => res && res.message).forEach(err => console.error(err))
   } catch (err) {
-    // TODO: Format output with Chalk.
-    console.error(err)
+    logError(err)
   }
 }
 
