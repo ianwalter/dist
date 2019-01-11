@@ -18,6 +18,8 @@ serves different, more-specific use cases.
   (e.g. using [Puppeteer][puppeteerUrl])
 * Inline your library's dependencies to create a single distribution file that
   should significantly improve startup time (I haven't tested this yet).
+* Use the babel option to transpile your code based on your library's Babel
+  configuration
 
 ## Options
 
