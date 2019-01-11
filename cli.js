@@ -9,7 +9,7 @@ const dist = require('.')
 const { cyan, gray, yellow, red } = require('chalk')
 
 const writeFile = pify(fs.writeFile)
-const logError = err => console.error(`💥 ${red(err)}`)
+const logError = err => console.error(`💥 ${red('Boom!')}`, err)
 
 async function run () {
   const cli = meow(

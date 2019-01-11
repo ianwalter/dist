@@ -12,7 +12,7 @@ import clone from '@ianwalter/clone'
 const resolveFalse = Promise.resolve(false)
 const byIsError = r => r instanceof Error
 
-function configurePresetEnv (moduleType, name, options) {
+function configurePresetEnv (moduleType, name, options = {}) {
   if (moduleType === 'esm') {
     return [name, { ...options, modules: false }]
   }
