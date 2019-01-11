@@ -33,11 +33,16 @@ async function dist (options) {
   cjs = cjs || cjs === '';
   iife = iife || iife === '';
   esm = esm || esm === '';
+  inline = inline || inline === '';
 
   // Determine which dependencies should be external (Node.js core modules
   // should always be external).
   const dependencies = Object.keys(pkg.dependencies || {});
-  let nodeExternal = [
+  let inlineDependencies = [];
+  if (inline) {
+    inlineDependencies = inline === true ? dependencies : inline.split(',');
+  }
+  let external = [
     'path',
     'fs',
     'crypto',
@@ -47,18 +52,14 @@ async function dist (options) {
     'util',
     'assert',
     'constants',
-    'events'
+    'events',
+    ...dependencies.filter(d => inlineDependencies.indexOf(d) === -1)
   ];
-  let external = [...nodeExternal, ...dependencies];
-  if (inline !== undefined) {
-    const inlineDependencies = inline ? inline.split(',') : dependencies;
-    external = external.filter(p => inlineDependencies.indexOf(p) === -1);
-  }
 
   // Determine which Rollup plugins should be used.
   const plugins = [
     // Allows dependencies to be bundled:
-    ...(inline !== undefined ? [nodeResolvePlugin()] : []),
+    ...(inlineDependencies.length ? [nodeResolvePlugin()] : []),
     // Allows CommonJS dependencies to be imported:
     cjsPlugin(),
     // Allows JSON to be imported:
@@ -71,9 +72,11 @@ async function dist (options) {
   if (iife) {
     iifeBundler = await rollup.rollup({
       input,
-      external: nodeExternal,
-      plugins: [nodeResolvePlugin(), cjsPlugin(), jsonPlugin()],
-      output: { globals: dependencies.map(d => ({ [d]: npmShortName(d) })) }
+      external,
+      plugins,
+      output: {
+        globals: inlineDependencies.map(d => ({ [d]: npmShortName(d) }))
+      }
     });
   }
 

@@ -5,7 +5,7 @@ const cli = './cli.js'
 
 test(`cli doesn't generate cjs file when passed --no-cjs`, async t => {
   const input = 'tests/fixtures/exportDefaultFunction.js'
-  const iife = 'tests/tmp/one.js'
-  const { stdout } = await execa(cli, [input, '--iife', iife, '--no-cjs'])
+  const esm = 'tests/tmp/one.js'
+  const { stdout } = await execa(cli, [input, '--esm', esm, '--no-cjs'])
   t.snapshot(stdout)
 })
