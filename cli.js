@@ -57,22 +57,22 @@ async function run () {
     const files = Object.entries(await dist(cli.flags))
     if (files.length) {
       const writes = []
-      files.forEach(([key, [path, src]]) => {
+      files.forEach(([moduleType, [path, code]]) => {
         // Make the file's containing directory if it doesn't exist.
         fs.mkdirSync(dirname(path), { recursive: true })
 
         // Inform the user about what files are being written.
         const relative = path.replace(`${process.cwd()}/`, '')
-        if (key === 'cjs') {
+        if (moduleType === 'cjs') {
           console.info(cyan('💿 Writing CommonJS dist file:'), gray(relative))
-        } else if (key === 'iife') {
+        } else if (moduleType === 'iife') {
           console.info(cyan('🌎 Writing IIFE dist file:'), gray(relative))
-        } else if (key === 'esm') {
+        } else if (moduleType === 'esm') {
           console.info(cyan('📦 Writing ES Module dist file:'), gray(relative))
         }
 
         // Add the file write operation to the list of writes to be completed
-        writes.push(writeFile(path, src))
+        writes.push(writeFile(path, code))
       })
 
       // Perform all of the writes in parallel, regardless of whether errors are
