@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.2.2",
-    "@ianwalter/clone": "^1.0.2",
+    "@ianwalter/clone": "^1.0.3",
     "@ianwalter/npm-short-name": "^1.0.0",
     "@ianwalter/promise-complete": "^2.0.0",
     "chalk": "^2.4.2",
