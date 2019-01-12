@@ -1,21 +1,17 @@
-'use strict';
-
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var path = require('path');
-var readPkgUp = _interopDefault(require('read-pkg-up'));
-var rollup = require('rollup');
-var cjsPlugin = _interopDefault(require('rollup-plugin-commonjs'));
-var nodeResolvePlugin = _interopDefault(require('rollup-plugin-node-resolve'));
-var jsonPlugin = _interopDefault(require('rollup-plugin-json'));
-var npmShortName = _interopDefault(require('@ianwalter/npm-short-name'));
-var core = require('@babel/core');
-var promiseComplete = _interopDefault(require('@ianwalter/promise-complete'));
-var clone = _interopDefault(require('@ianwalter/clone'));
-var requireFromString = _interopDefault(require('require-from-string'));
+import { resolve, join, dirname, extname } from 'path';
+import readPkgUp from 'read-pkg-up';
+import { rollup } from 'rollup';
+import cjsPlugin from 'rollup-plugin-commonjs';
+import nodeResolvePlugin from 'rollup-plugin-node-resolve';
+import jsonPlugin from 'rollup-plugin-json';
+import npmShortName from '@ianwalter/npm-short-name';
+import { transformAsync } from '@babel/core';
+import promiseComplete from '@ianwalter/promise-complete';
+import clone from '@ianwalter/clone';
 
 const resolveFalse = Promise.resolve(false);
 const byIsError = r => r instanceof Error;
+const getStringOpt = opt => opt && opt.length ? opt : false;
 
 function configurePresetEnv (moduleType, name, options = {}) {
   if (moduleType === 'esm') {
@@ -88,32 +84,26 @@ function transformBabelConfig (moduleType, sourceConfig = {}) {
 
 async function dist (options) {
   // Read modules package.json.
-  const { pkg, path: path$$1 } = await readPkgUp();
+  const { pkg, path } = await readPkgUp();
 
   // Deconstruct options and set defaults if necessary.
   let {
     name = options.name || npmShortName(pkg.name),
-    input = options.input || path.resolve(path.join(path.dirname(path$$1), 'index.js')),
-    output = options.output || path.join(path.dirname(path$$1), 'dist'),
+    input = options.input || resolve(join(dirname(path), 'index.js')),
+    output = options.output || join(dirname(path), 'dist'),
     cjs = options.cjs !== undefined ? options.cjs : pkg.main,
     iife = options.iife !== undefined ? options.iife : pkg.iife,
     esm = options.esm !== undefined ? options.esm : pkg.module,
     inline,
-    plugins = options.plugins || []
+    plugins = getStringOpt(options.plugins) ? require(resolve(options.plugins)) : []
   } = options;
+
+  console.log('PLUGINS', plugins);
 
   cjs = cjs || cjs === '';
   iife = iife || iife === '';
   esm = esm || esm === '';
   inline = inline || inline === '';
-
-  if (typeof plugins === 'string') {
-    const { generate } = await rollup.rollup({ input: path.resolve(plugins) });
-    const { output: [{ code }] } = await generate({ format: 'cjs' });
-    plugins = requireFromString(code);
-  }
-
-  console.log('PLIGION', plugins);
 
   // Determine which dependencies should be external (Node.js core modules
   // should always be external).
@@ -149,10 +139,10 @@ async function dist (options) {
   ];
 
   // Create the Rollup bundler instance(s).
-  const bundler = await rollup.rollup({ input, external, plugins: rollupPlugins });
+  const bundler = await rollup({ input, external, plugins: rollupPlugins });
   let iifeBundler;
   if (iife) {
-    iifeBundler = await rollup.rollup({
+    iifeBundler = await rollup({
       input,
       external,
       plugins: rollupPlugins,
@@ -205,9 +195,9 @@ async function dist (options) {
     // Transform necessary dist files using babel in parallel and don't stop
     // other transformations if there is an error.
     const result = await promiseComplete({
-      cjs: cjs ? core.transformAsync(cjsCode, cjsBabelConfig) : resolveFalse,
-      iife: iife ? core.transformAsync(iifeCode, iifeBabelConfig) : resolveFalse,
-      esm: esm ? core.transformAsync(esmCode, esmBabelConfig) : resolveFalse
+      cjs: cjs ? transformAsync(cjsCode, cjsBabelConfig) : resolveFalse,
+      iife: iife ? transformAsync(iifeCode, iifeBabelConfig) : resolveFalse,
+      esm: esm ? transformAsync(esmCode, esmBabelConfig) : resolveFalse
     });
 
     // Log any errors returned during the transformation process.
@@ -220,16 +210,16 @@ async function dist (options) {
   }
 
   // Determine the output file paths.
-  const dir = path.extname(output) ? path.dirname(output) : output;
-  const cjsPath = typeof cjs === 'string' && path.extname(cjs)
-    ? path.resolve(cjs)
-    : path.join(dir, `${name}.js`);
-  const iifePath = typeof iife === 'string' && path.extname(iife)
-    ? path.resolve(iife)
-    : path.join(dir, `${name}.iife.js`);
-  const esmPath = typeof esm === 'string' && path.extname(esm)
-    ? path.resolve(esm)
-    : path.join(dir, `${name}.m.js`);
+  const dir = extname(output) ? dirname(output) : output;
+  const cjsPath = typeof cjs === 'string' && extname(cjs)
+    ? resolve(cjs)
+    : join(dir, `${name}.js`);
+  const iifePath = typeof iife === 'string' && extname(iife)
+    ? resolve(iife)
+    : join(dir, `${name}.iife.js`);
+  const esmPath = typeof esm === 'string' && extname(esm)
+    ? resolve(esm)
+    : join(dir, `${name}.m.js`);
 
   // Return an object with the properties that use the file path as the key and
   // the source code as the value.
@@ -240,4 +230,4 @@ async function dist (options) {
   }
 }
 
-module.exports = dist;
+export default dist;

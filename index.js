@@ -8,6 +8,7 @@ import npmShortName from '@ianwalter/npm-short-name'
 import { transformAsync } from '@babel/core'
 import promiseComplete from '@ianwalter/promise-complete'
 import clone from '@ianwalter/clone'
+import requireFromString from 'require-from-string'
 
 const resolveFalse = Promise.resolve(false)
 const byIsError = r => r instanceof Error
@@ -93,13 +94,21 @@ export default async function dist (options) {
     cjs = options.cjs !== undefined ? options.cjs : pkg.main,
     iife = options.iife !== undefined ? options.iife : pkg.iife,
     esm = options.esm !== undefined ? options.esm : pkg.module,
-    inline
+    inline,
+    plugins = options.plugins || []
   } = options
 
   cjs = cjs || cjs === ''
   iife = iife || iife === ''
   esm = esm || esm === ''
   inline = inline || inline === ''
+
+  // Import plugins file if specified.
+  if (typeof plugins === 'string') {
+    const { generate } = await rollup({ input: resolve(plugins) })
+    const { output: [{ code }] } = await generate({ format: 'cjs' })
+    plugins = requireFromString(code)
+  }
 
   // Determine which dependencies should be external (Node.js core modules
   // should always be external).
@@ -123,23 +132,25 @@ export default async function dist (options) {
   ]
 
   // Determine which Rollup plugins should be used.
-  const plugins = [
+  const rollupPlugins = [
     // Allows dependencies to be bundled:
     ...(inlineDependencies.length ? [nodeResolvePlugin()] : []),
     // Allows CommonJS dependencies to be imported:
     cjsPlugin(),
     // Allows JSON to be imported:
-    jsonPlugin()
+    jsonPlugin(),
+    //
+    ...plugins
   ]
 
   // Create the Rollup bundler instance(s).
-  const bundler = await rollup({ input, external, plugins })
+  const bundler = await rollup({ input, external, plugins: rollupPlugins })
   let iifeBundler
   if (iife) {
     iifeBundler = await rollup({
       input,
       external,
-      plugins,
+      plugins: rollupPlugins,
       output: {
         globals: inlineDependencies.map(d => ({ [d]: npmShortName(d) }))
       }
