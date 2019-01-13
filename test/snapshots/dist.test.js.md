@@ -1,4 +1,4 @@
-# Snapshot report for `tests/dist.test.js`
+# Snapshot report for `test/dist.test.js`
 
 The actual snapshot is saved in `dist.test.js.snap`.
 

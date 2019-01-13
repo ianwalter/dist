@@ -12,6 +12,7 @@ var npmShortName = _interopDefault(require('@ianwalter/npm-short-name'));
 var core = require('@babel/core');
 var promiseComplete = _interopDefault(require('@ianwalter/promise-complete'));
 var clone = _interopDefault(require('@ianwalter/clone'));
+var requireFromString = _interopDefault(require('require-from-string'));
 
 const resolveFalse = Promise.resolve(false);
 const byIsError = r => r instanceof Error;
@@ -97,13 +98,21 @@ async function dist (options) {
     cjs = options.cjs !== undefined ? options.cjs : pkg.main,
     iife = options.iife !== undefined ? options.iife : pkg.iife,
     esm = options.esm !== undefined ? options.esm : pkg.module,
-    inline
+    inline,
+    plugins = options.plugins || []
   } = options;
 
   cjs = cjs || cjs === '';
   iife = iife || iife === '';
   esm = esm || esm === '';
   inline = inline || inline === '';
+
+  // Import plugins file if specified.
+  if (typeof plugins === 'string') {
+    const { generate } = await rollup.rollup({ input: path.resolve(plugins) });
+    const { output: [{ code }] } = await generate({ format: 'cjs' });
+    plugins = requireFromString(code);
+  }
 
   // Determine which dependencies should be external (Node.js core modules
   // should always be external).
@@ -127,23 +136,25 @@ async function dist (options) {
   ];
 
   // Determine which Rollup plugins should be used.
-  const plugins = [
+  const rollupPlugins = [
     // Allows dependencies to be bundled:
     ...(inlineDependencies.length ? [nodeResolvePlugin()] : []),
     // Allows CommonJS dependencies to be imported:
     cjsPlugin(),
     // Allows JSON to be imported:
-    jsonPlugin()
+    jsonPlugin(),
+    //
+    ...plugins
   ];
 
   // Create the Rollup bundler instance(s).
-  const bundler = await rollup.rollup({ input, external, plugins });
+  const bundler = await rollup.rollup({ input, external, plugins: rollupPlugins });
   let iifeBundler;
   if (iife) {
     iifeBundler = await rollup.rollup({
       input,
       external,
-      plugins,
+      plugins: rollupPlugins,
       output: {
         globals: inlineDependencies.map(d => ({ [d]: npmShortName(d) }))
       }

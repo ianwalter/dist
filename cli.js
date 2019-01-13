@@ -30,6 +30,7 @@ async function run () {
                       to false or module in package.json)
         --inline, -l  Inline/bundle imported modules (defaults to false)
         --babel, -b   Transpile output with Babel (defaults to false)
+        --plugins, -p Specify a path for a Rollup plugins file to include
 
       Example
         ❯ yarn dist
@@ -46,7 +47,8 @@ async function run () {
         iife: { type: 'string', alias: 'f' },
         esm: { type: 'string', alias: 'e' },
         inline: { type: 'string', alias: 'l' },
-        babel: { type: 'boolean', alias: 'b' }
+        babel: { type: 'boolean', alias: 'b' },
+        plugins: { type: 'string', alias: 'p' }
       }
     }
   )

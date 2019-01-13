@@ -34,7 +34,7 @@
     "dist"
   ],
   "scripts": {
-    "lint": "eslint index.js cli.js tests",
+    "lint": "eslint index.js cli.js test",
     "pretest": "./cli.js && ./cli.js",
     "test": "ava"
   },
@@ -47,12 +47,15 @@
     "meow": "^5.0.0",
     "pify": "^4.0.1",
     "read-pkg-up": "^4.0.0",
+    "require-from-string": "^2.0.2",
     "rollup": "^1.0.2",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-json": "^3.1.0",
     "rollup-plugin-node-resolve": "^4.0.0"
   },
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.2.0",
+    "@babel/preset-env": "^7.2.3",
     "ava": "^1.0.1",
     "common-tags": "^1.8.0",
     "eslint": "^5.12.0",
@@ -63,7 +66,10 @@
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
     "execa": "^1.0.0",
-    "np": "^3.1.0"
+    "np": "^3.1.0",
+    "postcss": "^7.0.11",
+    "rollup-plugin-vue": "^4.4.0",
+    "vue-template-compiler": "^2.5.22"
   },
   "eslintConfig": {
     "root": true,
@@ -79,6 +85,6 @@
     }
   },
   "eslintIgnore": [
-    "tests/tmp"
+    "test/tmp"
   ]
 }
