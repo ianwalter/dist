@@ -107,13 +107,12 @@ async function dist (options) {
   esm = esm || esm === '';
   inline = inline || inline === '';
 
+  // Import plugins file if specified.
   if (typeof plugins === 'string') {
     const { generate } = await rollup.rollup({ input: path.resolve(plugins) });
     const { output: [{ code }] } = await generate({ format: 'cjs' });
     plugins = requireFromString(code);
   }
-
-  console.log('PLIGION', plugins);
 
   // Determine which dependencies should be external (Node.js core modules
   // should always be external).
