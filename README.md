@@ -35,6 +35,7 @@ serves different, more-specific use cases.
                   false or module in package.json)
 * `--inline, -l`  Inline/bundle imported modules (defaults to false)
 * `--babel, -b`   Transpile output with Babel (defaults to false)
+* `--plugins, -p` Specify a path for a Rollup plugins file to include
 
 ## License
 

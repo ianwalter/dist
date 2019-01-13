@@ -34,7 +34,7 @@
     "dist"
   ],
   "scripts": {
-    "lint": "eslint index.js cli.js tests",
+    "lint": "eslint index.js cli.js test",
     "pretest": "./cli.js && ./cli.js",
     "test": "ava"
   },
@@ -83,6 +83,6 @@
     }
   },
   "eslintIgnore": [
-    "tests/tmp"
+    "test/tmp"
   ]
 }
