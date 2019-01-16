@@ -97,19 +97,20 @@ async function dist (options) {
     output = options.output || path.join(path.dirname(path$$1), 'dist'),
     cjs = options.cjs !== undefined ? options.cjs : pkg.main,
     iife = options.iife !== undefined ? options.iife : pkg.iife,
-    esm = options.esm !== undefined ? options.esm : pkg.module,
-    inline,
-    plugins = options.plugins || []
+    esm = options.esm !== undefined ? options.esm : pkg.module
   } = options;
+  let inline = options.inline || options.inline === '';
 
   cjs = cjs || cjs === '';
   iife = iife || iife === '';
   esm = esm || esm === '';
-  inline = inline || inline === '';
 
   // Import plugins file if specified.
-  if (typeof plugins === 'string') {
-    const { generate } = await rollup.rollup({ input: path.resolve(plugins) });
+  let plugins = [];
+  if (typeof options.plugins === 'string') {
+    const input = path.resolve(options.plugins);
+    const external = Object.keys(pkg.devDependencies || {});
+    const { generate } = await rollup.rollup({ input, external });
     const { output: [{ code }] } = await generate({ format: 'cjs' });
     plugins = requireFromString(code);
   }
