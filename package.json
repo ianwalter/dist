@@ -1,6 +1,6 @@
 {
   "name": "@ianwalter/dist",
-  "version": "1.4.0",
+  "version": "1.5.0-1",
   "description": "Simplify the generation of distribution files for your JavaScript library",
   "main": "dist/dist.js",
   "author": "Ian Walter <public@iankwalter.com> (https://iankwalter.com)",
@@ -39,23 +39,21 @@
     "test": "ava"
   },
   "dependencies": {
-    "@babel/core": "^7.2.2",
-    "@ianwalter/clone": "^1.0.3",
     "@ianwalter/npm-short-name": "^1.0.0",
-    "@ianwalter/promise-complete": "^2.0.0",
+    "@ianwalter/promise-complete": "^3.0.1",
     "chalk": "^2.4.2",
     "meow": "^5.0.0",
     "pify": "^4.0.1",
     "read-pkg-up": "^4.0.0",
     "require-from-string": "^2.0.2",
     "rollup": "^1.1.2",
+    "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-json": "^3.1.0",
     "rollup-plugin-node-resolve": "^4.0.0"
   },
   "devDependencies": {
-    "@babel/plugin-transform-runtime": "^7.2.0",
-    "@babel/preset-env": "^7.2.3",
+    "@ianwalter/execa-helper": "^1.0.0",
     "ava": "^1.2.0",
     "common-tags": "^1.8.0",
     "eslint": "^5.12.1",
@@ -65,10 +63,9 @@
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
-    "execa": "^1.0.0",
     "np": "^3.1.0",
     "postcss": "^7.0.14",
-    "rollup-plugin-vue": "^4.4.0",
+    "rollup-plugin-vue": "^4.6.2",
     "vue-template-compiler": "^2.5.22"
   },
   "eslintConfig": {

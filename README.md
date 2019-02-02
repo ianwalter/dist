@@ -18,8 +18,8 @@ serves different, more-specific use cases.
   (e.g. using [Puppeteer][puppeteerUrl])
 * Inline your library's dependencies to create a single distribution file that
   should significantly improve startup time (I haven't tested this yet).
-* Use the babel option to transpile your code based on your library's Babel
-  configuration
+* Use the babel option to transpile your code based on your library's
+  [Babel][babelUrl] configuration
 
 ## Options
 
@@ -50,5 +50,6 @@ Created by [Ian Walter](https://iankwalter.com)
 [rollupUrl]: https://rollupjs.org/
 [microbundleUrl]: https://github.com/developit/microbundle
 [puppeteerUrl]: https://pptr.dev/
+[babelUrl]: https://babeljs.io/
 [licenseUrl]: https://github.com/ianwalter/dist/blob/master/LICENSE
 
