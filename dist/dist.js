@@ -71,7 +71,7 @@ async function dist (options) {
     // Allows JSON to be imported:
     jsonPlugin(),
     // Allows source to be transpiled with babel:
-    ...(options.babel ? [babel()] : []),
+    ...(options.babel ? [babel({ runtimeHelpers: true })] : []),
     // Allow users to pass in their own rollup plugins:
     ...plugins
   ];
