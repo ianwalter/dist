@@ -9,7 +9,7 @@ const dist = require('.')
 const { cyan, gray, yellow, red } = require('chalk')
 
 const writeFile = pify(fs.writeFile)
-const logError = err => console.error(`💥 ${red('Boom!')}`, err)
+const logError = err => console.error('💥', red('Boom!'), err)
 
 async function run () {
   const cli = meow(
@@ -25,12 +25,12 @@ async function run () {
         --output, -o    Output filename or directory path (defaults to ./dist)
         --cjs, -c       Path for / whether to create a CommonJS dist file
                         (defaults to false or main in package.json)
-        --iife, -f      Path for / whether to create a IIFE dist file (defaults
-                        to false or iife in package.json)
         --esm, -e       Path for / whether to create a ESM dist file (defaults
                         to false or module in package.json)
         --browser , -b  Path for / whether to create a browser-specific (ESM)
                         dist file (defaults to false or browser in package.json)
+        --iife, -f      Path for / whether to create a IIFE dist file (defaults
+                        to false or iife in package.json)
         --inline, -l    Inline/bundle imported modules (defaults to false)
         --babel         Transpile output with Babel (defaults to false)
         --plugins, -p   Specify a path for a Rollup plugins file to include
@@ -69,15 +69,15 @@ async function run () {
         fs.mkdirSync(dirname(path), { recursive: true })
 
         // Inform the user about what files are being written.
-        const relative = path.replace(`${process.cwd()}/`, '')
+        const rel = path.replace(`${process.cwd()}/`, '')
         if (moduleType === 'cjs') {
-          console.info(cyan('💿 Writing CommonJS dist file:'), gray(relative))
+          console.info('💿', cyan('Writing CommonJS dist file:'), gray(rel))
         } else if (moduleType === 'esm') {
-          console.info(cyan('📦 Writing ES Module dist file:'), gray(relative))
+          console.info('📦', cyan('Writing ES Module dist file:'), gray(rel))
         } else if (moduleType === 'browser') {
-          console.info(cyan('🌎 Writing Browser dist file:'), gray(relative))
+          console.info('🌎', cyan('Writing Browser dist file:'), gray(rel))
         } else if (moduleType === 'iife') {
-          console.info(cyan('🎁 Writing IIFE dist file:'), gray(relative))
+          console.info('🎁', cyan('Writing IIFE dist file:'), gray(rel))
         }
 
         // Add the file write operation to the list of writes to be completed
@@ -91,7 +91,7 @@ async function run () {
       // Filter the results for errors and log them.
       results.filter(r => r instanceof Error).forEach(err => logError(err))
     } else {
-      console.warn(yellow('🤷 No distribution files were specified'))
+      console.warn(yellow('🤷', 'No distribution files were specified'))
     }
   } catch (err) {
     logError(err)

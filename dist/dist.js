@@ -22,15 +22,16 @@ async function dist (options) {
     input = options.input || path.resolve(path.join(path.dirname(path$$1), 'index.js')),
     output = options.output || path.join(path.dirname(path$$1), 'dist'),
     cjs = options.cjs !== undefined ? options.cjs : pkg.main,
-    iife = options.iife !== undefined ? options.iife : pkg.iife,
     esm = options.esm !== undefined ? options.esm : pkg.module,
-    browser = options.browser !== undefined ? options.browser : pkg.browser
+    browser = options.browser !== undefined ? options.browser : pkg.browser,
+    iife = options.iife !== undefined ? options.iife : pkg.iife
   } = options;
   let inline = options.inline || options.inline === '';
 
   cjs = cjs || cjs === '';
-  iife = iife || iife === '';
   esm = esm || esm === '';
+  browser = browser || browser === '';
+  iife = iife || iife === '';
 
   // Import plugins file if specified.
   let plugins = [];
@@ -97,44 +98,44 @@ async function dist (options) {
     cjsBundle = await bundler.generate({ format: 'cjs' });
   }
 
-  // Generate the Immediately Invoked Function Expression (IIFE) bundle.
-  let iifeBundle;
-  if (iife) {
-    iifeBundle = await iifeBundler.generate({ format: 'iife', name });
-  }
-
   // Generate the EcmaScript Module bundle.
   let esmBundle;
   if (esm || browser) {
     esmBundle = await bundler.generate({ format: 'esm' });
   }
 
+  // Generate the Immediately Invoked Function Expression (IIFE) bundle.
+  let iifeBundle;
+  if (iife) {
+    iifeBundle = await iifeBundler.generate({ format: 'iife', name });
+  }
+
   let cjsCode = cjs ? cjsBundle.output[0].code : undefined;
-  let iifeCode = iife ? iifeBundle.output[0].code : undefined;
   let esmCode = (esm || browser) ? esmBundle.output[0].code : undefined;
+  let iifeCode = iife ? iifeBundle.output[0].code : undefined;
 
   // Determine the output file paths.
   const dir = path.extname(output) ? path.dirname(output) : output;
   const cjsPath = typeof cjs === 'string' && path.extname(cjs)
     ? path.resolve(cjs)
     : path.join(dir, `${name}.js`);
-  const iifePath = typeof iife === 'string' && path.extname(iife)
-    ? path.resolve(iife)
-    : path.join(dir, `${name}.iife.js`);
   const esmPath = typeof esm === 'string' && path.extname(esm)
     ? path.resolve(esm)
     : path.join(dir, `${name}.m.js`);
   const browserPath = typeof browser === 'string' && path.extname(browser)
     ? path.resolve(browser)
     : path.join(dir, `${name}.browser.js`);
+  const iifePath = typeof iife === 'string' && path.extname(iife)
+    ? path.resolve(iife)
+    : path.join(dir, `${name}.iife.js`);
 
   // Return an object with the properties that use the file path as the key and
   // the source code as the value.
   return {
     ...(cjs ? { cjs: [cjsPath, cjsCode] } : {}),
-    ...(iife ? { iife: [iifePath, iifeCode] } : {}),
     ...(esm ? { esm: [esmPath, esmCode] } : {}),
-    ...(browser ? { browser: [browserPath, esmCode] } : {})
+    ...(browser ? { browser: [browserPath, esmCode] } : {}),
+    ...(iife ? { iife: [iifePath, iifeCode] } : {})
   }
 }
 

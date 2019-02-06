@@ -29,12 +29,12 @@ serves different, more-specific use cases.
 * `--output, -o`  Output filename or directory path (defaults to ./dist)
 * `--cjs, -c`     Path for / whether to create a CommonJS dist file (defaults to
                   false or main in package.json)
-* `--iife, -f`    Path for / whether to create a IIFE dist file (defaults to
-                  false or iife in package.json)
 * `--esm, -e`     Path for / whether to create a ESM dist file (defaults to
                   false or module in package.json)
 * `--browser, -b` Path for / whether to create a browser-specific (ESM)
                   dist file (defaults to false or browser in package.json)
+* `--iife, -f`    Path for / whether to create a IIFE dist file (defaults to
+                  false or iife in package.json)
 * `--inline, -l`  Inline/bundle imported modules (defaults to false)
 * `--babel`       Transpile output with Babel (defaults to false)
 * `--plugins, -p` Specify a path for a Rollup plugins file to include
