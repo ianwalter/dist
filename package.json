@@ -54,7 +54,7 @@
   },
   "devDependencies": {
     "@ianwalter/execa-helper": "^1.0.0",
-    "ava": "^1.2.0",
+    "ava": "^1.2.1",
     "common-tags": "^1.8.0",
     "eslint": "^5.13.0",
     "eslint-config-standard": "^12.0.0",
