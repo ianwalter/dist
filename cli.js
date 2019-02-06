@@ -18,25 +18,29 @@ async function run () {
         dist
 
       Option
-        --name, -n    Name to use for files and global variable (defaults to
-                      name in package.json)
-        --input, -i   Filename of source/entry file (defaults to {cwd}/index.js)
-        --output, -o  Output filename or directory path (defaults to ./dist)
-        --cjs, -c     Path for / whether to create a CommonJS dist file
-                      (defaults to true and ./dist/{name}.js)
-        --iife, -f    Path for / whether to create a IIFE dist file (defaults
-                      to false or iife in package.json or ./dist/{name}.iife.js)
-        --esm, -e     Path for / whether to create a ESM dist file (defaults
-                      to false or module in package.json)
-        --inline, -l  Inline/bundle imported modules (defaults to false)
-        --babel, -b   Transpile output with Babel (defaults to false)
-        --plugins, -p Specify a path for a Rollup plugins file to include
+        --name, -n      Name to use for files and global variable (defaults to
+                        name in package.json)
+        --input, -i     Filename of source/entry file (defaults to
+                        {cwd}/index.js)
+        --output, -o    Output filename or directory path (defaults to ./dist)
+        --cjs, -c       Path for / whether to create a CommonJS dist file
+                        (defaults to false or main in package.json)
+        --esm, -e       Path for / whether to create a ESM dist file (defaults
+                        to false or module in package.json)
+        --browser , -b  Path for / whether to create a browser-specific (ESM)
+                        dist file (defaults to false or browser in package.json)
+        --iife, -f      Path for / whether to create a IIFE dist file (defaults
+                        to false or iife in package.json)
+        --inline, -l    Inline/bundle imported modules (defaults to false)
+        --babel         Transpile output with Babel (defaults to false)
+        --plugins, -p   Specify a path for a Rollup plugins file to include
 
       Example
         ❯ yarn dist
         💿 Writing CommonJS file: /myProject/dist/someName.js
-        🌎 Writing IIFE file: /myProject/dist/someName.iife.js
         📦 Writing ES Module file: /myProject/dist/someName.m.js
+        🌎 Writing Browser file: /myProject/dist/someName.browser.js
+        🎁 Writing IIFE file: /myProject/dist/someName.iife.js
     `,
     {
       flags: {
@@ -46,8 +50,9 @@ async function run () {
         cjs: { type: 'string', alias: 'c' },
         iife: { type: 'string', alias: 'f' },
         esm: { type: 'string', alias: 'e' },
+        browser: { type: 'string', alias: 'b' },
         inline: { type: 'string', alias: 'l' },
-        babel: { type: 'boolean', alias: 'b' },
+        babel: { type: 'boolean' },
         plugins: { type: 'string', alias: 'p' }
       }
     }
@@ -67,10 +72,12 @@ async function run () {
         const relative = path.replace(`${process.cwd()}/`, '')
         if (moduleType === 'cjs') {
           console.info(cyan('💿 Writing CommonJS dist file:'), gray(relative))
-        } else if (moduleType === 'iife') {
-          console.info(cyan('🌎 Writing IIFE dist file:'), gray(relative))
         } else if (moduleType === 'esm') {
           console.info(cyan('📦 Writing ES Module dist file:'), gray(relative))
+        } else if (moduleType === 'browser') {
+          console.info(cyan('🌎 Writing Browser dist file:'), gray(relative))
+        } else if (moduleType === 'iife') {
+          console.info(cyan('🎁 Writing IIFE dist file:'), gray(relative))
         }
 
         // Add the file write operation to the list of writes to be completed

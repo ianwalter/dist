@@ -14,7 +14,8 @@ test(
     const name = 'exportDefaultLiteral'
     const input = join(__dirname, `fixtures/${name}.js`)
     const cjs = join(output, `${name}.js`)
-    t.snapshot(await dist({ name, input, cjs }))
+    const browser = join(output, `${name}.browser.js`)
+    t.snapshot(await dist({ name, input, cjs, browser }))
   }
 )
 
