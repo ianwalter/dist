@@ -1,6 +1,6 @@
 {
   "name": "@ianwalter/dist",
-  "version": "2.0.0-1",
+  "version": "2.0.0",
   "description": "Simplify the generation of distribution files for your JavaScript library",
   "main": "dist/dist.js",
   "author": "Ian Walter <public@iankwalter.com> (https://iankwalter.com)",
