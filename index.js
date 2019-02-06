@@ -19,7 +19,8 @@ export default async function dist (options) {
     output = options.output || join(dirname(path), 'dist'),
     cjs = options.cjs !== undefined ? options.cjs : pkg.main,
     iife = options.iife !== undefined ? options.iife : pkg.iife,
-    esm = options.esm !== undefined ? options.esm : pkg.module
+    esm = options.esm !== undefined ? options.esm : pkg.module,
+    browser = options.browser !== undefined ? options.browser : pkg.browser
   } = options
   let inline = options.inline || options.inline === ''
 
@@ -100,13 +101,13 @@ export default async function dist (options) {
 
   // Generate the EcmaScript Module bundle.
   let esmBundle
-  if (esm) {
+  if (esm || browser) {
     esmBundle = await bundler.generate({ format: 'esm' })
   }
 
   let cjsCode = cjs ? cjsBundle.output[0].code : undefined
   let iifeCode = iife ? iifeBundle.output[0].code : undefined
-  let esmCode = esm ? esmBundle.output[0].code : undefined
+  let esmCode = (esm || browser) ? esmBundle.output[0].code : undefined
 
   // Determine the output file paths.
   const dir = extname(output) ? dirname(output) : output
@@ -119,12 +120,16 @@ export default async function dist (options) {
   const esmPath = typeof esm === 'string' && extname(esm)
     ? resolve(esm)
     : join(dir, `${name}.m.js`)
+  const browserPath = typeof browser === 'string' && extname(browser)
+    ? resolve(browser)
+    : join(dir, `${name}.browser.js`)
 
   // Return an object with the properties that use the file path as the key and
   // the source code as the value.
   return {
     ...(cjs ? { cjs: [cjsPath, cjsCode] } : {}),
     ...(iife ? { iife: [iifePath, iifeCode] } : {}),
-    ...(esm ? { esm: [esmPath, esmCode] } : {})
+    ...(esm ? { esm: [esmPath, esmCode] } : {}),
+    ...(browser ? { browser: [browserPath, esmCode] } : {})
   }
 }
