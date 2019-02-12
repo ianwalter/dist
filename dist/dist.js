@@ -9,7 +9,7 @@ var cjsPlugin = _interopDefault(require('rollup-plugin-commonjs'));
 var nodeResolvePlugin = _interopDefault(require('rollup-plugin-node-resolve'));
 var jsonPlugin = _interopDefault(require('rollup-plugin-json'));
 var npmShortName = _interopDefault(require('@ianwalter/npm-short-name'));
-var babel = _interopDefault(require('rollup-plugin-babel'));
+var babelPlugin = _interopDefault(require('rollup-plugin-babel'));
 var requireFromString = _interopDefault(require('require-from-string'));
 
 async function dist (options) {
@@ -69,6 +69,14 @@ async function dist (options) {
     ...dependencies.filter(d => inlineDependencies.indexOf(d) === -1)
   ];
 
+  // Set the default babel config.
+  const babelConfig = {
+    runtimeHelpers: true,
+    externalHelpers: true,
+    babelrc: false,
+    ...pkg.babel
+  };
+
   // Determine which Rollup plugins should be used.
   const rollupPlugins = [
     // Allows dependencies to be bundled:
@@ -78,7 +86,7 @@ async function dist (options) {
     // Allows JSON to be imported:
     jsonPlugin(),
     // Allows source to be transpiled with babel:
-    ...(options.babel ? [babel({ runtimeHelpers: true })] : []),
+    ...(options.babel ? [babelPlugin(babelConfig)] : []),
     // Allow users to pass in their own rollup plugins:
     ...plugins
   ];
