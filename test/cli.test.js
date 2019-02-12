@@ -3,6 +3,7 @@ import test from 'ava'
 import execaHelper from '@ianwalter/execa-helper'
 
 const withCli = execaHelper('./cli.js')
+const withCnt = execaHelper('./cli.js', false)
 
 test('cjs file not generated when --no-cjs passed', withCli, async (t, cli) => {
   const input = 'test/fixtures/exportDefaultFunction.js'
@@ -12,7 +13,7 @@ test('cjs file not generated when --no-cjs passed', withCli, async (t, cli) => {
   t.snapshot(readFileSync(esm, 'utf8'))
 })
 
-test('dist file is transpiled when --babel passed', withCli, async (t, cli) => {
+test('dist file is transpiled when --babel passed', withCnt, async (t, cli) => {
   const input = 'test/fixtures/exportDefaultNewExpression.js'
   const cjs = 'tmp/two.js'
   const { stdout } = await cli('-i', input, '--cjs', cjs, '--babel')

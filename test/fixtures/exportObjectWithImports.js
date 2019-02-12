@@ -1,9 +1,9 @@
 import npmShortName from '@ianwalter/npm-short-name'
-import promiseComplete from '@ianwalter/promise-complete'
+import ky from 'ky'
 import greeting from './exportDefaultFunction'
 
 export {
   npmShortName,
   greeting,
-  promiseComplete
+  ky
 }

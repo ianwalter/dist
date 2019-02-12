@@ -5,7 +5,7 @@ import cjsPlugin from 'rollup-plugin-commonjs'
 import nodeResolvePlugin from 'rollup-plugin-node-resolve'
 import jsonPlugin from 'rollup-plugin-json'
 import npmShortName from '@ianwalter/npm-short-name'
-import babel from 'rollup-plugin-babel'
+import babelPlugin from 'rollup-plugin-babel'
 import requireFromString from 'require-from-string'
 
 export default async function dist (options) {
@@ -65,6 +65,14 @@ export default async function dist (options) {
     ...dependencies.filter(d => inlineDependencies.indexOf(d) === -1)
   ]
 
+  // Set the default babel config.
+  const babelConfig = {
+    runtimeHelpers: true,
+    externalHelpers: true,
+    babelrc: false,
+    ...pkg.babel
+  }
+
   // Determine which Rollup plugins should be used.
   const rollupPlugins = [
     // Allows dependencies to be bundled:
@@ -74,7 +82,7 @@ export default async function dist (options) {
     // Allows JSON to be imported:
     jsonPlugin(),
     // Allows source to be transpiled with babel:
-    ...(options.babel ? [babel({ runtimeHelpers: true })] : []),
+    ...(options.babel ? [babelPlugin(babelConfig)] : []),
     // Allow users to pass in their own rollup plugins:
     ...plugins
   ]

@@ -56,6 +56,6 @@ test('dist bundles specified imports with module into dist files', async t => {
   const name = 'exportObjectWithImports'
   const input = join(__dirname, `fixtures/${name}.js`)
   const cjs = join(output, `${name}.js`)
-  const inline = '@ianwalter/promise-complete'
-  t.snapshot(await dist({ name, input, output, cjs, inline }))
+  const babel = true
+  t.snapshot(await dist({ name, input, output, cjs, inline: 'ky', babel }))
 })
