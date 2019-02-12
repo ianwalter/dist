@@ -63,7 +63,9 @@ export default async function dist (options) {
   // Determine which Rollup plugins should be used.
   const rollupPlugins = [
     // Allows dependencies to be bundled:
-    ...(inlineDependencies.length ? [nodeResolvePlugin()] : []),
+    ...(inlineDependencies.length ? [
+      nodeResolvePlugin({ only: inlineDependencies })
+    ] : []),
     // Allows CommonJS dependencies to be imported:
     cjsPlugin(),
     // Allows JSON to be imported:
