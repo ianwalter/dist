@@ -43,8 +43,13 @@ export default async function dist (options) {
   // should always be external).
   const dependencies = Object.keys(pkg.dependencies || {})
   let inlineDependencies = []
-  if (inline) {
-    inlineDependencies = inline === true ? dependencies : inline.split(',')
+  let nodeResolve = []
+  if (inline === true) {
+    inlineDependencies = dependencies
+    nodeResolve = [nodeResolvePlugin()]
+  } else if (inline) {
+    inlineDependencies = inline.split(',')
+    nodeResolve = [nodeResolvePlugin({ only: inlineDependencies })]
   }
   let external = [
     'path',
@@ -63,7 +68,7 @@ export default async function dist (options) {
   // Determine which Rollup plugins should be used.
   const rollupPlugins = [
     // Allows dependencies to be bundled:
-    ...(inlineDependencies.length ? [nodeResolvePlugin()] : []),
+    ...nodeResolve,
     // Allows CommonJS dependencies to be imported:
     cjsPlugin(),
     // Allows JSON to be imported:
