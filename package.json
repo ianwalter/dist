@@ -70,7 +70,7 @@
     "np": "^3.1.0",
     "postcss": "^7.0.14",
     "rollup-plugin-vue": "^4.7.1",
-    "vue-template-compiler": "^2.6.4"
+    "vue-template-compiler": "^2.6.6"
   },
   "babel": {
     "env": {
