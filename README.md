@@ -13,9 +13,6 @@ serves different, more-specific use cases.
 
 * Write your library as an ES Module but still allow it to be require'd in
   Node.js
-* Generate a separate distribution file that wraps your library and it's
-  dependencies in an IIFE to make it easy to test your module in a real browser
-  (e.g. using [Puppeteer][puppeteerUrl])
 * Inline your library's dependencies to create a single distribution file that
   should significantly improve startup time (I haven't tested this yet).
 * Use the babel option to transpile your code based on your library's
@@ -33,8 +30,6 @@ serves different, more-specific use cases.
                   false or module in package.json)
 * `--browser, -b` Path for / whether to create a browser-specific (ESM)
                   dist file (defaults to false or browser in package.json)
-* `--iife, -f`    Path for / whether to create a IIFE dist file (defaults to
-                  false or iife in package.json)
 * `--inline, -l`  Inline/bundle imported modules (defaults to false)
 * `--babel`       Transpile output with Babel (defaults to false)
 * `--plugins, -p` Specify a path for a Rollup plugins file to include

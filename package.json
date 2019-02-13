@@ -14,8 +14,7 @@
     "inline",
     "browser",
     "distribution",
-    "rollup",
-    "iife"
+    "rollup"
   ],
   "homepage": "https://github.com/ianwalter/dist#readme",
   "repository": {

@@ -29,8 +29,6 @@ async function run () {
                         to false or module in package.json)
         --browser , -b  Path for / whether to create a browser-specific (ESM)
                         dist file (defaults to false or browser in package.json)
-        --iife, -f      Path for / whether to create a IIFE dist file (defaults
-                        to false or iife in package.json)
         --inline, -l    Inline/bundle imported modules (defaults to false)
         --babel         Transpile output with Babel (defaults to false)
         --plugins, -p   Specify a path for a Rollup plugins file to include
@@ -40,7 +38,6 @@ async function run () {
         💿 Writing CommonJS file: /myProject/dist/someName.js
         📦 Writing ES Module file: /myProject/dist/someName.m.js
         🌎 Writing Browser file: /myProject/dist/someName.browser.js
-        🎁 Writing IIFE file: /myProject/dist/someName.iife.js
     `,
     {
       flags: {
@@ -48,7 +45,6 @@ async function run () {
         input: { type: 'string', alias: 'i' },
         output: { type: 'string', alias: 'o' },
         cjs: { type: 'string', alias: 'c' },
-        iife: { type: 'string', alias: 'f' },
         esm: { type: 'string', alias: 'e' },
         browser: { type: 'string', alias: 'b' },
         inline: { type: 'string', alias: 'l' },
@@ -76,8 +72,6 @@ async function run () {
           console.info(cyan('📦 Writing ES Module dist file:'), gray(relative))
         } else if (moduleType === 'browser') {
           console.info(cyan('🌎 Writing Browser dist file:'), gray(relative))
-        } else if (moduleType === 'iife') {
-          console.info(cyan('🎁 Writing IIFE dist file:'), gray(relative))
         }
 
         // Add the file write operation to the list of writes to be completed
