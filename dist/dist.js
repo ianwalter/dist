@@ -11,6 +11,7 @@ var jsonPlugin = _interopDefault(require('rollup-plugin-json'));
 var npmShortName = _interopDefault(require('@ianwalter/npm-short-name'));
 var babelPlugin = _interopDefault(require('rollup-plugin-babel'));
 var requireFromString = _interopDefault(require('require-from-string'));
+var builtinModules = _interopDefault(require('builtin-modules/static'));
 
 async function dist (options) {
   // Read modules package.json.
@@ -56,16 +57,7 @@ async function dist (options) {
     nodeResolve = [nodeResolvePlugin({ only: inlineDependencies })];
   }
   let external = [
-    'path',
-    'fs',
-    'crypto',
-    'url',
-    'stream',
-    'module',
-    'util',
-    'assert',
-    'constants',
-    'events',
+    ...builtinModules,
     ...dependencies.filter(d => inlineDependencies.indexOf(d) === -1)
   ];
 

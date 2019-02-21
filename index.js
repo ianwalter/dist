@@ -7,6 +7,7 @@ import jsonPlugin from 'rollup-plugin-json'
 import npmShortName from '@ianwalter/npm-short-name'
 import babelPlugin from 'rollup-plugin-babel'
 import requireFromString from 'require-from-string'
+import builtinModules from 'builtin-modules/static'
 
 export default async function dist (options) {
   // Read modules package.json.
@@ -52,16 +53,7 @@ export default async function dist (options) {
     nodeResolve = [nodeResolvePlugin({ only: inlineDependencies })]
   }
   let external = [
-    'path',
-    'fs',
-    'crypto',
-    'url',
-    'stream',
-    'module',
-    'util',
-    'assert',
-    'constants',
-    'events',
+    ...builtinModules,
     ...dependencies.filter(d => inlineDependencies.indexOf(d) === -1)
   ]
 
