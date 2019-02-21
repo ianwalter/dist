@@ -14,13 +14,13 @@ var requireFromString = _interopDefault(require('require-from-string'));
 
 async function dist (options) {
   // Read modules package.json.
-  const { pkg, path: path$$1 } = await readPkgUp();
+  const { pkg, path: path$1 } = await readPkgUp();
 
   // Deconstruct options and set defaults if necessary.
   let {
     name = options.name || npmShortName(pkg.name),
-    input = options.input || path.resolve(path.join(path.dirname(path$$1), 'index.js')),
-    output = options.output || path.join(path.dirname(path$$1), 'dist'),
+    input = options.input || path.resolve(path.join(path.dirname(path$1), 'index.js')),
+    output = options.output || path.join(path.dirname(path$1), 'dist'),
     cjs = options.cjs !== undefined ? options.cjs : pkg.main,
     esm = options.esm !== undefined ? options.esm : pkg.module,
     browser = options.browser !== undefined ? options.browser : pkg.browser,
