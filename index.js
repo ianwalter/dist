@@ -40,20 +40,21 @@ export default async function dist (options) {
 
   // Determine which dependencies should be external (Node.js core modules
   // should always be external).
-  const dependencies = Object.keys(pkg.dependencies || {})
-  let inlineDependencies = []
+  const deps = Object.keys(pkg.dependencies || {})
+  let inlineDeps = []
   let nodeResolve = []
   if (inline === true) {
-    inlineDependencies = dependencies
+    inlineDeps = deps
     nodeResolve = [nodeResolvePlugin()]
   } else if (inline) {
-    inlineDependencies = inline.split(',')
-    nodeResolve = [nodeResolvePlugin({ only: inlineDependencies })]
+    inlineDeps = inline.split(',')
+    nodeResolve = [nodeResolvePlugin({ only: inlineDeps })]
   }
-  let external = [
-    ...builtinModules,
-    ...dependencies.filter(d => inlineDependencies.indexOf(d) === -1)
-  ]
+  const byIsNotInlineDep = dep => inlineDeps.indexOf(dep) === -1
+  const externalDeps = [...builtinModules, ...deps.filter(byIsNotInlineDep)]
+  const external = id => (
+    externalDeps.includes(id) || externalDeps.some(n => id.includes(n + '/'))
+  )
 
   // Set the default babel config.
   const babelConfig = {
