@@ -5,9 +5,8 @@
 
 ## About
 
-`dist` is basically a wrapper around [Rollup][rollupUrl] for the specific use
-cases discussed below. It was inspired by [microbundle][microbundleUrl] but is
-specific to the use-cases described below.
+`dist` is basically a wrapper around [Rollup][rollupUrl], inspired by
+[microbundle][microbundleUrl], but is specific to the use-cases described below.
 
 ## Features
 
