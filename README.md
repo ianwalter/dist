@@ -6,15 +6,16 @@
 ## About
 
 `dist` is basically a wrapper around [Rollup][rollupUrl] for the specific use
-cases discussed below. It was inspired by [microbundle][microbundleUrl] but
-serves different, more-specific use cases.
+cases discussed below. It was inspired by [microbundle][microbundleUrl] but is
+specific to the use-cases described below.
 
 ## Features
 
-* Write your library as an ES Module but still allow it to be require'd in
-  Node.js
+* Write your library as an EcmaScript Module but still allow it to be require'd
+  in Node.js
 * Inline your library's dependencies to create a single distribution file that
-  should significantly improve startup time (I haven't tested this yet).
+  should significantly improve startup time (a quick test of bundling a single
+  dependency cut the dependency's load time in half)
 * Use the babel option to transpile your code based on your library's
   [Babel][babelUrl] configuration
 
