@@ -28,7 +28,7 @@ test(
     const name = 'exportDefaultFunction'
     const input = join(__dirname, `fixtures/${name}.js`)
     const cjs = join(output, 'some-function.js')
-    t.snapshot(await dist({ name, input, output, cjs, iife: true }))
+    t.snapshot(await dist({ name, input, output, cjs }))
   }
 )
 
@@ -40,8 +40,7 @@ test(
   async t => {
     const name = 'exportDefaultNewExpression'
     const input = join(__dirname, `fixtures/${name}.js`)
-    const iife = join(output, 'b.js')
-    t.snapshot(await dist({ name, input, output, cjs: true, iife }))
+    t.snapshot(await dist({ name, input, output, cjs: true }))
   }
 )
 

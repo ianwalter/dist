@@ -12,6 +12,7 @@ var npmShortName = _interopDefault(require('@ianwalter/npm-short-name'));
 var babelPlugin = _interopDefault(require('rollup-plugin-babel'));
 var requireFromString = _interopDefault(require('require-from-string'));
 var builtinModules = _interopDefault(require('builtin-modules/static'));
+var hashbang = _interopDefault(require('@ianwalter/rollup-plugin-hashbang'));
 
 async function dist (options) {
   // Read modules package.json.
@@ -24,15 +25,13 @@ async function dist (options) {
     output = options.output || path.join(path.dirname(path$1), 'dist'),
     cjs = options.cjs !== undefined ? options.cjs : pkg.main,
     esm = options.esm !== undefined ? options.esm : pkg.module,
-    browser = options.browser !== undefined ? options.browser : pkg.browser,
-    iife = options.iife !== undefined ? options.iife : pkg.iife
+    browser = options.browser !== undefined ? options.browser : pkg.browser
   } = options;
   let inline = options.inline || options.inline === '';
 
   cjs = cjs || cjs === '';
   esm = esm || esm === '';
   browser = browser || browser === '';
-  iife = iife || iife === '';
 
   // Import plugins file if specified.
   let plugins = [];
@@ -46,20 +45,21 @@ async function dist (options) {
 
   // Determine which dependencies should be external (Node.js core modules
   // should always be external).
-  const dependencies = Object.keys(pkg.dependencies || {});
-  let inlineDependencies = [];
+  const deps = Object.keys(pkg.dependencies || {});
+  let inlineDeps = [];
   let nodeResolve = [];
   if (inline === true) {
-    inlineDependencies = dependencies;
+    inlineDeps = deps;
     nodeResolve = [nodeResolvePlugin()];
   } else if (inline) {
-    inlineDependencies = inline.split(',');
-    nodeResolve = [nodeResolvePlugin({ only: inlineDependencies })];
+    inlineDeps = inline.split(',');
+    nodeResolve = [nodeResolvePlugin({ only: inlineDeps })];
   }
-  let external = [
-    ...builtinModules,
-    ...dependencies.filter(d => inlineDependencies.indexOf(d) === -1)
-  ];
+  const byIsNotInlineDep = dep => inlineDeps.indexOf(dep) === -1;
+  const externalDeps = [...builtinModules, ...deps.filter(byIsNotInlineDep)];
+  const external = id => (
+    externalDeps.includes(id) || externalDeps.some(n => id.includes(n + '/'))
+  );
 
   // Set the default babel config.
   const babelConfig = {
@@ -71,6 +71,8 @@ async function dist (options) {
 
   // Determine which Rollup plugins should be used.
   const rollupPlugins = [
+    // Allows the hashbang, in a CLI for example, to be preserved:
+    hashbang(),
     // Allows dependencies to be bundled:
     ...nodeResolve,
     // Allows CommonJS dependencies to be imported:
@@ -85,17 +87,6 @@ async function dist (options) {
 
   // Create the Rollup bundler instance(s).
   const bundler = await rollup.rollup({ input, external, plugins: rollupPlugins });
-  let iifeBundler;
-  if (iife) {
-    iifeBundler = await rollup.rollup({
-      input,
-      external,
-      plugins: rollupPlugins,
-      output: {
-        globals: inlineDependencies.map(d => ({ [d]: npmShortName(d) }))
-      }
-    });
-  }
 
   // Generate the CommonJS bundle.
   let cjsBundle;
@@ -109,15 +100,8 @@ async function dist (options) {
     esmBundle = await bundler.generate({ format: 'esm' });
   }
 
-  // Generate the Immediately Invoked Function Expression (IIFE) bundle.
-  let iifeBundle;
-  if (iife) {
-    iifeBundle = await iifeBundler.generate({ format: 'iife', name });
-  }
-
   let cjsCode = cjs ? cjsBundle.output[0].code : undefined;
   let esmCode = (esm || browser) ? esmBundle.output[0].code : undefined;
-  let iifeCode = iife ? iifeBundle.output[0].code : undefined;
 
   // Determine the output file paths.
   const dir = path.extname(output) ? path.dirname(output) : output;
@@ -130,17 +114,13 @@ async function dist (options) {
   const browserPath = typeof browser === 'string' && path.extname(browser)
     ? path.resolve(browser)
     : path.join(dir, `${name}.browser.js`);
-  const iifePath = typeof iife === 'string' && path.extname(iife)
-    ? path.resolve(iife)
-    : path.join(dir, `${name}.iife.js`);
 
   // Return an object with the properties that use the file path as the key and
   // the source code as the value.
   return {
     ...(cjs ? { cjs: [cjsPath, cjsCode] } : {}),
     ...(esm ? { esm: [esmPath, esmCode] } : {}),
-    ...(browser ? { browser: [browserPath, esmCode] } : {}),
-    ...(iife ? { iife: [iifePath, iifeCode] } : {})
+    ...(browser ? { browser: [browserPath, esmCode] } : {})
   }
 }
 

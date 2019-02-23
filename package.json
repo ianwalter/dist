@@ -14,8 +14,7 @@
     "inline",
     "browser",
     "distribution",
-    "rollup",
-    "iife"
+    "rollup"
   ],
   "homepage": "https://github.com/ianwalter/dist#readme",
   "repository": {
@@ -42,6 +41,7 @@
     "@babel/core": "^7.3.3",
     "@ianwalter/npm-short-name": "^1.0.0",
     "@ianwalter/promise-complete": "^3.0.1",
+    "@ianwalter/rollup-plugin-hashbang": "^1.0.1",
     "builtin-modules": "^3.0.0",
     "chalk": "^2.4.2",
     "meow": "^5.0.0",
@@ -88,9 +88,6 @@
       "eslint:recommended",
       "standard"
     ],
-    "env": {
-      "node": true
-    },
     "rules": {
       "no-console": 0
     }
