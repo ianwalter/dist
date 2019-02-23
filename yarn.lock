@@ -753,6 +753,13 @@
   dependencies:
     "@babel/runtime" "^7.2.0"
 
+"@ianwalter/rollup-plugin-hashbang@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@ianwalter/rollup-plugin-hashbang/-/rollup-plugin-hashbang-1.0.1.tgz#7e3e7e2e3fa96385446501a588c192830c3b96aa"
+  integrity sha512-ik99WGpvOzS13B1G8Fzh+rPK7wfcE6s94qmhno/YbHo/vYyosNT73wJIS9dISHvVeD60RjRvFKoW9zaUdqpJqQ==
+  dependencies:
+    magic-string "^0.25.2"
+
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@samverschueren/stream-to-observable/-/stream-to-observable-0.3.0.tgz#ecdf48d532c58ea477acfcab80348424f8d0662f"

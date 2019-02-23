@@ -8,6 +8,7 @@ import npmShortName from '@ianwalter/npm-short-name'
 import babelPlugin from 'rollup-plugin-babel'
 import requireFromString from 'require-from-string'
 import builtinModules from 'builtin-modules/static'
+import hashbang from '@ianwalter/rollup-plugin-hashbang'
 
 export default async function dist (options) {
   // Read modules package.json.
@@ -66,6 +67,8 @@ export default async function dist (options) {
 
   // Determine which Rollup plugins should be used.
   const rollupPlugins = [
+    // Allows the hashbang, in a CLI for example, to be preserved:
+    hashbang(),
     // Allows dependencies to be bundled:
     ...nodeResolve,
     // Allows CommonJS dependencies to be imported:

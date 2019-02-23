@@ -12,6 +12,7 @@ var npmShortName = _interopDefault(require('@ianwalter/npm-short-name'));
 var babelPlugin = _interopDefault(require('rollup-plugin-babel'));
 var requireFromString = _interopDefault(require('require-from-string'));
 var builtinModules = _interopDefault(require('builtin-modules/static'));
+var hashbang = _interopDefault(require('@ianwalter/rollup-plugin-hashbang'));
 
 async function dist (options) {
   // Read modules package.json.
@@ -70,6 +71,8 @@ async function dist (options) {
 
   // Determine which Rollup plugins should be used.
   const rollupPlugins = [
+    // Allows the hashbang, in a CLI for example, to be preserved:
+    hashbang(),
     // Allows dependencies to be bundled:
     ...nodeResolve,
     // Allows CommonJS dependencies to be imported:
