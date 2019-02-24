@@ -51,12 +51,12 @@ test('dist bundles imports with module into dist files', async t => {
   t.snapshot(await dist({ name, input, output, cjs, esm: true, inline: '' }))
 })
 
-test('dist bundles specified imports with module into dist files', async t => {
+test('specified import gets bundled with module into dist files', async t => {
   const name = 'exportObjectWithImports'
   const input = join(__dirname, `fixtures/${name}.js`)
   const cjs = join(output, `${name}.js`)
-  const babel = true
-  t.snapshot(await dist({ name, input, output, cjs, inline: 'ky', babel }))
+  const inline = '@ianwalter/npm-short-name'
+  t.snapshot(await dist({ name, input, output, cjs, inline, babel: true }))
 })
 
 test('hashbang is preserved', async t => {
