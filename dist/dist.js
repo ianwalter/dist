@@ -47,13 +47,13 @@ async function dist (options) {
   // should always be external).
   const deps = Object.keys(pkg.dependencies || {});
   let inlineDeps = [];
-  let nodeResolve = [];
+  let nodeResolve;
   if (inline === true) {
     inlineDeps = deps;
-    nodeResolve = [nodeResolvePlugin()];
+    nodeResolve = nodeResolvePlugin();
   } else if (inline) {
     inlineDeps = inline.split(',');
-    nodeResolve = [nodeResolvePlugin({ only: inlineDeps })];
+    nodeResolve = nodeResolvePlugin({ only: inlineDeps });
   }
   const byIsNotInlineDep = dep => inlineDeps.indexOf(dep) === -1;
   const externalDeps = [...builtinModules, ...deps.filter(byIsNotInlineDep)];
@@ -74,7 +74,7 @@ async function dist (options) {
     // Allows the hashbang, in a CLI for example, to be preserved:
     hashbang(),
     // Allows dependencies to be bundled:
-    ...nodeResolve,
+    nodeResolve,
     // Allows CommonJS dependencies to be imported:
     cjsPlugin(),
     // Allows JSON to be imported:
