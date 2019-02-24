@@ -58,3 +58,9 @@ test('dist bundles specified imports with module into dist files', async t => {
   const babel = true
   t.snapshot(await dist({ name, input, output, cjs, inline: 'ky', babel }))
 })
+
+test('hashbang is preserved', async t => {
+  const input = join(__dirname, 'fixtures/cli.js')
+  const cjs = join(output, 'cli.js')
+  t.snapshot(await dist({ input, output, cjs }))
+})
