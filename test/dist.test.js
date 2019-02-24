@@ -1,62 +1,39 @@
 import { join } from 'path'
 import test from 'ava'
-import { oneLine } from 'common-tags'
 import dist from '..'
 
 const output = '/fakePath'
 
-test(
-  `
-    dist converts an export default literal declaration to a module.exports
-    assignment
-  `,
-  async t => {
-    const name = 'exportDefaultLiteral'
-    const input = join(__dirname, `fixtures/${name}.js`)
-    const cjs = join(output, `${name}.js`)
-    const browser = join(output, `${name}.browser.js`)
-    t.snapshot(await dist({ name, input, cjs, browser }))
-  }
-)
+test('export default literal converted to module.exports', async t => {
+  const name = 'exportDefaultLiteral'
+  const input = join(__dirname, `fixtures/${name}.js`)
+  const cjs = join(output, `${name}.js`)
+  t.snapshot(await dist({ name, input, output, cjs, browser: true }))
+})
 
-test(
-  oneLine`
-    dist converts an export default function declaration to a module.exports
-    assignment
-  `,
-  async t => {
-    const name = 'exportDefaultFunction'
-    const input = join(__dirname, `fixtures/${name}.js`)
-    const cjs = join(output, 'some-function.js')
-    t.snapshot(await dist({ name, input, output, cjs }))
-  }
-)
+test('export default function converted to module.exports', async t => {
+  const input = join(__dirname, 'fixtures/exportDefaultFunction.js')
+  const cjs = join(output, 'some-function.js')
+  t.snapshot(await dist({ input, output, cjs }))
+})
 
-test(
-  oneLine`
-    dist converts an export default new expresion declaration to a
-    module.exports assignment
-  `,
-  async t => {
-    const name = 'exportDefaultNewExpression'
-    const input = join(__dirname, `fixtures/${name}.js`)
-    t.snapshot(await dist({ name, input, output, cjs: true }))
-  }
-)
+test('export default new expression converted to module.exports', async t => {
+  const input = join(__dirname, 'fixtures/exportDefaultNewExpression.js')
+  t.snapshot(await dist({ input, output, cjs: true }))
+})
 
-test('dist bundles imports with module into dist files', async t => {
+test('all imports get bundled with module into dist files', async t => {
   const name = 'exportDefaultFunctionWithImports'
   const input = join(__dirname, `fixtures/${name}.js`)
   const cjs = join(output, `${name}.js`)
   t.snapshot(await dist({ name, input, output, cjs, esm: true, inline: '' }))
 })
 
-test('specified import gets bundled with module into dist files', async t => {
-  const name = 'exportObjectWithImports'
-  const input = join(__dirname, `fixtures/${name}.js`)
-  const cjs = join(output, `${name}.js`)
+test('specified import gets bundled with module into dist file', async t => {
+  const input = join(__dirname, 'fixtures/exportObjectWithImports.js')
+  const cjs = join(output, 'exportObjectWithImports.js')
   const inline = '@ianwalter/npm-short-name'
-  t.snapshot(await dist({ name, input, output, cjs, inline, babel: true }))
+  t.snapshot(await dist({ input, output, cjs, inline, babel: true }))
 })
 
 test('hashbang is preserved', async t => {
