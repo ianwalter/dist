@@ -38,7 +38,7 @@
     "test": "ava"
   },
   "dependencies": {
-    "@babel/core": "^7.3.3",
+    "@babel/core": "^7.3.4",
     "@ianwalter/npm-short-name": "^1.0.0",
     "@ianwalter/promise-complete": "^3.0.1",
     "@ianwalter/rollup-plugin-hashbang": "^1.0.1",
@@ -55,7 +55,7 @@
     "rollup-plugin-node-resolve": "^4.0.1"
   },
   "devDependencies": {
-    "@babel/runtime": "^7.3.1",
+    "@babel/runtime": "^7.3.4",
     "@ianwalter/babel-preset-lib": "^1.1.0",
     "@ianwalter/execa-helper": "^1.0.0",
     "ava": "^1.2.1",
