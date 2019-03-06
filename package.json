@@ -57,15 +57,9 @@
   "devDependencies": {
     "@babel/runtime": "^7.3.4",
     "@ianwalter/babel-preset-lib": "^1.2.0",
+    "@ianwalter/eslint-config": "^1.0.0",
     "@ianwalter/execa-helper": "^1.0.0",
     "ava": "^1.2.1",
-    "eslint": "^5.15.0",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-html": "^5.0.3",
-    "eslint-plugin-import": "^2.16.0",
-    "eslint-plugin-node": "^8.0.1",
-    "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-standard": "^4.0.0",
     "np": "^3.1.0",
     "postcss": "^7.0.14",
     "rollup-plugin-vue": "^4.7.2",
@@ -83,12 +77,8 @@
   "eslintConfig": {
     "root": true,
     "extends": [
-      "eslint:recommended",
-      "standard"
-    ],
-    "rules": {
-      "no-console": 0
-    }
+      "@ianwalter/eslint-config"
+    ]
   },
   "eslintIgnore": [
     "test/tmp"
