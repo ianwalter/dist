@@ -728,10 +728,10 @@
     eslint-plugin-promise "^4.0.1"
     eslint-plugin-standard "^4.0.0"
 
-"@ianwalter/execa-helper@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@ianwalter/execa-helper/-/execa-helper-1.0.0.tgz#fbd4e0e91e9a992f255430f2e1f659e0d53f065a"
-  integrity sha512-UsXlp7MKPoNBTxehZbcyq33wqJFEQFjigl5h6Gi8wrACUdQk4dYoLmlCfE7X2imKYFrpY1UWlWWySKhbYA9V0A==
+"@ianwalter/execa-helper@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@ianwalter/execa-helper/-/execa-helper-1.0.1.tgz#e10adeaf7e51426e4b2873b33acbaadfa62475a0"
+  integrity sha512-8PUfHgIS19f2g7oBvZMDOh3hb6sqG5CzHQzufC85a8A9LAFmqBZvICSZEhcNPygBXD4FIh+mNVp1UvHTjeclbw==
   dependencies:
     execa "^1.0.0"
 
