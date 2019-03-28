@@ -59,7 +59,7 @@
     "@ianwalter/babel-preset-lib": "^1.2.0",
     "@ianwalter/eslint-config": "^1.1.0",
     "@ianwalter/execa-helper": "^1.0.1",
-    "ava": "^1.4.0",
+    "ava": "^1.4.1",
     "np": "^3.1.0",
     "postcss": "^7.0.14",
     "rollup-plugin-vue": "^4.7.2",
