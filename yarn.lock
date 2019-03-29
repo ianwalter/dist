@@ -800,10 +800,10 @@
     "@babel/plugin-transform-runtime" "^7.2.0"
     "@babel/preset-env" "^7.3.1"
 
-"@ianwalter/eslint-config@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@ianwalter/eslint-config/-/eslint-config-1.1.0.tgz#620a614f702c3730ba44e45fe83afb7b768a4db5"
-  integrity sha512-yT7OKtJTXIz4fITnpolXDLIlyBU4e60+xtba5+ys6VD4iCELfgCEq56SiqONMZzIgEyQrxiCCwnx0kyWeI44hg==
+"@ianwalter/eslint-config@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@ianwalter/eslint-config/-/eslint-config-1.1.2.tgz#a88bbc4b09d715c53d59571690c1a3b56d56ebdb"
+  integrity sha512-FNv2vkOWlXsjRP/5FwRXk04i4aI3ZzfrF4H5pU+rOju7Idfqaq9lYvjk6ZAdnApoU6nUtGM3IjZboAQaOshKpg==
   dependencies:
     eslint "^5.14.1"
     eslint-config-standard "^12.0.0"
