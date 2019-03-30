@@ -46,7 +46,7 @@
     "chalk": "^2.4.2",
     "meow": "^5.0.0",
     "pify": "^4.0.1",
-    "read-pkg-up": "^4.0.0",
+    "read-pkg-up": "^5.0.0",
     "require-from-string": "^2.0.2",
     "rollup": "^1.7.4",
     "rollup-plugin-babel": "^4.3.2",
@@ -60,7 +60,7 @@
     "@ianwalter/eslint-config": "^1.1.2",
     "@ianwalter/execa-helper": "^1.0.1",
     "ava": "^1.4.1",
-    "np": "^3.1.0",
+    "np": "^4.0.2",
     "postcss": "^7.0.14",
     "rollup-plugin-vue": "^4.7.2",
     "vue-template-compiler": "^2.6.10"
