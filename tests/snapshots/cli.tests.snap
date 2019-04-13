@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`cjs file not generated when --no-cjs passed 1`] = `""`;
+
+exports[`cjs file not generated when --no-cjs passed 2`] = `
+"function greeting () {
+  return 'Hello World'
+}
+
+export default greeting;
+"
+`;
