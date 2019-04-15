@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`cjs file not generated when --no-cjs passed 1`] = `"📦 Writing ES Module dist file: tmp/one.js"`;
+
 exports[`cjs file not generated when --no-cjs passed 2`] = `
 "function greeting () {
   return 'Hello World'
@@ -148,6 +150,8 @@ var __vue_staticRenderFns__ = [];
 exports.Greeting = Greeting;
 "
 `;
+
+exports[`dist file is transpiled when --babel passed 1`] = `"💿 Writing CommonJS dist file: tmp/two.js"`;
 
 exports[`dist file is transpiled when --babel passed 2`] = `
 "'use strict';
