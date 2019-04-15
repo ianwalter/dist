@@ -1,5 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`cjs file not generated when --no-cjs passed 2`] = `
+"function greeting () {
+  return 'Hello World'
+}
+
+export default greeting;
+"
+`;
+
 exports[`dist file generated using custom plugins 1`] = `"💿 Writing CommonJS dist file: tmp/three.js"`;
 
 exports[`dist file generated using custom plugins 2`] = `
@@ -137,5 +146,16 @@ var __vue_staticRenderFns__ = [];
   );
 
 exports.Greeting = Greeting;
+"
+`;
+
+exports[`dist file is transpiled when --babel passed 2`] = `
+"'use strict';
+
+class SomeClass {}
+
+var exportDefaultNewExpression = new SomeClass();
+
+module.exports = exportDefaultNewExpression;
 "
 `;
