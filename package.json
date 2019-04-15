@@ -33,7 +33,7 @@
     "dist"
   ],
   "scripts": {
-    "lint": "eslint index.js cli.js test",
+    "lint": "eslint index.js cli.js tests",
     "pretest": "./cli.js && ./cli.js",
     "test": "bff"
   },
