@@ -62,7 +62,7 @@
     "execa": "^1.0.0",
     "np": "^4.0.2",
     "postcss": "^7.0.14",
-    "rollup-plugin-vue": "^4.7.2",
+    "rollup-plugin-vue": "^5.0.0",
     "vue-template-compiler": "^2.6.10"
   },
   "babel": {
