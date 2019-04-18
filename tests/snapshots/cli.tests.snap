@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`cjs file not generated when --no-cjs passed 1`] = `"📦 Writing ES Module dist file: tmp/one.js"`;
+exports[`cjs file not generated when --no-cjs passed 1`] = `"📦  [1mWriting ES Module dist file:[22m [90mtmp/one.js[39m"`;
 
 exports[`cjs file not generated when --no-cjs passed 2`] = `
 "function greeting () {
@@ -11,7 +11,7 @@ export default greeting;
 "
 `;
 
-exports[`dist file generated using custom plugins 1`] = `"💿 Writing CommonJS dist file: tmp/three.js"`;
+exports[`dist file generated using custom plugins 1`] = `"💿  [1mWriting CommonJS dist file:[22m [90mtmp/three.js[39m"`;
 
 exports[`dist file generated using custom plugins 2`] = `
 "'use strict';
@@ -151,7 +151,7 @@ exports.Greeting = Greeting;
 "
 `;
 
-exports[`dist file is transpiled when --babel passed 1`] = `"💿 Writing CommonJS dist file: tmp/two.js"`;
+exports[`dist file is transpiled when --babel passed 1`] = `"💿  [1mWriting CommonJS dist file:[22m [90mtmp/two.js[39m"`;
 
 exports[`dist file is transpiled when --babel passed 2`] = `
 "'use strict';

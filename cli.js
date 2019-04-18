@@ -5,11 +5,10 @@ const { dirname } = require('path')
 const pify = require('pify')
 const meow = require('meow')
 const promiseComplete = require('@ianwalter/promise-complete')
+const { print, chalk } = require('@ianwalter/print')
 const dist = require('.')
-const { cyan, gray, yellow, red } = require('chalk')
 
 const writeFile = pify(fs.writeFile)
-const logError = err => console.error(`💥 ${red('Boom!')}`, err)
 
 async function run () {
   const cli = meow(
@@ -67,11 +66,11 @@ async function run () {
         // Inform the user about what files are being written.
         const relative = path.replace(`${process.cwd()}/`, '')
         if (moduleType === 'cjs') {
-          console.info(cyan('💿 Writing CommonJS dist file:'), gray(relative))
+          print.log('💿', 'Writing CommonJS dist file:', chalk.gray(relative))
         } else if (moduleType === 'esm') {
-          console.info(cyan('📦 Writing ES Module dist file:'), gray(relative))
+          print.log('📦', 'Writing ES Module dist file:', chalk.gray(relative))
         } else if (moduleType === 'browser') {
-          console.info(cyan('🌎 Writing Browser dist file:'), gray(relative))
+          print.log('🌎', 'Writing Browser dist file:', chalk.gray(relative))
         }
 
         // Add the file write operation to the list of writes to be completed
@@ -83,12 +82,12 @@ async function run () {
       const results = await promiseComplete(writes)
 
       // Filter the results for errors and log them.
-      results.filter(r => r instanceof Error).forEach(err => logError(err))
+      results.filter(r => r instanceof Error).forEach(err => print.error(err))
     } else {
-      console.warn(yellow('🤷 No distribution files were specified'))
+      print.warn('No distribution files were specified')
     }
   } catch (err) {
-    logError(err)
+    print.error(err)
   }
 }
 
