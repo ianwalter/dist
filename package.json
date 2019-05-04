@@ -56,7 +56,7 @@
   },
   "devDependencies": {
     "@babel/runtime": "^7.4.4",
-    "@ianwalter/babel-preset-lib": "^1.2.0",
+    "@ianwalter/babel-preset-lib": "^2.0.2",
     "@ianwalter/bff": "^4.0.1",
     "@ianwalter/eslint-config": "^1.1.2",
     "@ianwalter/renovate-config": "^1.1.0",
