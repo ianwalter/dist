@@ -4030,7 +4030,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var camelCase = _interopDefault(require('camelcase'));
-var promiseComplete = _interopDefault(require('@ianwalter/promise-complete'));
+var pSettle = _interopDefault(require('p-settle'));
 
 function npmShortName(name = '') {
   const parts = name.split('/');
@@ -4041,7 +4041,7 @@ function greeting() {
   return 'Hello World';
 }
 
-exports.promiseComplete = promiseComplete;
+exports.pSettle = pSettle;
 exports.greeting = greeting;
 exports.npmShortName = npmShortName;
 ",

@@ -2,13 +2,11 @@
 
 const fs = require('fs')
 const { dirname } = require('path')
-const pify = require('pify')
+const { writeFile } = require('@ianwalter/fs')
 const meow = require('meow')
-const promiseComplete = require('@ianwalter/promise-complete')
+const pSettle = require('p-settle')
 const { print, chalk } = require('@ianwalter/print')
 const dist = require('.')
-
-const writeFile = pify(fs.writeFile)
 
 async function run () {
   const cli = meow(
@@ -79,7 +77,7 @@ async function run () {
 
       // Perform all of the writes in parallel, regardless of whether errors are
       // encountered in individual operations.
-      const results = await promiseComplete(writes)
+      const results = await pSettle(writes)
 
       // Filter the results for errors and log them.
       results.filter(r => r instanceof Error).forEach(err => print.error(err))

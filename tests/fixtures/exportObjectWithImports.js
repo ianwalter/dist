@@ -1,9 +1,9 @@
 import npmShortName from '@ianwalter/npm-short-name'
-import promiseComplete from '@ianwalter/promise-complete'
+import pSettle from 'p-settle'
 import greeting from './exportDefaultFunction'
 
 export {
   npmShortName,
-  promiseComplete,
+  pSettle,
   greeting
 }
