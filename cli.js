@@ -26,7 +26,7 @@ async function run () {
   })
 
   // TODO: comment
-  config.input = config._.length ? config._ : config.input
+  config.input = config._.length ? config._[0] : config.input
   delete config._
 
   try {
