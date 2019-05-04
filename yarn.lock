@@ -576,7 +576,7 @@
     js-levenshtein "^1.1.3"
     semver "^5.3.0"
 
-"@babel/runtime@^7.2.0", "@babel/runtime@^7.3.1", "@babel/runtime@^7.4.4":
+"@babel/runtime@^7.3.1", "@babel/runtime@^7.4.4":
   version "7.4.4"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.4.4.tgz#dc2e34982eb236803aa27a07fea6857af1b9171d"
   integrity sha512-w0+uT71b6Yi7i5SE0co4NioIpSYS6lLiXvCzWzGSKvpK5vdQtCbICHMj+gbAKAOtxiV6HsVh/MBdaF9EQ6faSg==
@@ -709,13 +709,6 @@
     chalk "^2.4.2"
     has-ansi "^3.0.0"
     has-emoji "^1.0.0"
-
-"@ianwalter/promise-complete@^3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@ianwalter/promise-complete/-/promise-complete-3.0.1.tgz#2d091107caca4736223b5b39968efea5f215691b"
-  integrity sha512-zWviJp82MB0spJ7FUrpzcIkvZnz/izhayBLsHv/0sFYsHvI92X7r2y9/zBhkKgG3WDzPE5+qJ86zXgRGc5tDzQ==
-  dependencies:
-    "@babel/runtime" "^7.2.0"
 
 "@ianwalter/renovate-config@^1.1.0":
   version "1.1.0"
@@ -3440,6 +3433,11 @@ kind-of@^6.0.0, kind-of@^6.0.2:
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.2.tgz#01146b36a6218e64e58f3a8d66de5d7fc6f6d051"
   integrity sha512-s5kLOcnH0XqDO+FvuaLX8DDjZ18CGFk7VygH40QoKPUQhW4e2rvM0rwUq0t8IQDOwYSeLK01U90OjzBTme2QqA==
+
+ky@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/ky/-/ky-0.10.0.tgz#b736665a484962f02d8e2498ab27cfb316cfb7d7"
+  integrity sha512-2OiL0TJiex7tGTUvYOrijLbXKV9rb9IJcLvDh+m5+v87ZhBThIlXwEjaC8/H0e8zMW+hq4HCznVBIdbNMsSQKg==
 
 latest-version@^3.0.0:
   version "3.1.0"
