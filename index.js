@@ -14,14 +14,18 @@ export default async function dist (options) {
   // Read modules package.json.
   const { pkg, path } = await readPkgUp()
 
+  // TODO: comment
+  const hasFormat = options.cjs || options.esm || options.browser
+  const getFormat = (format, fallback) => hasFormat ? format : fallback
+
   // Deconstruct options and set defaults if necessary.
   let {
     name = options.name || npmShortName(pkg.name),
     input = options.input || resolve(join(dirname(path), 'index.js')),
     output = options.output || join(dirname(path), 'dist'),
-    cjs = options.cjs !== undefined ? options.cjs : pkg.main,
-    esm = options.esm !== undefined ? options.esm : pkg.module,
-    browser = options.browser !== undefined ? options.browser : pkg.browser
+    cjs = getFormat(options.cjs, pkg.main),
+    esm = getFormat(options.esm, pkg.module),
+    browser = getFormat(options.browser, pkg.browser)
   } = options
   let inline = options.inline || options.inline === ''
 

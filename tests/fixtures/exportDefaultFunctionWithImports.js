@@ -1,7 +1,7 @@
 import npmShortName from '@ianwalter/npm-short-name'
-import chalk from 'chalk'
-import message from './exportDefaultLiteral'
+import ky from 'ky'
+import url from './exportDefaultLiteral'
 
 export default function greeting () {
-  return chalk.cyan(npmShortName(message))
+  return ky.get(npmShortName(url))
 }
