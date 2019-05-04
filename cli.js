@@ -64,6 +64,7 @@ async function run () {
     }
   } catch (err) {
     print.error(err)
+    process.exit(1)
   }
 }
 
