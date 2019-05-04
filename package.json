@@ -48,7 +48,7 @@
     "pify": "^4.0.1",
     "read-pkg-up": "^5.0.0",
     "require-from-string": "^2.0.2",
-    "rollup": "^1.7.4",
+    "rollup": "^1.11.2",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-commonjs": "^9.2.2",
     "rollup-plugin-json": "^4.0.0",
