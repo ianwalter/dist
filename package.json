@@ -59,6 +59,7 @@
     "@ianwalter/babel-preset-lib": "^1.2.0",
     "@ianwalter/bff": "^4.0.0",
     "@ianwalter/eslint-config": "^1.1.2",
+    "@ianwalter/renovate-config": "^1.1.0",
     "execa": "^1.0.0",
     "np": "^5.0.0",
     "postcss": "^7.0.14",
@@ -82,5 +83,10 @@
   },
   "eslintIgnore": [
     "test/tmp"
-  ]
+  ],
+  "renovate": {
+    "extends": [
+      "@ianwalter"
+    ]
+  }
 }
