@@ -2,10 +2,10 @@ const { readFileSync } = require('fs')
 const { test } = require('@ianwalter/bff')
 const execa = require('execa')
 
-test('cjs file not generated when --no-cjs passed', async ({ expect }) => {
+test('cjs file not generated when --esm specified', async ({ expect }) => {
   const input = 'tests/fixtures/exportDefaultFunction.js'
   const esm = 'tmp/one.js'
-  const args = [input, '--esm', esm, '--no-cjs']
+  const args = [input, '--esm', esm]
   const { stdout } = await execa('./cli.js', args)
   expect(stdout).toMatchSnapshot()
   expect(readFileSync(esm, 'utf8')).toMatchSnapshot()

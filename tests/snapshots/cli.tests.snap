@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`cjs file not generated when --no-cjs passed 1`] = `"📦  [1mWriting ES Module dist file:[22m [90mtmp/one.js[39m"`;
+exports[`cjs file not generated when --esm specified 1`] = `"📦  [1mWriting ES Module dist file:[22m [90mtmp/one.js[39m"`;
 
-exports[`cjs file not generated when --no-cjs passed 2`] = `
+exports[`cjs file not generated when --esm specified 2`] = `
 "function greeting () {
   return 'Hello World'
 }
