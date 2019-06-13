@@ -12,7 +12,7 @@ import hashbang from '@ianwalter/rollup-plugin-hashbang'
 
 export default async function dist (options) {
   // Read modules package.json.
-  const { pkg, path } = await readPkgUp()
+  const { package: pkg, path } = await readPkgUp()
 
   // TODO: comment
   const hasFormat = options.cjs || options.esm || options.browser

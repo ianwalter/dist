@@ -16,7 +16,7 @@ var hashbang = _interopDefault(require('@ianwalter/rollup-plugin-hashbang'));
 
 async function dist (options) {
   // Read modules package.json.
-  const { pkg, path: path$1 } = await readPkgUp();
+  const { package: pkg, path: path$1 } = await readPkgUp();
 
   // TODO: comment
   const hasFormat = options.cjs || options.esm || options.browser;
