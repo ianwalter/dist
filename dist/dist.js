@@ -2,7 +2,7 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var path = require('path');
+var path = _interopDefault(require('path'));
 var readPkgUp = _interopDefault(require('read-pkg-up'));
 var rollup = require('rollup');
 var cjsPlugin = _interopDefault(require('rollup-plugin-commonjs'));
@@ -16,7 +16,7 @@ var hashbang = _interopDefault(require('@ianwalter/rollup-plugin-hashbang'));
 
 async function dist (options) {
   // Read modules package.json.
-  const { package: pkg, path: path$1 } = await readPkgUp();
+  const { package: pkg, path: projectPath } = await readPkgUp();
 
   // TODO: comment
   const hasFormat = options.cjs || options.esm || options.browser;
@@ -25,8 +25,9 @@ async function dist (options) {
   // Deconstruct options and set defaults if necessary.
   let {
     name = options.name || npmShortName(pkg.name),
-    input = options.input || path.resolve(path.join(path.dirname(path$1), 'index.js')),
-    output = options.output || path.join(path.dirname(path$1), 'dist'),
+    input = options.input ||
+            path.resolve(path.join(path.dirname(projectPath), 'index.js')),
+    output = options.output || path.join(path.dirname(projectPath), 'dist'),
     cjs = getFormat(options.cjs, pkg.main),
     esm = getFormat(options.esm, pkg.module),
     browser = getFormat(options.browser, pkg.browser)
@@ -61,9 +62,18 @@ async function dist (options) {
   }
   const byIsNotInlineDep = dep => inlineDeps.indexOf(dep) === -1;
   const externalDeps = [...builtinModules, ...deps.filter(byIsNotInlineDep)];
-  const external = id => (
-    externalDeps.includes(id) || externalDeps.some(n => id.includes(n + '/'))
-  );
+  const isInExternal = id => {
+    try {
+      const modulePath = require.resolve(id);
+      if (id !== modulePath) {
+        return externalDeps.some(external => modulePath.includes(external))
+      }
+    } catch (err) {
+      // Nothing needs to be done with this error.
+    }
+    return false
+  };
+  const external = id => externalDeps.includes(id) || isInExternal(id);
 
   // Set the default babel config.
   const babelConfig = {
