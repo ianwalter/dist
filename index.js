@@ -56,20 +56,12 @@ export default async function dist (options) {
     inlineDeps = inline.split(',')
     nodeResolve = nodeResolvePlugin({ only: inlineDeps })
   }
-  const byIsNotInlineDep = dep => inlineDeps.indexOf(dep) === -1
-  const externalDeps = [...builtinModules, ...deps.filter(byIsNotInlineDep)]
-  const isInExternal = id => {
-    try {
-      const modulePath = require.resolve(id)
-      if (id !== modulePath) {
-        return externalDeps.some(external => modulePath.includes(external))
-      }
-    } catch (err) {
-      // Nothing needs to be done with this error.
-    }
-    return false
-  }
-  const external = id => externalDeps.includes(id) || isInExternal(id)
+  const externalModules = deps.filter(dep => inlineDeps.indexOf(dep) === -1)
+  const externalDeps = [...builtinModules, ...externalModules]
+  const external = id => (
+    externalDeps.includes(id) ||
+    externalModules.some(external => id.includes(external + path.sep))
+  )
 
   // Set the default babel config.
   const babelConfig = {
