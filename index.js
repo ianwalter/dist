@@ -1,4 +1,4 @@
-import { dirname, join, resolve, extname } from 'path'
+import path from 'path'
 import readPkgUp from 'read-pkg-up'
 import { rollup } from 'rollup'
 import cjsPlugin from 'rollup-plugin-commonjs'
@@ -12,7 +12,7 @@ import hashbang from '@ianwalter/rollup-plugin-hashbang'
 
 export default async function dist (options) {
   // Read modules package.json.
-  const { package: pkg, path } = await readPkgUp()
+  const { package: pkg, path: projectPath } = await readPkgUp()
 
   // TODO: comment
   const hasFormat = options.cjs || options.esm || options.browser
@@ -21,8 +21,9 @@ export default async function dist (options) {
   // Deconstruct options and set defaults if necessary.
   let {
     name = options.name || npmShortName(pkg.name),
-    input = options.input || resolve(join(dirname(path), 'index.js')),
-    output = options.output || join(dirname(path), 'dist'),
+    input = options.input ||
+            path.resolve(path.join(path.dirname(projectPath), 'index.js')),
+    output = options.output || path.join(path.dirname(projectPath), 'dist'),
     cjs = getFormat(options.cjs, pkg.main),
     esm = getFormat(options.esm, pkg.module),
     browser = getFormat(options.browser, pkg.browser)
@@ -36,7 +37,7 @@ export default async function dist (options) {
   // Import plugins file if specified.
   let plugins = []
   if (typeof options.plugins === 'string') {
-    const input = resolve(options.plugins)
+    const input = path.resolve(options.plugins)
     const external = Object.keys(pkg.devDependencies || {})
     const { generate } = await rollup({ input, external })
     const { output: [{ code }] } = await generate({ format: 'cjs' })
@@ -55,10 +56,11 @@ export default async function dist (options) {
     inlineDeps = inline.split(',')
     nodeResolve = nodeResolvePlugin({ only: inlineDeps })
   }
-  const byIsNotInlineDep = dep => inlineDeps.indexOf(dep) === -1
-  const externalDeps = [...builtinModules, ...deps.filter(byIsNotInlineDep)]
+  const externalModules = deps.filter(dep => inlineDeps.indexOf(dep) === -1)
+  const externalDeps = [...builtinModules, ...externalModules]
   const external = id => (
-    externalDeps.includes(id) || externalDeps.some(n => id.includes(n + '/'))
+    externalDeps.includes(id) ||
+    externalModules.some(external => id.includes(external + path.sep))
   )
 
   // Set the default babel config.
@@ -104,16 +106,16 @@ export default async function dist (options) {
   let esmCode = (esm || browser) ? esmBundle.output[0].code : undefined
 
   // Determine the output file paths.
-  const dir = extname(output) ? dirname(output) : output
-  const cjsPath = typeof cjs === 'string' && extname(cjs)
-    ? resolve(cjs)
-    : join(dir, `${name}.js`)
-  const esmPath = typeof esm === 'string' && extname(esm)
-    ? resolve(esm)
-    : join(dir, `${name}.m.js`)
-  const browserPath = typeof browser === 'string' && extname(browser)
-    ? resolve(browser)
-    : join(dir, `${name}.browser.js`)
+  const dir = path.extname(output) ? path.dirname(output) : output
+  const cjsPath = typeof cjs === 'string' && path.extname(cjs)
+    ? path.resolve(cjs)
+    : path.join(dir, `${name}.js`)
+  const esmPath = typeof esm === 'string' && path.extname(esm)
+    ? path.resolve(esm)
+    : path.join(dir, `${name}.m.js`)
+  const browserPath = typeof browser === 'string' && path.extname(browser)
+    ? path.resolve(browser)
+    : path.join(dir, `${name}.browser.js`)
 
   // Return an object with the properties that use the file path as the key and
   // the source code as the value.
