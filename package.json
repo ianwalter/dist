@@ -59,7 +59,7 @@
     "@ianwalter/babel-preset-lib": "^2.0.2",
     "@ianwalter/bff": "^5.2.1",
     "@ianwalter/eslint-config": "^2.0.1",
-    "@ianwalter/renovate-config": "^1.1.0",
+    "@ianwalter/renovate-config": "^1.1.1",
     "execa": "^2.0.1",
     "ky": "^0.10.0",
     "np": "^5.0.3",
