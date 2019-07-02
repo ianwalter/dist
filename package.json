@@ -48,7 +48,7 @@
     "p-settle": "^3.1.0",
     "read-pkg-up": "^6.0.0",
     "require-from-string": "^2.0.2",
-    "rollup": "^1.16.3",
+    "rollup": "^1.16.4",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-commonjs": "^10.0.1",
     "rollup-plugin-json": "^4.0.0",
