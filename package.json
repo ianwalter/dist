@@ -55,7 +55,7 @@
     "rollup-plugin-node-resolve": "^5.2.0"
   },
   "devDependencies": {
-    "@babel/runtime": "^7.4.5",
+    "@babel/runtime": "^7.5.0",
     "@ianwalter/babel-preset-lib": "^2.0.2",
     "@ianwalter/bff": "^5.2.1",
     "@ianwalter/eslint-config": "^2.0.1",
