@@ -758,6 +758,16 @@
     pkg-conf "^3.1.0"
     yargs "^13.2.2"
 
+"@ianwalter/cli@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@ianwalter/cli/-/cli-1.2.0.tgz#637edc5e1c9cc2f5467812123cb92a64c39b6215"
+  integrity sha512-oTQ4n3M98cHmEmu093bvgLCMl10UY3M//xPwDRBdA+W8A32dy0bfqqxrpgI2s4URXDNElrJ9Ik+my1QjMHirhA==
+  dependencies:
+    "@ianwalter/merge" "^5.0.0"
+    dot-prop "^5.1.0"
+    getopts "^2.2.5"
+    read-pkg-up "^6.0.0"
+
 "@ianwalter/eslint-config@^2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@ianwalter/eslint-config/-/eslint-config-2.1.0.tgz#d54fb3e462623680388567894c8bf07b46cbd898"
@@ -789,6 +799,11 @@
   integrity sha512-SrJt5zo4BjRHKQ6U0ErJlVgXQA2HLYRL1nGd8Vti84rbztwrsmwhxKUSsOHQWEY7/8MqlR2O22oDPJdLnIQ9RQ==
   dependencies:
     "@babel/runtime" "^7.3.1"
+
+"@ianwalter/merge@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@ianwalter/merge/-/merge-5.0.0.tgz#972b3cd668ab87416fba1af99186cd83d34d687f"
+  integrity sha512-Z+Xn8dT0ApkjGizdwMQaCgsAyHO+zKhCC2OYO7lEYLs1IdCzXtRUYah3vkIWT8/Ad94ni0rxtR39VTRWJE1/Qw==
 
 "@ianwalter/npm-short-name@^1.0.0":
   version "1.0.0"
@@ -2798,6 +2813,13 @@ dot-prop@^5.0.0:
   dependencies:
     is-obj "^1.0.0"
 
+dot-prop@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/dot-prop/-/dot-prop-5.1.0.tgz#bdd8c986a77b83e3fca524e53786df916cabbd8a"
+  integrity sha512-n1oC6NBF+KM9oVXtjmen4Yo7HyAVWV2UUl50dCYJdw2924K6dX9bf9TTTWaKtYlRn0FEtxG27KS80ayVLixxJA==
+  dependencies:
+    is-obj "^2.0.0"
+
 duplexer3@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/duplexer3/-/duplexer3-0.1.4.tgz#ee01dd1cac0ed3cbc7fdbea37dc0a8f1ce002ce2"
@@ -3622,6 +3644,11 @@ getopts@^2.2.4:
   resolved "https://registry.yarnpkg.com/getopts/-/getopts-2.2.4.tgz#3137fe8a5fddf304904059a851bdc1c22f0f54fb"
   integrity sha512-Rz7DGyomZjrenu9Jx4qmzdlvJgvrEFHXHvjK0FcZtcTC1U5FmES7OdZHUwMuSnEE6QvBvwse1JODKj7TgbSEjQ==
 
+getopts@^2.2.5:
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/getopts/-/getopts-2.2.5.tgz#67a0fe471cacb9c687d817cab6450b96dde8313b"
+  integrity sha512-9jb7AW5p3in+IiJWhQiZmmwkpLaR/ccTWdWQCtZM66HJcHHLegowh4q4tSD7gouUyeNvFWRavfK9GXosQHDpFA==
+
 getpass@^0.1.1:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/getpass/-/getpass-0.1.7.tgz#5eff8e3e684d569ae4cb2b1282604e8ba62149fa"
@@ -4304,6 +4331,11 @@ is-obj@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/is-obj/-/is-obj-1.0.1.tgz#3e4729ac1f5fde025cd7d83a896dab9f4f67db0f"
   integrity sha1-PkcprB9f3gJc19g6iW2rn09n2w8=
+
+is-obj@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/is-obj/-/is-obj-2.0.0.tgz#473fb05d973705e3fd9620545018ca8e22ef4982"
+  integrity sha512-drqDG3cbczxxEJRoOXcOjtdp1J/lyp1mNn0xaznRs8+muBhgQcrnbspox5X5fOw0HnMnbfDzvnEMEtqDEJEo8w==
 
 is-observable@^1.1.0:
   version "1.1.0"
