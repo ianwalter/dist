@@ -38,7 +38,7 @@
     "test": "bff"
   },
   "dependencies": {
-    "@babel/core": "^7.4.5",
+    "@babel/core": "^7.5.4",
     "@ianwalter/cli": "^1.2.0",
     "@ianwalter/fs": "^1.1.0",
     "@ianwalter/npm-short-name": "^1.0.0",
