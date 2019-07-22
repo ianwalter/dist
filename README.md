@@ -33,6 +33,7 @@
 * `--inline, -l`  Inline/bundle imported modules (defaults to false)
 * `--babel, -B`       Transpile output with Babel (defaults to false)
 * `--plugins, -p` Specify a path for a Rollup plugins file to include
+* `--minify, -m`  Use Terser to minify output (defaults to false)
 
 ## License
 
