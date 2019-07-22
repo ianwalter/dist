@@ -28,7 +28,7 @@ export default async function dist (options) {
     esm = getFormat(options.esm, pkg.module),
     browser = getFormat(options.browser, pkg.browser)
   } = options
-  let inline = options.inline || options.inline === ''
+  const inline = options.inline || options.inline === ''
 
   cjs = cjs || cjs === ''
   esm = esm || esm === ''
@@ -102,8 +102,8 @@ export default async function dist (options) {
     esmBundle = await bundler.generate({ format: 'esm' })
   }
 
-  let cjsCode = cjs ? cjsBundle.output[0].code : undefined
-  let esmCode = (esm || browser) ? esmBundle.output[0].code : undefined
+  const cjsCode = cjs ? cjsBundle.output[0].code : undefined
+  const esmCode = (esm || browser) ? esmBundle.output[0].code : undefined
 
   // Determine the output file paths.
   const dir = path.extname(output) ? path.dirname(output) : output
