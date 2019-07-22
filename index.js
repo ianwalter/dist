@@ -9,6 +9,7 @@ import babelPlugin from 'rollup-plugin-babel'
 import requireFromString from 'require-from-string'
 import builtinModules from 'builtin-modules/static'
 import hashbang from '@ianwalter/rollup-plugin-hashbang'
+import { terser } from 'rollup-plugin-terser'
 
 export default async function dist (options) {
   // Read modules package.json.
@@ -82,9 +83,11 @@ export default async function dist (options) {
     // Allows JSON to be imported:
     jsonPlugin(),
     // Allows source to be transpiled with babel:
-    ...(options.babel ? [babelPlugin(babelConfig)] : []),
+    ...options.babel ? [babelPlugin(babelConfig)] : [],
     // Allow users to pass in their own rollup plugins:
-    ...plugins
+    ...plugins,
+    //
+    ...options.minify ? [terser(options.minify)] : []
   ]
 
   // Create the Rollup bundler instance(s).

@@ -13,6 +13,7 @@ var babelPlugin = _interopDefault(require('rollup-plugin-babel'));
 var requireFromString = _interopDefault(require('require-from-string'));
 var builtinModules = _interopDefault(require('builtin-modules/static'));
 var hashbang = _interopDefault(require('@ianwalter/rollup-plugin-hashbang'));
+var rollupPluginTerser = require('rollup-plugin-terser');
 
 async function dist (options) {
   // Read modules package.json.
@@ -32,7 +33,7 @@ async function dist (options) {
     esm = getFormat(options.esm, pkg.module),
     browser = getFormat(options.browser, pkg.browser)
   } = options;
-  let inline = options.inline || options.inline === '';
+  const inline = options.inline || options.inline === '';
 
   cjs = cjs || cjs === '';
   esm = esm || esm === '';
@@ -86,9 +87,11 @@ async function dist (options) {
     // Allows JSON to be imported:
     jsonPlugin(),
     // Allows source to be transpiled with babel:
-    ...(options.babel ? [babelPlugin(babelConfig)] : []),
+    ...options.babel ? [babelPlugin(babelConfig)] : [],
     // Allow users to pass in their own rollup plugins:
-    ...plugins
+    ...plugins,
+    //
+    ...options.minify ? [rollupPluginTerser.terser(options.minify)] : []
   ];
 
   // Create the Rollup bundler instance(s).
@@ -106,8 +109,8 @@ async function dist (options) {
     esmBundle = await bundler.generate({ format: 'esm' });
   }
 
-  let cjsCode = cjs ? cjsBundle.output[0].code : undefined;
-  let esmCode = (esm || browser) ? esmBundle.output[0].code : undefined;
+  const cjsCode = cjs ? cjsBundle.output[0].code : undefined;
+  const esmCode = (esm || browser) ? esmBundle.output[0].code : undefined;
 
   // Determine the output file paths.
   const dir = path.extname(output) ? path.dirname(output) : output;

@@ -20,7 +20,8 @@ async function run () {
         browser: 'b',
         inline: 'i',
         babel: 'B',
-        plugins: 'p'
+        plugins: 'p',
+        minify: 'm'
       }
     }
   })
