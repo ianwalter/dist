@@ -89,6 +89,9 @@
   "renovate": {
     "extends": [
       "@ianwalter"
+    ],
+    "ignoreDeps": [
+      "ky"
     ]
   }
 }
