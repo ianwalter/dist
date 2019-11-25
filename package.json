@@ -62,7 +62,7 @@
     "@ianwalter/eslint-config": "^3.1.0",
     "@ianwalter/release": "^3.0.6",
     "@ianwalter/renovate-config": "^1.2.0",
-    "execa": "^3.3.0",
+    "execa": "^3.4.0",
     "ky": "^0.10.0",
     "postcss": "^7.0.23",
     "rollup-plugin-vue": "^5.0.1",
