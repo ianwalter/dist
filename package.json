@@ -64,7 +64,7 @@
     "@ianwalter/renovate-config": "^1.2.0",
     "execa": "^4.0.0",
     "ky": "^0.10.0",
-    "postcss": "^7.0.25",
+    "postcss": "^7.0.26",
     "rollup-plugin-vue": "^5.0.1",
     "vue-template-compiler": "^2.6.11"
   },
