@@ -56,7 +56,7 @@
     "rollup-plugin-terser": "^5.2.0"
   },
   "devDependencies": {
-    "@babel/runtime": "^7.8.3",
+    "@babel/runtime": "^7.8.4",
     "@ianwalter/babel-preset-lib": "^2.0.2",
     "@ianwalter/bff": "^8.1.0",
     "@ianwalter/eslint-config": "^3.1.0",
