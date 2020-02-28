@@ -57,7 +57,6 @@
   },
   "devDependencies": {
     "@babel/runtime": "^7.8.4",
-    "@ianwalter/babel-preset-lib": "^2.0.2",
     "@ianwalter/bff": "^9.6.0",
     "@ianwalter/eslint-config": "^4.0.0",
     "@ianwalter/release": "^5.0.0",
@@ -67,15 +66,6 @@
     "postcss": "^7.0.27",
     "rollup-plugin-vue": "^5.0.1",
     "vue-template-compiler": "^2.6.11"
-  },
-  "babel": {
-    "env": {
-      "test": {
-        "presets": [
-          "@ianwalter/lib"
-        ]
-      }
-    }
   },
   "eslintConfig": {
     "root": true,
