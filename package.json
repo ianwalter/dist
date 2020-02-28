@@ -64,7 +64,7 @@
     "execa": "^4.0.0",
     "ky": "^0.10.0",
     "postcss": "^7.0.27",
-    "rollup-plugin-vue": "^5.0.1",
+    "rollup-plugin-vue": "^5.1.6",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
