@@ -24,10 +24,10 @@ devDependencies:
   '@ianwalter/renovate-config': 1.4.2
   execa: 4.0.3
   ky: 0.10.0
-  postcss: 8.1.3
-  rollup-plugin-vue: 5.1.9_064d5ac84a062041cec86ffad6c1ca93
+  postcss: 8.1.4
+  rollup-plugin-vue: 5.1.9_db3f93f9483c4023f8e58f75721a0e6e
   vue-template-compiler: 2.6.12
-lockfileVersion: 5.1
+lockfileVersion: 5.2
 packages:
   /@babel/code-frame/7.10.4:
     dependencies:
@@ -964,12 +964,12 @@ packages:
       prettier: 1.19.1
     resolution:
       integrity: sha512-lejBLa7xAMsfiZfNp7Kv51zOzifnb29FwdnMLa96z26kXErPFioSf9BMcePVIQ6/Gc6/mC0UrPpxAWIHyae0vw==
-  /@vue/component-compiler/4.2.3_064d5ac84a062041cec86ffad6c1ca93:
+  /@vue/component-compiler/4.2.3_db3f93f9483c4023f8e58f75721a0e6e:
     dependencies:
       '@vue/component-compiler-utils': 3.2.0
       clean-css: 4.2.3
       hash-sum: 1.0.2
-      postcss: 8.1.3
+      postcss: 8.1.4
       postcss-modules-sync: 1.0.0
       source-map: 0.6.1
       vue-template-compiler: 2.6.12
@@ -3392,7 +3392,7 @@ packages:
       integrity: sha512-WPAeS38Kza29f04I0iOIQrXeiebRXjmn6cFehzI7KKJOgT0NmqYAcLgjWnIAfKs5FBmEQgje1kXab0DaLKCl2w==
   /jest-pnp-resolver/1.2.2_jest-resolve@26.6.0:
     dependencies:
-      jest-resolve: 26.6.0_jest-resolve@26.6.0
+      jest-resolve: 26.6.0
     dev: true
     engines:
       node: '>=6'
@@ -3409,7 +3409,7 @@ packages:
       node: '>= 10.14.2'
     resolution:
       integrity: sha512-Gv3ZIs/nA48/Zvjrl34bf+oD76JHiGDUxNOVgUjh3j890sblXryjY4rss71fPtD/njchl6PSE2hIhvyWa1eT0A==
-  /jest-resolve/26.6.0_jest-resolve@26.6.0:
+  /jest-resolve/26.6.0:
     dependencies:
       '@jest/types': 26.6.0
       chalk: 4.1.0
@@ -3422,8 +3422,6 @@ packages:
     dev: true
     engines:
       node: '>= 10.14.2'
-    peerDependencies:
-      jest-resolve: '*'
     resolution:
       integrity: sha512-tRAz2bwraHufNp+CCmAD8ciyCpXCs1NQxB5EJAmtCFy6BN81loFEGWKzYu26Y62lAJJe4X4jg36Kf+NsQyiStQ==
   /jest-serializer/26.5.0:
@@ -3449,7 +3447,7 @@ packages:
       jest-haste-map: 26.6.0
       jest-matcher-utils: 26.6.0
       jest-message-util: 26.6.0
-      jest-resolve: 26.6.0_jest-resolve@26.6.0
+      jest-resolve: 26.6.0
       natural-compare: 1.4.0
       pretty-format: 26.6.0
       semver: 7.3.2
@@ -4608,7 +4606,7 @@ packages:
       node: '>=6.0.0'
     resolution:
       integrity: sha512-3QT8bBJeX/S5zKTTjTCIjRF3If4avAT6kqxcASlTWEtAFCb9NH0OUxNDfgZSWdP5fJnBYCMEWkIFfWeugjzYMg==
-  /postcss/8.1.3:
+  /postcss/8.1.4:
     dependencies:
       colorette: 1.2.1
       line-column: 1.0.2
@@ -4618,7 +4616,7 @@ packages:
     engines:
       node: ^10 || ^12 || >=14
     resolution:
-      integrity: sha512-AKsHGqd7HmXmL/EgyAjI4Gx719A5yQdt9HzyXrI8M/hzxfumecYS95kfvIt40UZqPVNoEt0Va1M3PG54XtNPbg==
+      integrity: sha512-LfqcwgMq9LOd8pX7K2+r2HPitlIGC5p6PoZhVELlqhh2YGDVcXKpkCseqan73Hrdik6nBd2OvoDPUaP/oMj9hQ==
   /preferred-pm/3.0.2:
     dependencies:
       find-up: 5.0.0
@@ -5115,9 +5113,9 @@ packages:
       rollup: '>=0.66.0 <3'
     resolution:
       integrity: sha512-1pkwkervMJQGFYvM9nscrUoncPwiKR/K+bHdjv6PFgRo3cgPHoRT83y2Aa3GvINj4539S15t/tpFPb775TDs6w==
-  /rollup-plugin-vue/5.1.9_064d5ac84a062041cec86ffad6c1ca93:
+  /rollup-plugin-vue/5.1.9_db3f93f9483c4023f8e58f75721a0e6e:
     dependencies:
-      '@vue/component-compiler': 4.2.3_064d5ac84a062041cec86ffad6c1ca93
+      '@vue/component-compiler': 4.2.3_db3f93f9483c4023f8e58f75721a0e6e
       '@vue/component-compiler-utils': 3.2.0
       debug: 4.2.0
       hash-sum: 1.0.2
@@ -6150,7 +6148,7 @@ specifiers:
   execa: ^4.0.3
   ky: ^0.10.0
   p-settle: ^3.1.0
-  postcss: ^8.1.2
+  postcss: ^8.1.4
   read-pkg-up: ^6.0.0
   require-from-string: ^2.0.2
   rollup: 1.21.4
