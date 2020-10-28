@@ -22,7 +22,7 @@ devDependencies:
   '@ianwalter/eslint-config': 5.4.0
   '@ianwalter/release': 5.0.2
   '@ianwalter/renovate-config': 1.4.2
-  execa: 4.0.3
+  execa: 4.1.0
   ky: 0.10.0
   postcss: 8.1.4
   rollup-plugin-vue: 5.1.9_db3f93f9483c4023f8e58f75721a0e6e
@@ -2460,6 +2460,22 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-WFDXGHckXPWZX19t1kCsXzOpqX9LWYNqn4C+HqZlk/V0imTkzJZqf87ZBhvpHaftERYknpk0fjSylnXVlVgI0A==
+  /execa/4.1.0:
+    dependencies:
+      cross-spawn: 7.0.3
+      get-stream: 5.2.0
+      human-signals: 1.1.1
+      is-stream: 2.0.0
+      merge-stream: 2.0.0
+      npm-run-path: 4.0.1
+      onetime: 5.1.2
+      signal-exit: 3.0.3
+      strip-final-newline: 2.0.0
+    dev: true
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-j5W0//W7f8UxAn8hXVnwG8tLwdiUy4FJLcSupCg6maBYZDpyBvTApK7KyuI4bKj8KOh1r2YH+6ucuYtJv1bTZA==
   /expand-brackets/2.1.4:
     dependencies:
       debug: 2.6.9
@@ -6145,7 +6161,7 @@ specifiers:
   '@ianwalter/rollup-plugin-hashbang': ^1.3.0
   '@rollup/plugin-json': ^4.1.0
   builtin-modules: ^3.1.0
-  execa: ^4.0.3
+  execa: ^4.1.0
   ky: ^0.10.0
   p-settle: ^3.1.0
   postcss: ^8.1.4
