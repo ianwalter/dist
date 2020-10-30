@@ -17,7 +17,7 @@ dependencies:
   rollup-plugin-terser: 5.3.1_rollup@1.21.4
 devDependencies:
   '@babel/runtime': 7.12.1
-  '@changesets/cli': 2.11.1
+  '@changesets/cli': 2.11.2
   '@ianwalter/bff': 9.12.1
   '@ianwalter/eslint-config': 5.4.0
   '@ianwalter/release': 5.0.2
@@ -226,7 +226,7 @@ packages:
     dev: true
     resolution:
       integrity: sha512-3Kv21FNvysTQvZs3fHr6aZeDibhZHtgI1++fMZplzVtwNVmpjow3zv9lcZmJP26LthbpVH3I8+nqlU7M43lfWA==
-  /@changesets/cli/2.11.1:
+  /@changesets/cli/2.11.2:
     dependencies:
       '@babel/runtime': 7.12.1
       '@changesets/apply-release-plan': 4.0.0
@@ -261,7 +261,7 @@ packages:
     dev: true
     hasBin: true
     resolution:
-      integrity: sha512-Msjz1Kb1VYf9P0zPvbQ3g/+0BsPpu/9ReZ8o08CFQb3FvYmHaG5KIOcZd2I+kaWF4TWiLeL26fkMQxFn5+KiAA==
+      integrity: sha512-Lfw4MWj46H7dgPzgYmRJ8QbpDxi02dK+21zuWzBjVtsf3AqJgy7oVdXl4Yga/JhBq8eeoxBS9NoCVw8/JOZBcg==
   /@changesets/config/1.4.0:
     dependencies:
       '@changesets/errors': 0.1.4
@@ -6149,7 +6149,7 @@ packages:
 specifiers:
   '@babel/core': ^7.8.6
   '@babel/runtime': ^7.12.1
-  '@changesets/cli': ^2.11.1
+  '@changesets/cli': ^2.11.2
   '@ianwalter/bff': ^9.9.1
   '@ianwalter/cli': ^1.2.0
   '@ianwalter/eslint-config': ^5.4.0
