@@ -16,7 +16,7 @@ dependencies:
   rollup-plugin-node-resolve: 5.2.0_rollup@1.21.4
   rollup-plugin-terser: 5.3.1_rollup@1.21.4
 devDependencies:
-  '@babel/runtime': 7.12.1
+  '@babel/runtime': 7.12.5
   '@changesets/cli': 2.11.2
   '@ianwalter/bff': 9.12.1
   '@ianwalter/eslint-config': 5.4.0
@@ -169,6 +169,12 @@ packages:
       regenerator-runtime: 0.13.7
     resolution:
       integrity: sha512-J5AIf3vPj3UwXaAzb5j1xM4WAQDX3EMgemF8rjCP3SoW09LfRKAXQKt6CoVYl230P6iWdRcBbnLDDdnqWxZSCA==
+  /@babel/runtime/7.12.5:
+    dependencies:
+      regenerator-runtime: 0.13.7
+    dev: true
+    resolution:
+      integrity: sha512-plcc+hbExy3McchJCEQG3knOsuh3HH+Prx1P6cLIkET/0dLuQDEnrT+s27Axgc9bqfsmNUNHfscgMUdBpC9xfg==
   /@babel/template/7.10.4:
     dependencies:
       '@babel/code-frame': 7.10.4
@@ -6148,7 +6154,7 @@ packages:
       integrity: sha1-9+572FfdfB0tOMDnTvvWgdFDH9E=
 specifiers:
   '@babel/core': ^7.8.6
-  '@babel/runtime': ^7.12.1
+  '@babel/runtime': ^7.12.5
   '@changesets/cli': ^2.11.2
   '@ianwalter/bff': ^9.9.1
   '@ianwalter/cli': ^1.2.0
