@@ -24,8 +24,8 @@ devDependencies:
   '@ianwalter/renovate-config': 1.4.2
   execa: 4.1.0
   ky: 0.10.0
-  postcss: 8.1.4
-  rollup-plugin-vue: 5.1.9_db3f93f9483c4023f8e58f75721a0e6e
+  postcss: 8.1.6
+  rollup-plugin-vue: 5.1.9_59c5ddcdee87804dab2248c9b7436c19
   vue-template-compiler: 2.6.12
 lockfileVersion: 5.2
 packages:
@@ -970,12 +970,12 @@ packages:
       prettier: 1.19.1
     resolution:
       integrity: sha512-lejBLa7xAMsfiZfNp7Kv51zOzifnb29FwdnMLa96z26kXErPFioSf9BMcePVIQ6/Gc6/mC0UrPpxAWIHyae0vw==
-  /@vue/component-compiler/4.2.3_db3f93f9483c4023f8e58f75721a0e6e:
+  /@vue/component-compiler/4.2.3_59c5ddcdee87804dab2248c9b7436c19:
     dependencies:
       '@vue/component-compiler-utils': 3.2.0
       clean-css: 4.2.3
       hash-sum: 1.0.2
-      postcss: 8.1.4
+      postcss: 8.1.6
       postcss-modules-sync: 1.0.0
       source-map: 0.6.1
       vue-template-compiler: 2.6.12
@@ -4045,13 +4045,13 @@ packages:
   /ms/2.1.2:
     resolution:
       integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
-  /nanoid/3.1.15:
+  /nanoid/3.1.16:
     dev: true
     engines:
       node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1
     hasBin: true
     resolution:
-      integrity: sha512-n8rXUZ8UU3lV6+43atPrSizqzh25n1/f00Wx1sCiE7R1sSHytZLTTiQl8DjC4IDLOnEZDlgJhy0yO4VsIpMxow==
+      integrity: sha512-+AK8MN0WHji40lj8AEuwLOvLSbWYApQpre/aFJZD71r43wVRLrOYS4FmJOPQYon1TqB462RzrrxlfA74XRES8w==
   /nanomatch/1.2.13:
     dependencies:
       arr-diff: 4.0.0
@@ -4628,17 +4628,17 @@ packages:
       node: '>=6.0.0'
     resolution:
       integrity: sha512-3QT8bBJeX/S5zKTTjTCIjRF3If4avAT6kqxcASlTWEtAFCb9NH0OUxNDfgZSWdP5fJnBYCMEWkIFfWeugjzYMg==
-  /postcss/8.1.4:
+  /postcss/8.1.6:
     dependencies:
       colorette: 1.2.1
       line-column: 1.0.2
-      nanoid: 3.1.15
+      nanoid: 3.1.16
       source-map: 0.6.1
     dev: true
     engines:
       node: ^10 || ^12 || >=14
     resolution:
-      integrity: sha512-LfqcwgMq9LOd8pX7K2+r2HPitlIGC5p6PoZhVELlqhh2YGDVcXKpkCseqan73Hrdik6nBd2OvoDPUaP/oMj9hQ==
+      integrity: sha512-JuifSl4h8dJ70SiMXKjzCxhalE6p2TnMHuq9G8ftyXj2jg6SXzqCsEuxMj9RkmJoO5D+Z9YrWunNkxqpRT02qg==
   /preferred-pm/3.0.2:
     dependencies:
       find-up: 5.0.0
@@ -5135,9 +5135,9 @@ packages:
       rollup: '>=0.66.0 <3'
     resolution:
       integrity: sha512-1pkwkervMJQGFYvM9nscrUoncPwiKR/K+bHdjv6PFgRo3cgPHoRT83y2Aa3GvINj4539S15t/tpFPb775TDs6w==
-  /rollup-plugin-vue/5.1.9_db3f93f9483c4023f8e58f75721a0e6e:
+  /rollup-plugin-vue/5.1.9_59c5ddcdee87804dab2248c9b7436c19:
     dependencies:
-      '@vue/component-compiler': 4.2.3_db3f93f9483c4023f8e58f75721a0e6e
+      '@vue/component-compiler': 4.2.3_59c5ddcdee87804dab2248c9b7436c19
       '@vue/component-compiler-utils': 3.2.0
       debug: 4.2.0
       hash-sum: 1.0.2
@@ -6170,7 +6170,7 @@ specifiers:
   execa: ^4.1.0
   ky: ^0.10.0
   p-settle: ^3.1.0
-  postcss: ^8.1.4
+  postcss: ^8.1.6
   read-pkg-up: ^6.0.0
   require-from-string: ^2.0.2
   rollup: 1.21.4
