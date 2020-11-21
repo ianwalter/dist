@@ -24,8 +24,8 @@ devDependencies:
   '@ianwalter/renovate-config': 1.4.2
   execa: 4.1.0
   ky: 0.10.0
-  postcss: 8.1.8
-  rollup-plugin-vue: 5.1.9_e6a432496777f71682c61b822da397e9
+  postcss: 8.1.9
+  rollup-plugin-vue: 5.1.9_f4bbdb1cf7e1ab445a44e18f0a38cb97
   vue-template-compiler: 2.6.12
 lockfileVersion: 5.2
 packages:
@@ -970,12 +970,12 @@ packages:
       prettier: 1.19.1
     resolution:
       integrity: sha512-lejBLa7xAMsfiZfNp7Kv51zOzifnb29FwdnMLa96z26kXErPFioSf9BMcePVIQ6/Gc6/mC0UrPpxAWIHyae0vw==
-  /@vue/component-compiler/4.2.3_e6a432496777f71682c61b822da397e9:
+  /@vue/component-compiler/4.2.3_f4bbdb1cf7e1ab445a44e18f0a38cb97:
     dependencies:
       '@vue/component-compiler-utils': 3.2.0
       clean-css: 4.2.3
       hash-sum: 1.0.2
-      postcss: 8.1.8
+      postcss: 8.1.9
       postcss-modules-sync: 1.0.0
       source-map: 0.6.1
       vue-template-compiler: 2.6.12
@@ -3686,13 +3686,6 @@ packages:
       node: '>= 0.8.0'
     resolution:
       integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==
-  /line-column/1.0.2:
-    dependencies:
-      isarray: 1.0.0
-      isobject: 2.1.0
-    dev: true
-    resolution:
-      integrity: sha1-0lryk2tvSEkXKzEuR5LR2Ye8NKI=
   /lines-and-columns/1.1.6:
     resolution:
       integrity: sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=
@@ -4045,13 +4038,13 @@ packages:
   /ms/2.1.2:
     resolution:
       integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
-  /nanoid/3.1.16:
+  /nanoid/3.1.18:
     dev: true
     engines:
       node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1
     hasBin: true
     resolution:
-      integrity: sha512-+AK8MN0WHji40lj8AEuwLOvLSbWYApQpre/aFJZD71r43wVRLrOYS4FmJOPQYon1TqB462RzrrxlfA74XRES8w==
+      integrity: sha512-rndlDjbbHbcV3xi+R2fpJ+PbGMdfBxz5v1fATIQFq0DP64FsicQdwnKLy47K4kZHdRpmQXtz24eGsxQqamzYTA==
   /nanomatch/1.2.13:
     dependencies:
       arr-diff: 4.0.0
@@ -4628,17 +4621,17 @@ packages:
       node: '>=6.0.0'
     resolution:
       integrity: sha512-3QT8bBJeX/S5zKTTjTCIjRF3If4avAT6kqxcASlTWEtAFCb9NH0OUxNDfgZSWdP5fJnBYCMEWkIFfWeugjzYMg==
-  /postcss/8.1.8:
+  /postcss/8.1.9:
     dependencies:
       colorette: 1.2.1
-      line-column: 1.0.2
-      nanoid: 3.1.16
+      nanoid: 3.1.18
       source-map: 0.6.1
+      vfile-location: 3.2.0
     dev: true
     engines:
       node: ^10 || ^12 || >=14
     resolution:
-      integrity: sha512-hO6jFWBy0QnBBRaw+s0F4hVPKGDICec/nLNEG1D4qqw9/LBzWMkTjckqqELXAo0J42jN8GFZXtgQfezEaoG9gQ==
+      integrity: sha512-oWuBpEl1meaMKkQXn0ic78TUrgsMvrAZLE/6ZY0H3LTteq2O3L8PGWwMbPLctpksTJIHjQeossMUMNQW7qRIHQ==
   /preferred-pm/3.0.2:
     dependencies:
       find-up: 5.0.0
@@ -5135,9 +5128,9 @@ packages:
       rollup: '>=0.66.0 <3'
     resolution:
       integrity: sha512-1pkwkervMJQGFYvM9nscrUoncPwiKR/K+bHdjv6PFgRo3cgPHoRT83y2Aa3GvINj4539S15t/tpFPb775TDs6w==
-  /rollup-plugin-vue/5.1.9_e6a432496777f71682c61b822da397e9:
+  /rollup-plugin-vue/5.1.9_f4bbdb1cf7e1ab445a44e18f0a38cb97:
     dependencies:
-      '@vue/component-compiler': 4.2.3_e6a432496777f71682c61b822da397e9
+      '@vue/component-compiler': 4.2.3_f4bbdb1cf7e1ab445a44e18f0a38cb97
       '@vue/component-compiler-utils': 3.2.0
       debug: 4.2.0
       hash-sum: 1.0.2
@@ -5939,6 +5932,10 @@ packages:
       spdx-expression-parse: 3.0.1
     resolution:
       integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==
+  /vfile-location/3.2.0:
+    dev: true
+    resolution:
+      integrity: sha512-aLEIZKv/oxuCDZ8lkJGhuhztf/BW4M+iHdCwglA/eWc+vtuRFJj8EtgceYFX4LRjOhCAAiNHsKGssC6onJ+jbA==
   /void-elements/2.0.1:
     dev: true
     engines:
@@ -6170,7 +6167,7 @@ specifiers:
   execa: ^4.1.0
   ky: ^0.10.0
   p-settle: ^3.1.0
-  postcss: ^8.1.8
+  postcss: ^8.1.9
   read-pkg-up: ^6.0.0
   require-from-string: ^2.0.2
   rollup: 1.21.4
