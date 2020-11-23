@@ -24,8 +24,8 @@ devDependencies:
   '@ianwalter/renovate-config': 1.4.2
   execa: 4.1.0
   ky: 0.10.0
-  postcss: 8.1.9
-  rollup-plugin-vue: 5.1.9_f4bbdb1cf7e1ab445a44e18f0a38cb97
+  postcss: 8.1.10
+  rollup-plugin-vue: 5.1.9_7957dcc4cb7a7d53e824721d9d5484c4
   vue-template-compiler: 2.6.12
 lockfileVersion: 5.2
 packages:
@@ -970,12 +970,12 @@ packages:
       prettier: 1.19.1
     resolution:
       integrity: sha512-lejBLa7xAMsfiZfNp7Kv51zOzifnb29FwdnMLa96z26kXErPFioSf9BMcePVIQ6/Gc6/mC0UrPpxAWIHyae0vw==
-  /@vue/component-compiler/4.2.3_f4bbdb1cf7e1ab445a44e18f0a38cb97:
+  /@vue/component-compiler/4.2.3_7957dcc4cb7a7d53e824721d9d5484c4:
     dependencies:
       '@vue/component-compiler-utils': 3.2.0
       clean-css: 4.2.3
       hash-sum: 1.0.2
-      postcss: 8.1.9
+      postcss: 8.1.10
       postcss-modules-sync: 1.0.0
       source-map: 0.6.1
       vue-template-compiler: 2.6.12
@@ -4619,7 +4619,7 @@ packages:
       node: '>=6.0.0'
     resolution:
       integrity: sha512-3QT8bBJeX/S5zKTTjTCIjRF3If4avAT6kqxcASlTWEtAFCb9NH0OUxNDfgZSWdP5fJnBYCMEWkIFfWeugjzYMg==
-  /postcss/8.1.9:
+  /postcss/8.1.10:
     dependencies:
       colorette: 1.2.1
       nanoid: 3.1.18
@@ -4629,7 +4629,7 @@ packages:
     engines:
       node: ^10 || ^12 || >=14
     resolution:
-      integrity: sha512-oWuBpEl1meaMKkQXn0ic78TUrgsMvrAZLE/6ZY0H3LTteq2O3L8PGWwMbPLctpksTJIHjQeossMUMNQW7qRIHQ==
+      integrity: sha512-iBXEV5VTTYaRRdxiFYzTtuv2lGMQBExqkZKSzkJe+Fl6rvQrA/49UVGKqB+LG54hpW/TtDBMGds8j33GFNW7pg==
   /preferred-pm/3.0.2:
     dependencies:
       find-up: 5.0.0
@@ -5126,9 +5126,9 @@ packages:
       rollup: '>=0.66.0 <3'
     resolution:
       integrity: sha512-1pkwkervMJQGFYvM9nscrUoncPwiKR/K+bHdjv6PFgRo3cgPHoRT83y2Aa3GvINj4539S15t/tpFPb775TDs6w==
-  /rollup-plugin-vue/5.1.9_f4bbdb1cf7e1ab445a44e18f0a38cb97:
+  /rollup-plugin-vue/5.1.9_7957dcc4cb7a7d53e824721d9d5484c4:
     dependencies:
-      '@vue/component-compiler': 4.2.3_f4bbdb1cf7e1ab445a44e18f0a38cb97
+      '@vue/component-compiler': 4.2.3_7957dcc4cb7a7d53e824721d9d5484c4
       '@vue/component-compiler-utils': 3.2.0
       debug: 4.2.0
       hash-sum: 1.0.2
@@ -6165,7 +6165,7 @@ specifiers:
   execa: ^4.1.0
   ky: ^0.10.0
   p-settle: ^3.1.0
-  postcss: ^8.1.9
+  postcss: ^8.1.10
   read-pkg-up: ^6.0.0
   require-from-string: ^2.0.2
   rollup: 1.21.4
