@@ -24,8 +24,8 @@ devDependencies:
   '@ianwalter/renovate-config': 1.4.2
   execa: 5.0.0
   ky: 0.10.0
-  postcss: 8.1.13
-  rollup-plugin-vue: 5.1.9_52582ccd55ec5f11edd71feced1c2725
+  postcss: 8.1.14
+  rollup-plugin-vue: 5.1.9_48a3d5791149d969a1945a8c28959028
   vue-template-compiler: 2.6.12
 lockfileVersion: 5.2
 packages:
@@ -971,12 +971,12 @@ packages:
       prettier: 1.19.1
     resolution:
       integrity: sha512-lejBLa7xAMsfiZfNp7Kv51zOzifnb29FwdnMLa96z26kXErPFioSf9BMcePVIQ6/Gc6/mC0UrPpxAWIHyae0vw==
-  /@vue/component-compiler/4.2.3_52582ccd55ec5f11edd71feced1c2725:
+  /@vue/component-compiler/4.2.3_48a3d5791149d969a1945a8c28959028:
     dependencies:
       '@vue/component-compiler-utils': 3.2.0
       clean-css: 4.2.3
       hash-sum: 1.0.2
-      postcss: 8.1.13
+      postcss: 8.1.14
       postcss-modules-sync: 1.0.0
       source-map: 0.6.1
       vue-template-compiler: 2.6.12
@@ -4632,17 +4632,16 @@ packages:
       node: '>=6.0.0'
     resolution:
       integrity: sha512-3QT8bBJeX/S5zKTTjTCIjRF3If4avAT6kqxcASlTWEtAFCb9NH0OUxNDfgZSWdP5fJnBYCMEWkIFfWeugjzYMg==
-  /postcss/8.1.13:
+  /postcss/8.1.14:
     dependencies:
       colorette: 1.2.1
       nanoid: 3.1.20
       source-map: 0.6.1
-      vfile-location: 3.2.0
     dev: true
     engines:
       node: ^10 || ^12 || >=14
     resolution:
-      integrity: sha512-D++wck3XhQkICYfysZRx90JCDgaTTdq8YxLswB9cjBzfxwcVcQjn3LsjXon0PQ6TIOof2IGWLRHhSgXZuJct4w==
+      integrity: sha512-KatkyVPBKfENS+c3dpXJoDXnDD5UZs5exAnDksLqaRJPKwYphEPZt4N0m0i049v2/BtWVQibAhxW4ilXXcolpA==
   /preferred-pm/3.0.2:
     dependencies:
       find-up: 5.0.0
@@ -5139,9 +5138,9 @@ packages:
       rollup: '>=0.66.0 <3'
     resolution:
       integrity: sha512-1pkwkervMJQGFYvM9nscrUoncPwiKR/K+bHdjv6PFgRo3cgPHoRT83y2Aa3GvINj4539S15t/tpFPb775TDs6w==
-  /rollup-plugin-vue/5.1.9_52582ccd55ec5f11edd71feced1c2725:
+  /rollup-plugin-vue/5.1.9_48a3d5791149d969a1945a8c28959028:
     dependencies:
-      '@vue/component-compiler': 4.2.3_52582ccd55ec5f11edd71feced1c2725
+      '@vue/component-compiler': 4.2.3_48a3d5791149d969a1945a8c28959028
       '@vue/component-compiler-utils': 3.2.0
       debug: 4.2.0
       hash-sum: 1.0.2
@@ -5943,10 +5942,6 @@ packages:
       spdx-expression-parse: 3.0.1
     resolution:
       integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==
-  /vfile-location/3.2.0:
-    dev: true
-    resolution:
-      integrity: sha512-aLEIZKv/oxuCDZ8lkJGhuhztf/BW4M+iHdCwglA/eWc+vtuRFJj8EtgceYFX4LRjOhCAAiNHsKGssC6onJ+jbA==
   /void-elements/2.0.1:
     dev: true
     engines:
@@ -6178,7 +6173,7 @@ specifiers:
   execa: ^5.0.0
   ky: ^0.10.0
   p-settle: ^3.1.0
-  postcss: ^8.1.13
+  postcss: ^8.1.14
   read-pkg-up: ^6.0.0
   require-from-string: ^2.0.2
   rollup: 1.21.4
