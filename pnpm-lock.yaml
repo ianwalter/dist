@@ -18,7 +18,7 @@ dependencies:
 devDependencies:
   '@babel/runtime': 7.12.5
   '@changesets/cli': 2.12.0
-  '@ianwalter/bff': 9.12.2
+  '@ianwalter/bff': 9.12.3
   '@ianwalter/eslint-config': 6.0.0
   '@ianwalter/release': 5.0.2
   '@ianwalter/renovate-config': 1.4.2
@@ -489,13 +489,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-a1oe3gdY7aVJotysd2hbkARZdIXd80b1xL+kcJGQ/5VzEv7bMhQ+vlamv8DLz828uz/dxMCVb4++n75RyVUs2Q==
-  /@ianwalter/bff/9.12.2:
+  /@ianwalter/bff/9.12.3:
     dependencies:
       '@generates/logger': 0.0.8
       '@ianwalter/cli': 4.1.0
       '@ianwalter/clone': 6.0.1
       '@ianwalter/cloneable': 2.0.0
-      '@ianwalter/print': 8.1.0
       '@ianwalter/sleep': 0.0.1
       '@ianwalter/subpub': 3.0.0
       '@ianwalter/timer': 2.0.2
@@ -512,7 +511,7 @@ packages:
     dev: true
     hasBin: true
     resolution:
-      integrity: sha512-BlnnT1QTVJTTdWEm5cftesA3e57z1VpOn0F4kvvxpIbzziABfhJza3xf1/FiIiEbDScvRHM0LbWfysYRgW975Q==
+      integrity: sha512-e2oAW25bJdHR24bOcaFF9L43UYRFbPaeGz1gyp4Pj06p8ShEq4hHuWr8+jQXC/+YsZ8aoprxDH9jU6pX/zkFHQ==
   /@ianwalter/chromafi/1.0.1:
     dependencies:
       ansi-mark: 1.0.4
@@ -692,24 +691,6 @@ packages:
     dev: true
     resolution:
       integrity: sha512-AXE7sZgEISpP0cGJY8DN/rI3G+wcDz1EL4KLEVFv2wvZwPaUQaH9qGGoacer1N9xVOGp1D8VSRJc3tJdHTu1MQ==
-  /@ianwalter/print/8.1.0:
-    dependencies:
-      '@ianwalter/chromafi': 1.0.1
-      '@ianwalter/cli': 4.1.0
-      '@ianwalter/clone': 6.0.1
-      '@ianwalter/cloneable': 2.0.0
-      '@ianwalter/dot': 1.0.5
-      '@ianwalter/merge': 9.0.1
-      chalk: 4.1.0
-      has-ansi: 4.0.0
-      has-emoji: 1.1.0
-      marked: 1.2.2
-      marked-terminal: 4.1.0_marked@1.2.2
-      strip-ansi: 6.0.0
-    dev: true
-    hasBin: true
-    resolution:
-      integrity: sha512-1C3oH2YYpfPsRELDK2GDLEyzUNqBu4RMFrkbL+IFG5QrigAKX0wC64gjcmXkgGI9wGUEQ0R3vjnR/yMzC+Yymw==
   /@ianwalter/release/5.0.2:
     dependencies:
       '@ianwalter/base-error': 6.1.0
@@ -6161,7 +6142,7 @@ specifiers:
   '@babel/core': ^7.8.6
   '@babel/runtime': ^7.12.5
   '@changesets/cli': ^2.12.0
-  '@ianwalter/bff': ^9.12.2
+  '@ianwalter/bff': ^9.12.3
   '@ianwalter/cli': ^1.2.0
   '@ianwalter/eslint-config': ^6.0.0
   '@ianwalter/fs': ^1.1.0
